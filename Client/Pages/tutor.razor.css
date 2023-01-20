@@ -1,0 +1,7 @@
+﻿.validation-errors {
+    border-style: solid;
+    border-width: 10px;
+    border-radius: 25px;
+    padding: 3px;
+    border-color:red;
+}

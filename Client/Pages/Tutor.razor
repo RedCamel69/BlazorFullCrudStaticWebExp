@@ -1,0 +1,147 @@
+﻿@page "/tutor"
+@page "/tutor/{id:int}"
+@using BlazorEcommerceStaticWebApp.Client.Services.TutorService;
+@inject ITutorService TutorService
+@inject NavigationManager NavigationManager
+@inject IJSRuntime JS
+
+@if (Id is null)
+{
+    <PageTitle>Create a new Tutor</PageTitle>
+    <h3>Create a new Tutor</h3>
+}
+else
+{
+    <PageTitle>Edit @tutor.FirstName @tutor.FirstName </PageTitle>
+    <h3>Edit @tutor.FirstName @tutor.LastName </h3>
+}
+
+<EditForm Model="tutor" OnValidSubmit="HandleSubmit" OnInvalidSubmit="HandleInvalidSubmit">
+
+    @* @if (FormSubmitMessage.Contains("invalid"))
+    {
+        <div style="border-style:solid;border-width:2px;border-color:red">
+            <h3>@FormSubmitMessage</h3>
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+        </div>
+    }*@
+
+    <h3>@FormSubmitMessage</h3>
+    <DataAnnotationsValidator />
+     
+    @if (InvalidSubmit)
+    {
+        <div class="validation-errors">
+            <ValidationSummary />
+        </div>
+    }
+
+
+
+    <div>
+        <label for="title">FirstName</label>
+        <InputText id="FirstName" @bind-Value="tutor.FirstName" class="form-control" />
+        <ValidationMessage For="@(() => tutor.FirstName)" />
+    </div>
+    <div>
+        <label for="LastName">LastName</label>
+        <InputText id="LastName" @bind-Value="tutor.LastName" class="form-control" />
+        <ValidationMessage For="@(() => tutor.LastName)" />
+    </div>
+    <div>
+        <label for="ProtopageUrl">ProtopageUrl</label>
+        <InputText id="ProtopageUrl" @bind-Value="tutor.ProtopageUrl" class="form-control" />
+    </div>
+    <div>
+        <label for="Email">Email</label>
+        <InputText id="Email" @bind-Value="tutor.Email" class="form-control" />
+    </div>
+    <div>
+        <label for="Phone">Phone</label>
+        <InputText id="Phone" @bind-Value="tutor.Phone" class="form-control" />
+    </div>
+    <div>
+        <label for="MobilePhone">Mobile</label>
+        <InputText id="MobilePhone" @bind-Value="tutor.MobilePhone" class="form-control" />
+    </div>
+    <div>
+        <label for="BusinessId">Business Id</label>
+        <InputNumber id="BusinessId" @bind-Value="tutor.BusinessId" class="form-control" />
+    </div>
+    <br />
+    <button type="submit" class="btn btn-primary">@btnText</button>
+    <button type="button" class="btn btn-danger"
+            @onclick="DeleteProduct">
+        Delete Tutor
+    </button>
+</EditForm>
+
+
+
+
+@code {
+    [Parameter]
+    public int? Id { get; set; }
+
+    string btnText = string.Empty;
+    public string FormSubmitMessage { get; set; } = "Form Data Not Submitted";
+    public bool InvalidSubmit { get; set; } = false;
+
+    BlazorEcommerceStaticWebApp.Shared.Tutor tutor =
+        new BlazorEcommerceStaticWebApp.Shared.Tutor { };
+
+    private IJSObjectReference _jsModule;
+
+    protected override void OnInitialized()
+    {
+        TutorService.TutorsChanged += StateHasChanged;
+        btnText = Id == null ? "Save New Tutor" : "Update Tutor";
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        _jsModule = await JS.InvokeAsync<IJSObjectReference>("import", "./scripts/Helper.js");
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (Id is not null)
+        {
+            var result = await TutorService.GetTutorById((int)Id);
+            if (result is not null)
+                tutor = result;
+            else
+                NavigationManager.NavigateTo("/tutor");
+        }
+    }
+
+    async Task HandleSubmit()
+    {
+        InvalidSubmit = false;
+
+        if (Id is null)
+        {
+            await TutorService.CreateTutor(tutor);
+        }
+        else
+        {
+            await TutorService.UpdateTutor(tutor);
+        }
+    }
+
+    public void HandleInvalidSubmit() {
+        FormSubmitMessage = "Invalid Data Submitted";
+        InvalidSubmit = true;
+    }
+
+    async Task DeleteProduct()
+    {
+      
+      
+        //js variants
+        //await JS.InvokeVoidAsync("NoImplento");
+        await JS.InvokeVoidAsync("alert", "Not Implemented!"); 
+        await _jsModule.InvokeVoidAsync("showAlert", "JS function called from .NET");
+    }
+}

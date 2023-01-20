@@ -1,0 +1,111 @@
+﻿@inject ITutorService TutorService
+@inject NavigationManager NavigationManager
+
+@page "/tutors"
+@using BlazorEcommerceStaticWebApp.Client.Services.TutorService;
+@using BlazorEcommerceStaticWebApp.Shared
+
+@inject HttpClient Http
+
+<div class="align-content-xl-around">
+
+    <div class="table-title">
+          <div class="row">
+            <div class="col-sm-6">
+                <h2>Manage <b>Tutors</b></h2>
+            </div>
+         @*   <div class="col-sm-6">
+                <a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i class="material-icons"></i> <span>Add New Tutor</span></a>
+                <a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons"></i> <span>Delete</span></a>
+           </div>*@
+        </div>
+    </div>
+    <div class="table-responsive">
+
+        <table class="table table-striped table-hover table-bordered">
+    <thead>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Protopage Url</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Business Id</th>
+            <th></th>
+        </tr>
+    </thead>
+
+            @if (TutorService.Tutors == null || TutorService.Tutors.Count == 0)
+            {
+                <img src="images/Loading_2.gif">
+            }
+            else
+            {
+                <tbody>
+
+
+                    @foreach (var tutor in TutorService.Tutors)
+                    {
+                        <tr>
+                            <td>@tutor.FirstName</td>
+                            <td>@tutor.LastName </td>
+                            <td>@tutor.ProtopageUrl</td>
+                            <td>@tutor.Email</td>
+                            <td>@tutor.Phone</td>
+                            <td>@tutor.BusinessId</td>
+                            <td>
+                                <button class="btn btn-primary"
+                                @onclick="(() => ShowTutor(tutor.Id))">
+                                    <i class="oi oi-pencil"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+
+            }
+</table>
+<button class="btn btn-primary"
+        @onclick="CreateNewTutor">
+    Create New Tutor
+</button>
+
+    </div>
+</div>
+
+
+@code {
+
+    //
+
+    private WeatherForecast[] forecasts = new WeatherForecast[]{};
+
+    protected override void OnInitialized()
+    {
+        TutorService.TutorsChanged += StateHasChanged;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            //forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("/api/WeatherForecast") ?? new WeatherForecast[]{};
+            //await ProductService.GetProducts(null);
+            await TutorService.GetTutors();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+        }
+    }
+
+    void ShowTutor(int id)
+    {
+        NavigationManager.NavigateTo($"tutor/{id}");
+    }
+
+    void CreateNewTutor()
+    {
+        NavigationManager.NavigateTo("/tutor");
+    }
+}
