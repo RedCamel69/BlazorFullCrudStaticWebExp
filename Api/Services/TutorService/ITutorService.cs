@@ -15,9 +15,10 @@ namespace Api.Services.TutorService
 
         Task<ServiceResponse<Tutor>> UpdateTutor(Tutor tutor);
 
-       
-
         Task<ServiceResponse<Tutor>> CreateTutor(Tutor tutor);
+
+        ServiceResponse<bool> DeleteTutor(int tutorId);
+        Task<ServiceResponse<bool>> DeleteTutorAsync(int tutorId);
 
     }
 }
