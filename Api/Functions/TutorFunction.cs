@@ -52,13 +52,8 @@ ILogger log)
             string result = await req.ReadAsStringAsync();
 
             var j=  JsonConvert.DeserializeObject<Tutor>(result);
-
     
             log.LogInformation("C# HTTP POST trigger function processed api/tutor request.");
-
-
-           // var pinkleton = await _tutorService.CreateTutor(j);
-
 
             return new OkObjectResult(_tutorService.CreateTutor(j));
         }
@@ -84,6 +79,19 @@ ILogger log)
             return new OkObjectResult(_tutorService.UpdateTutor(j));
         }
 
+        [FunctionName("DeleteTutor")]
+        public async Task<IActionResult> DeleteTutor(
+        [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "DeleteTutor/{tutorId:int}")] HttpRequest req,
+                    int tutorId,
+                    ILogger log)
+        {
+            var s = tutorId;
+            log.LogInformation("C# HTTP POST trigger function processed api/tutor request");
 
+            //return new OkObjectResult(_tutorService.DeleteTutor(tutorId));
+
+            var res = _tutorService.DeleteTutorAsync(tutorId);
+            return new OkObjectResult(res);
+        }
     }
 }
