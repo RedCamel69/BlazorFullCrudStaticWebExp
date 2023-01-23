@@ -40,9 +40,7 @@ namespace Api.Services.TutorService
 
         public ServiceResponse<bool> DeleteTutor(int tutorId)
         {
-            //var dbTutor = _context.Tutors.Find(tutorId);
-            // Find not working with tests as we merely have a list of objects but no primary key
-            var dbTutor  = _context.Tutors.FirstOrDefault(x => x.Id == tutorId);
+          var dbTutor  = _context.Tutors.FirstOrDefault(x => x.Id == tutorId);
             if (dbTutor == null)
             {
                 return new ServiceResponse<bool>
