@@ -72,7 +72,7 @@ else
     <br />
     <button type="submit" class="btn btn-primary">@btnText</button>
     <button type="button" class="btn btn-danger"
-            @onclick="DeleteProduct">
+            @onclick="DeleteTutor">
         Delete Tutor
     </button>
 </EditForm>
@@ -135,13 +135,17 @@ else
         InvalidSubmit = true;
     }
 
-    async Task DeleteProduct()
+    async Task DeleteTutor()
     {
-      
-      
-        //js variants
-        //await JS.InvokeVoidAsync("NoImplento");
-        await JS.InvokeVoidAsync("alert", "Not Implemented!"); 
-        await _jsModule.InvokeVoidAsync("showAlert", "JS function called from .NET");
+
+        //js variants       
+        //await JS.InvokeVoidAsync("alert", "Not Implemented!"); 
+        //await _jsModule.InvokeVoidAsync("showAlert", "Not Implemented!");
+
+        if (Id != null)
+        {
+            await TutorService.DeleteTutor(Convert.ToInt32(Id));
+        }
+
     }
 }

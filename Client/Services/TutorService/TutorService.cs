@@ -7,7 +7,7 @@ namespace BlazorEcommerceStaticWebApp.Client.Services.TutorService
 {
     public class TutorService : ITutorService
     {
-        //
+      
         private readonly HttpClient _http;
         private readonly NavigationManager _navigationManger;
 
@@ -67,6 +67,12 @@ namespace BlazorEcommerceStaticWebApp.Client.Services.TutorService
         public async Task UpdateTutor(Tutor tutor)
         {
             await _http.PutAsJsonAsync("api/tutor", tutor);
+            _navigationManger.NavigateTo("tutors");
+        }
+
+        public async Task DeleteTutor(int id)
+        {
+            await _http.PostAsync($"api/deletetutor/{id}",null);
             _navigationManger.NavigateTo("tutors");
         }
     }
