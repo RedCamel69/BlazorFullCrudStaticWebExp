@@ -1,7 +1,14 @@
-﻿.validation-errors {
+﻿
+.input-group > input.invalid  {
+    outline: none;
+}
+
+.fred {
+    background-color: red;
+    color: green;
+}
+
+#freddy {
     border-style: solid;
     border-width: 10px;
-    border-radius: 25px;
-    padding: 3px;
-    border-color:red;
 }

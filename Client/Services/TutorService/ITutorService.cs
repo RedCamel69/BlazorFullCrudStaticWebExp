@@ -17,5 +17,6 @@ namespace BlazorEcommerceStaticWebApp.Client.Services.TutorService
 
         Task UpdateTutor(Tutor tutor);
 
+        Task DeleteTutor(Tutor product);
     }
 }

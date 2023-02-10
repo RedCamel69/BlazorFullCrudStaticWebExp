@@ -1,6 +1,7 @@
 ﻿using BlazorEcommerceStaticWebApp.Api.Data;
 using BlazorEcommerceStaticWebApp.Shared;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,6 +37,26 @@ namespace Api.Services.TutorService
             };
 
             return response;
+        }
+
+        public async Task<ServiceResponse<bool>> DeleteTutorAsync(int tutorId)
+        {
+            var dbTutor = await _context.Tutors.FirstOrDefaultAsync(x=>x.Id == tutorId);
+            if (dbTutor == null)
+            {
+                return new ServiceResponse<bool>
+                {
+                    Success = false,
+                    Data = false,
+                    Message = "Tutor not found."
+                };
+            }
+
+            //dbTutor.Deleted = true;
+            _context.Tutors.Remove(dbTutor);
+
+            await _context.SaveChangesAsync();
+            return new ServiceResponse<bool> { Data = true };
         }
 
         public ServiceResponse<Tutor> GetTutor(int Id)

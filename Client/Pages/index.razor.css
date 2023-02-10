@@ -6,6 +6,7 @@
     border-collapse: inherit;*/ /*override reboot scss*/
     table-layout:fixed;
     width:280px;
+    background-color:red;
 }
 
 .table-col{

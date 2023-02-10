@@ -85,5 +85,17 @@ ILogger log)
         }
 
 
+        [FunctionName("DeleteTutor")]
+        public async Task<IActionResult> DeleteTutor(
+[HttpTrigger(AuthorizationLevel.Anonymous, "delete", Route = "tutor/{tutorId:int}")] HttpRequest req,
+//Tutor tutor,
+int tutorId,
+ILogger log)
+        {
+            log.LogInformation("C# HTTP DELETE trigger function processed api/tutor request.");
+            return new OkObjectResult(await _tutorService.DeleteTutorAsync(tutorId));
+        }
+
+
     }
 }
