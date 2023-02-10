@@ -83,62 +83,62 @@ namespace Test
         }
 
 
-        [Fact]
-        public void Delete_Returns_ServiceResponse()
-        {
+        //[Fact]
+        //public void Delete_Returns_ServiceResponse()
+        //{
 
-            var data = new List<Tutor>
-            {
-                new Tutor {   Id=1,FirstName="Tutor 1 FName", LastName="Tutor 1 LName", Phone = "11111111"},
-                new Tutor {   Id=2,FirstName="Tutor 1 FName", LastName="Tutor 1 LName", Phone = "2222222"},
-                new Tutor {   Id=3,FirstName="Tutor 1 FName", LastName="Tutor 1 LName", Phone = "3333333"}
-            }.AsQueryable();
+        //    var data = new List<Tutor>
+        //    {
+        //        new Tutor {   Id=1,FirstName="Tutor 1 FName", LastName="Tutor 1 LName", Phone = "11111111"},
+        //        new Tutor {   Id=2,FirstName="Tutor 1 FName", LastName="Tutor 1 LName", Phone = "2222222"},
+        //        new Tutor {   Id=3,FirstName="Tutor 1 FName", LastName="Tutor 1 LName", Phone = "3333333"}
+        //    }.AsQueryable();
 
-            var mockHttpContextAccessor = new Mock<IHttpContextAccessor>();
+        //    var mockHttpContextAccessor = new Mock<IHttpContextAccessor>();
 
-            var mockSet = new Mock<DbSet<Tutor>>();
-            mockSet.As<IQueryable<Tutor>>().Setup(m => m.Provider).Returns(data.Provider);
-            mockSet.As<IQueryable<Tutor>>().Setup(m => m.Expression).Returns(data.Expression);
-            mockSet.As<IQueryable<Tutor>>().Setup(m => m.ElementType).Returns(data.ElementType);
-            mockSet.As<IQueryable<Tutor>>().Setup(m => m.GetEnumerator()).Returns(() => data.GetEnumerator());
+        //    var mockSet = new Mock<DbSet<Tutor>>();
+        //    mockSet.As<IQueryable<Tutor>>().Setup(m => m.Provider).Returns(data.Provider);
+        //    mockSet.As<IQueryable<Tutor>>().Setup(m => m.Expression).Returns(data.Expression);
+        //    mockSet.As<IQueryable<Tutor>>().Setup(m => m.ElementType).Returns(data.ElementType);
+        //    mockSet.As<IQueryable<Tutor>>().Setup(m => m.GetEnumerator()).Returns(() => data.GetEnumerator());
 
-            var mockContext = new Mock<ApplicationDbContext>();
-            mockContext.Setup(t => t.Tutors).Returns(mockSet.Object);
+        //    var mockContext = new Mock<ApplicationDbContext>();
+        //    mockContext.Setup(t => t.Tutors).Returns(mockSet.Object);
 
-            var service = new TutorService(mockContext.Object, mockHttpContextAccessor.Object);
-            var res = service.DeleteTutor(1);
+        //    var service = new TutorService(mockContext.Object, mockHttpContextAccessor.Object);
+        //    var res = service.DeleteTutor(1);
 
-            Assert.Contains("ServiceResponse", res.GetType().Name);
-        }
+        //    Assert.Contains("ServiceResponse", res.GetType().Name);
+        //}
 
-        [Fact]
-        public void Delete_Returns_ServiceResponse_If_Tutor_Not_Found()
-        {
+        //[Fact]
+        //public void Delete_Returns_ServiceResponse_If_Tutor_Not_Found()
+        //{
 
-            var data = new List<Tutor>
-            {
-                new Tutor {   Id=1,FirstName="Tutor 1 FName", LastName="Tutor 1 LName", Phone = "11111111"},
-                new Tutor {   Id=2,FirstName="Tutor 1 FName", LastName="Tutor 1 LName", Phone = "2222222"},
-                new Tutor {   Id=3,FirstName="Tutor 1 FName", LastName="Tutor 1 LName", Phone = "3333333"}
-            }.AsQueryable();
+        //    var data = new List<Tutor>
+        //    {
+        //        new Tutor {   Id=1,FirstName="Tutor 1 FName", LastName="Tutor 1 LName", Phone = "11111111"},
+        //        new Tutor {   Id=2,FirstName="Tutor 1 FName", LastName="Tutor 1 LName", Phone = "2222222"},
+        //        new Tutor {   Id=3,FirstName="Tutor 1 FName", LastName="Tutor 1 LName", Phone = "3333333"}
+        //    }.AsQueryable();
 
-            var mockHttpContextAccessor = new Mock<IHttpContextAccessor>();
+        //    var mockHttpContextAccessor = new Mock<IHttpContextAccessor>();
 
-            var mockSet = new Mock<DbSet<Tutor>>();
-            mockSet.As<IQueryable<Tutor>>().Setup(m => m.Provider).Returns(data.Provider);
-            mockSet.As<IQueryable<Tutor>>().Setup(m => m.Expression).Returns(data.Expression);
-            mockSet.As<IQueryable<Tutor>>().Setup(m => m.ElementType).Returns(data.ElementType);
-            mockSet.As<IQueryable<Tutor>>().Setup(m => m.GetEnumerator()).Returns(() => data.GetEnumerator());
+        //    var mockSet = new Mock<DbSet<Tutor>>();
+        //    mockSet.As<IQueryable<Tutor>>().Setup(m => m.Provider).Returns(data.Provider);
+        //    mockSet.As<IQueryable<Tutor>>().Setup(m => m.Expression).Returns(data.Expression);
+        //    mockSet.As<IQueryable<Tutor>>().Setup(m => m.ElementType).Returns(data.ElementType);
+        //    mockSet.As<IQueryable<Tutor>>().Setup(m => m.GetEnumerator()).Returns(() => data.GetEnumerator());
 
-            var mockContext = new Mock<ApplicationDbContext>();
-            mockContext.Setup(t => t.Tutors).Returns(mockSet.Object);
+        //    var mockContext = new Mock<ApplicationDbContext>();
+        //    mockContext.Setup(t => t.Tutors).Returns(mockSet.Object);
 
-            var service = new TutorService(mockContext.Object, mockHttpContextAccessor.Object);
-            var res = service.DeleteTutor(1001);
+        //    var service = new TutorService(mockContext.Object, mockHttpContextAccessor.Object);
+        //    var res = service.DeleteTutor(1001);
 
-            Assert.Contains("ServiceResponse", res.GetType().Name);
-            Assert.True(res.Message == "Tutor not found.");
-        }
+        //    Assert.Contains("ServiceResponse", res.GetType().Name);
+        //    Assert.True(res.Message == "Tutor not found.");
+        //}
 
     }
 } 

@@ -79,18 +79,7 @@ ILogger log)
             return new OkObjectResult(_tutorService.UpdateTutor(j));
         }
 
-        [FunctionName("DeleteTutor")]
-        public async Task<IActionResult> DeleteTutor(
-        [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "DeleteTutor/{tutorId:int}")] HttpRequest req,
-                    int tutorId,
-                    ILogger log)
-        {
-            var s = tutorId;
-            log.LogInformation("C# HTTP POST trigger function processed api/tutor request");
-
-            //return new OkObjectResult(_tutorService.DeleteTutor(tutorId));
-
-
+       
         [FunctionName("DeleteTutor")]
         public async Task<IActionResult> DeleteTutor(
           [HttpTrigger(AuthorizationLevel.Anonymous, "delete", Route = "tutor/{tutorId:int}")] HttpRequest req,
@@ -101,9 +90,7 @@ ILogger log)
             log.LogInformation("C# HTTP DELETE trigger function processed api/tutor request.");
             return new OkObjectResult(await _tutorService.DeleteTutorAsync(tutorId));
         }
-            var res = _tutorService.DeleteTutorAsync(tutorId);
-            return new OkObjectResult(res);
-        }
+           
 
     }
 }

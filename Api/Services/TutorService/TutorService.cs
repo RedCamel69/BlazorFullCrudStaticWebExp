@@ -29,7 +29,7 @@ namespace Api.Services.TutorService
 
             _context.Tutors.Add(tutor);
             await _context.SaveChangesAsync();
-           
+
             var response = new ServiceResponse<Tutor>
             {
                 Data = tutor,
@@ -37,7 +37,8 @@ namespace Api.Services.TutorService
             };
 
             return response;
-   
+        }
+
         public async Task<ServiceResponse<bool>> DeleteTutorAsync(int tutorId)
         {
             var dbTutor = await _context.Tutors.FirstOrDefaultAsync(x=>x.Id == tutorId);           
@@ -57,37 +58,7 @@ namespace Api.Services.TutorService
             return new ServiceResponse<bool> { Data = true };
         }
 
-        
-    
-        public async Task<ServiceResponse<bool>> DeleteTutorAsync(int tutorId)
-        {
-            try
-            {
-                var dbTutor = await _context.Tutors.FindAsync(tutorId);
-                if (dbTutor == null)
-                {
-                    return new ServiceResponse<bool>
-                    {
-                        Success = false,
-                        Data = false,
-                        Message = "Tutor not found."
-                    };
-                }
-
-                _context.Tutors.Remove(dbTutor);
-
-                await _context.SaveChangesAsync();
-
-                return new ServiceResponse<bool> { Data = true, Success = true, Message = String.Format("Tutor {0} sucessfully deleted.", tutorId) };
-            }
-            catch(Exception ex)
-            {
-                var e = ex;
-                var p = ex;
-                return new ServiceResponse<bool> { Data = false, Success = false, Message = ex.Message };
-            }
-        }
-
+             
         public ServiceResponse<Tutor> GetTutor(int Id)
         {
             var response = new ServiceResponse<Tutor>
