@@ -5,6 +5,8 @@
 @inject NavigationManager NavigationManager
 @inject IJSRuntime JS
 
+<h2 class="fred" id="freddy">Test</h2>
+
 @if (Id is null)
 {
     <PageTitle>Create a new Tutor</PageTitle>
@@ -16,20 +18,12 @@ else
     <h3>Edit @tutor.FirstName @tutor.LastName </h3>
 }
 
-<EditForm Model="tutor" OnValidSubmit="HandleSubmit" OnInvalidSubmit="HandleInvalidSubmit">
-
-    @* @if (FormSubmitMessage.Contains("invalid"))
-    {
-        <div style="border-style:solid;border-width:2px;border-color:red">
-            <h3>@FormSubmitMessage</h3>
-            <DataAnnotationsValidator />
-            <ValidationSummary />
-        </div>
-    }*@
+<EditForm Model="tutor" OnValidSubmit="HandleSubmit"
+          OnInvalidSubmit="HandleInvalidSubmit" Context="CurrentEditContext">
 
     <h3>@FormSubmitMessage</h3>
     <DataAnnotationsValidator />
-     
+
     @if (InvalidSubmit)
     {
         <div class="validation-errors">
@@ -55,7 +49,12 @@ else
     </div>
     <div>
         <label for="Email">Email</label>
-        <InputText id="Email" @bind-Value="tutor.Email" class="form-control" />
+        <div class="input-group @CurrentEditContext.FieldCssClass( () => tutor.Email)">
+            <div class="input-group-prepend">
+                <span class="input-group-text">@@</span>
+            </div>
+            <InputText id="Email" @bind-Value="tutor.Email" class="form-control" type="email" />
+        </div>
     </div>
     <div>
         <label for="Phone">Phone</label>
@@ -130,18 +129,19 @@ else
         }
     }
 
-    public void HandleInvalidSubmit() {
+    public void HandleInvalidSubmit()
+    {
         FormSubmitMessage = "Invalid Data Submitted";
         InvalidSubmit = true;
     }
 
     async Task DeleteProduct()
     {
-      
-      
+
+        await TutorService.DeleteTutor(tutor);
         //js variants
         //await JS.InvokeVoidAsync("NoImplento");
-        await JS.InvokeVoidAsync("alert", "Not Implemented!"); 
-        await _jsModule.InvokeVoidAsync("showAlert", "JS function called from .NET");
+        //await JS.InvokeVoidAsync("alert", "Not Implemented! Will delete tutor with id : " + Id);
+        //await _jsModule.InvokeVoidAsync("showAlert", "JS function called from .NET");
     }
 }
