@@ -62,3 +62,10 @@ a, .btn-link {
     .blazor-error-boundary::after {
         content: "An error has occurred."
     }
+
+/* bespoke */
+.validation-errors {
+    border-style: solid;
+    border-radius: 0.25em;
+    border-color:red;
+}

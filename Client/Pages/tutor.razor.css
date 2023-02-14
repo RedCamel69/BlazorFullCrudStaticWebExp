@@ -5,10 +5,11 @@
 
 .fred {
     background-color: red;
-    color: green;
+    color: yellow;
 }
 
 #freddy {
     border-style: solid;
     border-width: 10px;
 }
+
