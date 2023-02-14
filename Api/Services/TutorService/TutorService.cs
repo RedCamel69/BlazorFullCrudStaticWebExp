@@ -13,15 +13,12 @@ namespace Api.Services.TutorService
     public class TutorService : ITutorService
     {
         private readonly ApplicationDbContext _context;
-        private readonly IHttpContextAccessor _httpContext;
-
+      
         public TutorService(
-            ApplicationDbContext context,
-            IHttpContextAccessor httpContext
+            ApplicationDbContext context           
             )
         {
             _context = context;
-            _httpContext = httpContext;
         }
 
         public async Task<ServiceResponse<Tutor>> CreateTutor(Tutor tutor)
@@ -57,8 +54,7 @@ namespace Api.Services.TutorService
             await _context.SaveChangesAsync();
             return new ServiceResponse<bool> { Data = true };
         }
-
-             
+          
         public ServiceResponse<Tutor> GetTutor(int Id)
         {
             var response = new ServiceResponse<Tutor>
@@ -96,5 +92,25 @@ namespace Api.Services.TutorService
 
             return response;
         }
+
+        public ServiceResponse<bool> DeleteTutor(int tutorId)
+        {
+            var dbTutor =  _context.Tutors.FirstOrDefault(x => x.Id == tutorId);
+            if (dbTutor == null)
+            {
+                return new ServiceResponse<bool>
+                {
+                    Success = false,
+                    Data = false,
+                    Message = "Tutor not found."
+                };
+            }
+
+            _context.Tutors.Attach(dbTutor);
+            _context.Tutors.Remove(dbTutor);
+           
+            _context.SaveChanges();
+            return new ServiceResponse<bool> { Data = true };
+        }
     }
-}
+} 
