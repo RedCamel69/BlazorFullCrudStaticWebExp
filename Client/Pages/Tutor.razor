@@ -1,5 +1,6 @@
 ﻿@page "/tutor"
 @page "/tutor/{id:int}"
+@using BlazorEcommerceStaticWebApp.Client.Components;
 @using BlazorEcommerceStaticWebApp.Client.Services.TutorService;
 @inject ITutorService TutorService
 @inject NavigationManager NavigationManager
@@ -66,10 +67,15 @@ else
     </button>
 </EditForm>
 
-
+<Confirm @ref="DeleteConfirmation"  ConfirmationChanged ="ConfirmDelete_Click"
+         ConfirmationMessage=@($"Are you sure you want to delete tutor \"{tutor.FirstName} {tutor.LastName}\" ?")>
+</Confirm>
 
 
 @code {
+
+    protected ConfirmBase DeleteConfirmation { get; set; }
+
     [Parameter]
     public int? Id { get; set; }
 
@@ -127,11 +133,21 @@ else
 
     async Task DeleteProduct()
     {
+        DeleteConfirmation.Show();
 
-        await TutorService.DeleteTutor(tutor);
-        //js variants
+      //  await TutorService.DeleteTutor(tutor);
+       
+      //js variants
         //await JS.InvokeVoidAsync("NoImplento");
         //await JS.InvokeVoidAsync("alert", "Not Implemented! Will delete tutor with id : " + Id);
         //await _jsModule.InvokeVoidAsync("showAlert", "JS function called from .NET");
+    }
+
+    protected async Task ConfirmDelete_Click(bool deleteConfirmed)
+    {
+        if (deleteConfirmed)
+        {
+            await TutorService.DeleteTutor(tutor);
+        }
     }
 }
