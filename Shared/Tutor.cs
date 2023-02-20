@@ -20,18 +20,22 @@ namespace BlazorEcommerceStaticWebApp.Shared
         [StringLength(50)]
         public string LastName { get; set; }
 
+        [Required]
         [Url]
-        public string? ProtopageUrl { get; set; }
+        public string ProtopageUrl { get; set; }
 
-
+        [Required]
         [EmailAddress]
-        public string? Email { get; set; }
+        public string Email { get; set; }
+
+        [Required]
+        [Phone]
+        public string Phone { get; set; }
 
         [Phone]
-        public string? Phone { get; set; }
-
         public string? MobilePhone { get; set; }
 
+        [Required]
         [Range(0,100)]
         public int? BusinessId { get; set; }
 

@@ -37,6 +37,7 @@ else
     <div>
         <label for="ProtopageUrl">ProtopageUrl</label>
         <InputText id="ProtopageUrl" @bind-Value="tutor.ProtopageUrl" class="form-control" />
+        <ValidationMessage For="@(() => tutor.ProtopageUrl)" />
     </div>
     <div>
         <label for="Email">Email</label>
@@ -45,19 +46,24 @@ else
                 <span class="input-group-text">@@</span>
             </div>
             <InputText id="Email" @bind-Value="tutor.Email" class="form-control" type="email" />
+          
         </div>
+        <ValidationMessage For="@(() => tutor.Email)" />
     </div>
     <div>
         <label for="Phone">Phone</label>
         <InputText id="Phone" @bind-Value="tutor.Phone" class="form-control" />
+        <ValidationMessage For="@(() => tutor.Phone)" />
     </div>
     <div>
         <label for="MobilePhone">Mobile</label>
         <InputText id="MobilePhone" @bind-Value="tutor.MobilePhone" class="form-control" />
+        <ValidationMessage For="@(() => tutor.MobilePhone)" />
     </div>
     <div>
         <label for="BusinessId">Business Id</label>
         <InputNumber id="BusinessId" @bind-Value="tutor.BusinessId" class="form-control" />
+        <ValidationMessage For="@(() => tutor.BusinessId)" />
     </div>
     <br />
     <button type="submit" class="btn btn-primary">@btnText</button>
