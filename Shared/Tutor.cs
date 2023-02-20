@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BlazorEcommerceStaticWebApp.Shared.Validations;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -22,6 +23,7 @@ namespace BlazorEcommerceStaticWebApp.Shared
 
         [Required]
         [Url]
+        [ProtopageUrl(ErrorMessage ="Not a valid Protopage Url")]
         public string ProtopageUrl { get; set; }
 
         [Required]
@@ -36,8 +38,8 @@ namespace BlazorEcommerceStaticWebApp.Shared
         public string? MobilePhone { get; set; }
 
         [Required]
-        [Range(0,100)]
-        public int? BusinessId { get; set; }
+        //[RegularExpression("^[a-zA-Z0-9]*$", ErrorMessage = "Only Alphabets and Numbers allowed.")]
+        public string? BusinessId { get; set; }
 
     }
 }
