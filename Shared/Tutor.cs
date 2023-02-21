@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +12,7 @@ namespace BlazorEcommerceStaticWebApp.Shared
     public class Tutor
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         [Required]
@@ -38,8 +40,8 @@ namespace BlazorEcommerceStaticWebApp.Shared
         public string? MobilePhone { get; set; }
 
         [Required]
-        //[RegularExpression("^[a-zA-Z0-9]*$", ErrorMessage = "Only Alphabets and Numbers allowed.")]
-        public string? BusinessId { get; set; }
+       public int? BusinessId { get; set; }
 
+        public Business Business { get; set; }  
     }
 }

@@ -70,7 +70,9 @@ namespace Api.Services.TutorService
         {
             var response = new ServiceResponse<List<Tutor>>
             {
-                Data = _context.Tutors.ToList()
+                Data = _context.Tutors
+                            .Include(x=>x.Business)
+                            .ToList()
             };
 
             return response;

@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Microsoft.EntityFrameworkCore;
-using Api.Services.ProductService;
+
 using Api.Services.TutorService;
 using BlazorEcommerceStaticWebApp.Shared;
 

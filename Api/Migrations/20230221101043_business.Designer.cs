@@ -3,6 +3,7 @@ using System;
 using BlazorEcommerceStaticWebApp.Api.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,28 +11,13 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230221101043_business")]
+    partial class business
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.3");
-
-            modelBuilder.Entity("BlazorEcommerceStaticWebApp.Shared.Business", b =>
-                {
-                    b.Property<int>("BusinessId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("BusinessId");
-
-                    b.ToTable("Businesses");
-                });
 
             modelBuilder.Entity("BlazorEcommerceStaticWebApp.Shared.Category", b =>
                 {
@@ -519,9 +505,9 @@ namespace Api.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("BusinessId")
+                    b.Property<string>("BusinessId")
                         .IsRequired()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -549,8 +535,6 @@ namespace Api.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("BusinessId");
 
                     b.ToTable("Tutors");
                 });
@@ -588,20 +572,6 @@ namespace Api.Migrations
                         .IsRequired();
 
                     b.Navigation("ProductType");
-                });
-
-            modelBuilder.Entity("BlazorEcommerceStaticWebApp.Shared.Tutor", b =>
-                {
-                    b.HasOne("BlazorEcommerceStaticWebApp.Shared.Business", null)
-                        .WithMany("Tutors")
-                        .HasForeignKey("BusinessId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("BlazorEcommerceStaticWebApp.Shared.Business", b =>
-                {
-                    b.Navigation("Tutors");
                 });
 
             modelBuilder.Entity("BlazorEcommerceStaticWebApp.Shared.Product", b =>

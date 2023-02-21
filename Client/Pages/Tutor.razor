@@ -61,26 +61,36 @@ else
         <ValidationMessage For="@(() => tutor.MobilePhone)" />
     </div>
     <div>
-        <label for="BusinessId">Business Id</label>
+     @*   <label for="BusinessId">Select Business</label>
+      
+
         <InputText id="BusinessId" @bind-Value="tutor.BusinessId" class="form-control" />
-        <ValidationMessage For="@(() => tutor.BusinessId)" />
+        <ValidationMessage For="@(() => tutor.BusinessId)" />*@
     </div>
     <br />
     <button type="submit" class="btn btn-primary">@btnText</button>
-    <button type="button" class="btn btn-danger"
-            @onclick="DeleteProduct">
-        Delete Tutor
-    </button>
+
+    @if (DisplayDeleteButton)
+        {
+            <button type="button" class="btn btn-danger"
+                    @onclick="DeleteProduct">
+                Delete Tutor
+            </button>
+        }
+
 </EditForm>
 
-<Confirm @ref="DeleteConfirmation"  ConfirmationChanged ="ConfirmDelete_Click"
+
+    <Confirm @ref="DeleteConfirmation"  ConfirmationChanged ="ConfirmDelete_Click"
          ConfirmationMessage=@($"Are you sure you want to delete tutor \"{tutor.FirstName} {tutor.LastName}\" ?")>
-</Confirm>
+    </Confirm>
+
 
 
 @code {
 
     protected ConfirmBase DeleteConfirmation { get; set; }
+    private bool DisplayDeleteButton { get; set; }
 
     [Parameter]
     public int? Id { get; set; }
@@ -109,12 +119,19 @@ else
     {
         if (Id is not null)
         {
+            DisplayDeleteButton = true;
             var result = await TutorService.GetTutorById((int)Id);
             if (result is not null)
                 tutor = result;
             else
                 NavigationManager.NavigateTo("/tutor");
         }
+        else
+        {
+            DisplayDeleteButton = false;
+        }
+
+        
     }
 
     async Task HandleSubmit()

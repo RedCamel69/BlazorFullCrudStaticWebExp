@@ -5,8 +5,6 @@ using BlazorEcommerceStaticWebApp.Api.Data;
 using System.IO;
 using System;
 using Microsoft.Extensions.Logging;
-using Api.Services.ProductService;
-using Api.Services.CategoryService;
 using Api.Services.TutorService;
 
 [assembly: FunctionsStartup(typeof(BlazorEcommerceStaticWebApp.Api.StartUp))]
@@ -64,9 +62,7 @@ namespace BlazorEcommerceStaticWebApp.Api
             //    //           //.UseLoggerFactory(s.GetRequiredService<ILoggerFactory>())
             //    //           );
 
-            builder.Services.AddScoped<IProductService, ProductService>();
-            builder.Services.AddScoped<ICategoryService, CategoryService>();
-
+       
             builder.Services.AddScoped<ITutorService, TutorService>();
 
         }

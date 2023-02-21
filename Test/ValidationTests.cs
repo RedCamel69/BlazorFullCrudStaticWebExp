@@ -1,18 +1,5 @@
-using Api.Services.TutorService;
-using Api.Services.ProductService;
-using BlazorEcommerceStaticWebApp.Api.Data;
-using BlazorEcommerceStaticWebApp.Shared;
-using BlazorEcommerceStaticWebApp.Test;
-using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
-using Moq;
-using System.Collections.Generic;
-using System.Data.Entity.Infrastructure;
-using System.Net.Http;
-using System.Reflection.Metadata;
-using System.Linq.Expressions;
 using BlazorEcommerceStaticWebApp.Shared.Validations;
-//using System.Data.Entity;
+
 
 namespace Test
 {
