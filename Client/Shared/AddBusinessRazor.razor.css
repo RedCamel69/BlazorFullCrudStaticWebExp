@@ -1,0 +1,21 @@
+﻿
+/* as the code is injected onto parent page we need to manually add animation which would normally come out of the box with bootstrap*/
+
+.modal {
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.8); /* Black w/ opacity */
+}
+
+.fade {
+    animation: 0.15s myFade;
+}
+
+@keyframes myFade {
+    from {
+        opacity :0;
+    }
+
+    to {
+        opacity:0.7;
+    }
+}

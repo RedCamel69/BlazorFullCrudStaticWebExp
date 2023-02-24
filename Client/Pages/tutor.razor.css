@@ -13,3 +13,11 @@
     border-width: 10px;
 }
 
+.addBusinessLink{
+  /*  border-style:solid;
+    border-color:blue;
+    color:blue;
+    border-width:thin;*/
+  cursor:pointer;
+}
+

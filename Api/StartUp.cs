@@ -6,6 +6,7 @@ using System.IO;
 using System;
 using Microsoft.Extensions.Logging;
 using Api.Services.TutorService;
+using Api.Services.BusinessService;
 
 [assembly: FunctionsStartup(typeof(BlazorEcommerceStaticWebApp.Api.StartUp))]
 namespace BlazorEcommerceStaticWebApp.Api
@@ -64,6 +65,7 @@ namespace BlazorEcommerceStaticWebApp.Api
 
        
             builder.Services.AddScoped<ITutorService, TutorService>();
+            builder.Services.AddScoped<IBusinessService, BusinessService>();
 
         }
 

@@ -2,7 +2,10 @@
 @page "/tutor/{id:int}"
 @using BlazorEcommerceStaticWebApp.Client.Components;
 @using BlazorEcommerceStaticWebApp.Client.Services.TutorService;
+@using BlazorEcommerceStaticWebApp.Client.Services.BusinessService;
+
 @inject ITutorService TutorService
+@inject IBusinessService BusinessService
 @inject NavigationManager NavigationManager
 @inject IJSRuntime JS
 
@@ -61,10 +64,21 @@ else
         <ValidationMessage For="@(() => tutor.MobilePhone)" />
     </div>
     <div>
-     @*   <label for="BusinessId">Select Business</label>
-      
+     <label for="BusinessId">Business</label>
 
-        <InputText id="BusinessId" @bind-Value="tutor.BusinessId" class="form-control" />
+        <p>Either select a business from the list or <a @onclick="AddBusiness" class="addBusinessLink">add a new one</a></p>
+        <select name="number">
+            <option value="">Select a business</option>
+            <option value="1">tt</option>
+           @foreach (Business b in BusinessService.Businesses)
+            {
+                <option value="@b.BusinessId">@b.Name</option>
+            }
+        </select>
+
+     @*   <InputText  @bind-Value="tutor.Business.Name" class="form-control" />*@
+
+@*   <InputText id="BusinessId" @bind-Value="tutor.BusinessId" class="form-control" />
         <ValidationMessage For="@(() => tutor.BusinessId)" />*@
     </div>
     <br />
@@ -81,16 +95,23 @@ else
 </EditForm>
 
 
-    <Confirm @ref="DeleteConfirmation"  ConfirmationChanged ="ConfirmDelete_Click"
-         ConfirmationMessage=@($"Are you sure you want to delete tutor \"{tutor.FirstName} {tutor.LastName}\" ?")>
+  <Confirm @ref="DeleteConfirmation"
+      ConfirmationChanged ="ConfirmDelete_Click"
+       ConfirmationMessage=@($"Are you sure you want to delete tutor \"{tutor.FirstName} {tutor.LastName}\" ?")>
     </Confirm>
 
-
+<AddBusinessRazor @ref="AddBusinessModal" 
+    AddBusinessChanged="ConfirmAddBusiness_Click" 
+   ConfirmationMessage=@("Please add your business name.")>
+</AddBusinessRazor>
 
 @code {
 
     protected ConfirmBase DeleteConfirmation { get; set; }
+    protected AddBusinessBase AddBusinessModal { get; set; }
     private bool DisplayDeleteButton { get; set; }
+
+
 
     [Parameter]
     public int? Id { get; set; }
@@ -107,11 +128,15 @@ else
     protected override void OnInitialized()
     {
         TutorService.TutorsChanged += StateHasChanged;
+        BusinessService.BusinessesChanged += StateHasChanged;
+        BusinessService.Businesses = new List<Business>();
+
         btnText = Id == null ? "Save New Tutor" : "Update Tutor";
     }
 
     protected override async Task OnInitializedAsync()
     {
+        await BusinessService.GetBusinesses();
         _jsModule = await JS.InvokeAsync<IJSObjectReference>("import", "./scripts/Helper.js");
     }
 
@@ -131,7 +156,7 @@ else
             DisplayDeleteButton = false;
         }
 
-        
+
     }
 
     async Task HandleSubmit()
@@ -158,9 +183,9 @@ else
     {
         DeleteConfirmation.Show();
 
-      //  await TutorService.DeleteTutor(tutor);
-       
-      //js variants
+        //  await TutorService.DeleteTutor(tutor);
+
+        //js variants
         //await JS.InvokeVoidAsync("NoImplento");
         //await JS.InvokeVoidAsync("alert", "Not Implemented! Will delete tutor with id : " + Id);
         //await _jsModule.InvokeVoidAsync("showAlert", "JS function called from .NET");
@@ -172,5 +197,31 @@ else
         {
             await TutorService.DeleteTutor(tutor);
         }
+    }
+
+
+    protected async Task ConfirmAddBusiness_Click(bool addConfirmed)
+    {
+        if (addConfirmed)
+        {
+        //    //await JS.InvokeVoidAsync("alert", "Not Implemented!");
+        //    //await TutorService.DeleteTutor(tutor);
+        //    //StateHasChanged();
+         await BusinessService.GetBusinesses();
+
+        }
+       
+    }
+
+    async Task AddBusiness()
+    {
+        AddBusinessModal.Show();
+
+        //  await TutorService.DeleteTutor(tutor);
+
+        //js variants
+        //await JS.InvokeVoidAsync("NoImplento");
+        //await JS.InvokeVoidAsync("alert", "Not Implemented! Will delete tutor with id : " + Id);
+        //await _jsModule.InvokeVoidAsync("showAlert", "JS function called from .NET");
     }
 }
