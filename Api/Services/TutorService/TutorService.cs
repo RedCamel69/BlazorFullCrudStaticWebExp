@@ -1,4 +1,5 @@
-﻿using BlazorEcommerceStaticWebApp.Api.Data;
+﻿using Api.Migrations;
+using BlazorEcommerceStaticWebApp.Api.Data;
 using BlazorEcommerceStaticWebApp.Shared;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -23,17 +24,31 @@ namespace Api.Services.TutorService
 
         public async Task<ServiceResponse<Tutor>> CreateTutor(Tutor tutor)
         {
+            var response = new ServiceResponse<Tutor>();
 
-            _context.Tutors.Add(tutor);
-            await _context.SaveChangesAsync();
-
-            var response = new ServiceResponse<Tutor>
+            try
             {
-                Data = tutor,
-                Message = "Successfully added new tutor"
-            };
+                tutor.Business = null; //ef workaround to stop new business being created
+
+                _context.Tutors.Add(tutor);
+                             
+                await _context.SaveChangesAsync();
+
+                response.Data = tutor;
+                response.Message = "Successfully added new tutor";
+                response.Success = true;
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Data = null;
+                response.Message = ex.Message;
+            }
+
+
 
             return response;
+          
         }
 
         public async Task<ServiceResponse<bool>> DeleteTutorAsync(int tutorId)
@@ -82,6 +97,7 @@ namespace Api.Services.TutorService
 
         public async Task<ServiceResponse<Tutor>> UpdateTutor(Tutor tutor)
         {
+            tutor.Business = null; //ef workaround to stop new business being created
             _context.Tutors.Update(tutor);
             await _context.SaveChangesAsync();
 

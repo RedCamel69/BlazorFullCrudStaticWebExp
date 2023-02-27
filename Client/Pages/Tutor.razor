@@ -67,19 +67,21 @@ else
      <label for="BusinessId">Business</label>
 
         <p>Either select a business from the list or <a @onclick="AddBusiness" class="addBusinessLink">add a new one</a></p>
-        <select name="number">
-            <option value="">Select a business</option>
-            <option value="1">tt</option>
-           @foreach (Business b in BusinessService.Businesses)
+        
+        <select id="SelectBusiness" @ref="SelectBusinessElement" name="number" @onchange="SelectBusiness">
+            <option value="">Select a business</option>            
+            @foreach (Business b in BusinessService.Businesses)
             {
                 <option value="@b.BusinessId">@b.Name</option>
             }
         </select>
 
-     @*   <InputText  @bind-Value="tutor.Business.Name" class="form-control" />*@
 
-@*   <InputText id="BusinessId" @bind-Value="tutor.BusinessId" class="form-control" />
-        <ValidationMessage For="@(() => tutor.BusinessId)" />*@
+      @*<InputText  @bind-Value="tutor.Business.Name" class="form-control" />*@
+        <ValidationMessage For="@(() => tutor.BusinessId)" />
+        <InputNumber id="BusinessId" @bind-Value="tutor.BusinessId" class="form-control" hidden />
+       
+
     </div>
     <br />
     <button type="submit" class="btn btn-primary">@btnText</button>
@@ -111,6 +113,7 @@ else
     protected AddBusinessBase AddBusinessModal { get; set; }
     private bool DisplayDeleteButton { get; set; }
 
+    protected ElementReference SelectBusinessElement;  // set the @ref for attribute
 
 
     [Parameter]
@@ -204,13 +207,15 @@ else
     {
         if (addConfirmed)
         {
-        //    //await JS.InvokeVoidAsync("alert", "Not Implemented!");
-        //    //await TutorService.DeleteTutor(tutor);
-        //    //StateHasChanged();
-         await BusinessService.GetBusinesses();
+            //    //await JS.InvokeVoidAsync("alert", "Not Implemented!");
+            //    //await TutorService.DeleteTutor(tutor);
+            //    //StateHasChanged();
+            await BusinessService.GetBusinesses();
+
+            await JS.InvokeVoidAsync("SetFocusToElement", SelectBusinessElement);
 
         }
-       
+
     }
 
     async Task AddBusiness()
@@ -223,5 +228,21 @@ else
         //await JS.InvokeVoidAsync("NoImplento");
         //await JS.InvokeVoidAsync("alert", "Not Implemented! Will delete tutor with id : " + Id);
         //await _jsModule.InvokeVoidAsync("showAlert", "JS function called from .NET");
+    }
+
+    async Task SelectBusiness(ChangeEventArgs e)
+    {
+        int businessId = Convert.ToInt32(e.Value);
+
+        // await BusinessService.GetBusinesses();
+
+        var selectedBusiness = BusinessService.Businesses.FirstOrDefault(x => x.BusinessId == businessId);
+
+        await JS.InvokeVoidAsync("alert", "Not Implemented! Will delete tutor with id : " + selectedBusiness.Name);
+
+        tutor.Business = selectedBusiness;
+
+        tutor.BusinessId = selectedBusiness.BusinessId;
+
     }
 }

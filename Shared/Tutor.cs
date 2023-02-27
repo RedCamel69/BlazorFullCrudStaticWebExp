@@ -39,7 +39,7 @@ namespace BlazorEcommerceStaticWebApp.Shared
         [Phone]
         public string? MobilePhone { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="Please select a business")]
        public int? BusinessId { get; set; }
 
         public Business Business { get; set; }  

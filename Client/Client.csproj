@@ -25,4 +25,10 @@
     <None Include="wwwroot\images\product\atari-vcs.jpg" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="wwwroot\scripts\Helper.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>
