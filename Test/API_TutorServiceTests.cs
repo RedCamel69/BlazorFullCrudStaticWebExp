@@ -72,7 +72,7 @@ namespace Test
             var tutors = service.GetTutors();
 
             Assert.Contains("ServiceResponse", tutors.GetType().Name);
-            Assert.True(tutors.Data.Count==3);
+            Assert.True(tutors.Data.Count == 3);
             Assert.True(tutors.Data.FirstOrDefault().FirstName == "Tutor 1 FName");
 
         }
@@ -125,7 +125,7 @@ namespace Test
             mockSet.As<IQueryable<Tutor>>().Setup(m => m.ElementType).Returns(data.AsQueryable().ElementType);
             mockSet.As<IQueryable<Tutor>>().Setup(m => m.GetEnumerator()).Returns(() => data.AsQueryable().GetEnumerator());
 
-           
+
             var mockContext = new Mock<ApplicationDbContext>();
 
             mockSet.Setup(m => m.Remove(It.IsAny<Tutor>())).Callback<Tutor>(s =>
@@ -133,7 +133,7 @@ namespace Test
                 data.Remove(data.Find(t => t.Id == s.Id));
             });
 
-         
+
 
             mockContext.Setup(t => t.Tutors).Returns(mockSet.Object);
 
@@ -172,7 +172,7 @@ namespace Test
 
             var mockContext = new Mock<ApplicationDbContext>();
 
-            
+
 
             mockContext.Setup(t => t.Tutors).Returns(mockSet.Object);
 
@@ -184,9 +184,9 @@ namespace Test
 
             Assert.Contains("ServiceResponse", res.GetType().Name);
             Assert.True(deletedTutor == null);
-            Assert.True(remainingTutor !=null);
-            Assert.True(tutorsLeft.Count==2);
+            Assert.True(remainingTutor != null);
+            Assert.True(tutorsLeft.Count == 2);
 
         }
     }
-} 
+}

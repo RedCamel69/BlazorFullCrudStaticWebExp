@@ -1,6 +1,5 @@
 using BlazorEcommerceStaticWebApp.Shared;
 using Microsoft.EntityFrameworkCore;
-using System;
 
 namespace BlazorEcommerceStaticWebApp.Api.Data;
 
@@ -13,7 +12,7 @@ public class ApplicationDbContext : DbContext
 
     public virtual DbSet<Business> Businesses { get; set; }
 
-    
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         if (!optionsBuilder.IsConfigured)
@@ -49,7 +48,7 @@ public class ApplicationDbContext : DbContext
         //        ProtopageUrl = "https://www.protopage.co,/demo1", 
         //        BusinessId = 1});
 
-        
+
     }
 }
 

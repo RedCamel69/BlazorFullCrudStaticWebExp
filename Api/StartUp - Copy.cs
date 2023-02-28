@@ -1,10 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
+﻿using BlazorEcommerceStaticWebApp.Api.Data;
 using Microsoft.Azure.Functions.Extensions.DependencyInjection;
-using BlazorEcommerceStaticWebApp.Api.Data;
-using System.IO;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using System;
-using Microsoft.Extensions.Logging;
+using System.IO;
 
 [assembly: FunctionsStartup(typeof(BlazorEcommerceStaticWebApp.Api.StartUp))]
 namespace BlazorEcommerceStaticWebApp.Api
@@ -23,7 +22,7 @@ namespace BlazorEcommerceStaticWebApp.Api
         public override void Configure(IFunctionsHostBuilder builder)
         {
 
-           
+
 
             //bool isDevEnv = Environment.GetEnvironmentVariable("AZURE_FUNCTIONS_ENVIRONMENT") == DevEnvValue ? true : false;
 
@@ -34,11 +33,11 @@ namespace BlazorEcommerceStaticWebApp.Api
 
             // if (isDevEnv)
             // {
-                builder.Services.AddDbContext<ApplicationDbContext>(options =>
-                {
-                    Console.WriteLine("Dev dbContext");
-                    options.UseSqlite(Utils.GetSQLiteConnectionString());
-                });
+            builder.Services.AddDbContext<ApplicationDbContext>(options =>
+            {
+                Console.WriteLine("Dev dbContext");
+                options.UseSqlite(Utils.GetSQLiteConnectionString());
+            });
             //}
             //else
             //{

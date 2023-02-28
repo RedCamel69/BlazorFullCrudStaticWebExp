@@ -1,9 +1,9 @@
-using Microsoft.AspNetCore.Components.Web;
-using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using BlazorEcommerceStaticWebApp.Client;
+using BlazorEcommerceStaticWebApp.Client.Services.BusinessService;
 using BlazorEcommerceStaticWebApp.Client.Services.ProductService;
 using BlazorEcommerceStaticWebApp.Client.Services.TutorService;
-using BlazorEcommerceStaticWebApp.Client.Services.BusinessService;
+using Microsoft.AspNetCore.Components.Web;
+using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");

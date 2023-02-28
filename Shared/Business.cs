@@ -15,6 +15,6 @@ namespace BlazorEcommerceStaticWebApp.Shared
         [StringLength(100)]
         public string? Name { get; set; }
 
-       // public ICollection<Tutor>? Tutors { get; set; }
+        // public ICollection<Tutor>? Tutors { get; set; }
     }
 }

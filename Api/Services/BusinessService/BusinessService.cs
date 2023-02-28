@@ -1,10 +1,8 @@
 ﻿using BlazorEcommerceStaticWebApp.Api.Data;
 using BlazorEcommerceStaticWebApp.Shared;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Api.Services.BusinessService
@@ -37,10 +35,10 @@ namespace Api.Services.BusinessService
             {
                 response.Success = false;
                 response.Data = null;
-                response.Message = ex.Message;  
+                response.Message = ex.Message;
             }
 
-           
+
 
             return response;
         }
@@ -49,7 +47,7 @@ namespace Api.Services.BusinessService
         {
             var response = new ServiceResponse<List<Business>>
             {
-                Data = _context.Businesses                           
+                Data = _context.Businesses
                            .ToList()
             };
 

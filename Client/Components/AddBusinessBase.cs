@@ -8,7 +8,7 @@ namespace BlazorEcommerceStaticWebApp.Client.Components
     public class AddBusinessBase : ComponentBase
     {
         protected Business? business { get; set; }
-       
+
         protected bool ShowAddBusinessBase { get; set; }
 
         [Parameter]
@@ -27,12 +27,12 @@ namespace BlazorEcommerceStaticWebApp.Client.Components
         [Parameter]
         public EventCallback<bool> AddBusinessChanged { get; set; }
 
-       // [Parameter]
-       // public Business NewBusiness { get; set; }
+        // [Parameter]
+        // public Business NewBusiness { get; set; }
 
         protected virtual async Task OnConfirmationChange(bool value, Business business = null)
         {
-                    
+
             ShowAddBusinessBase = false;
             //NewBusiness = business;
             await AddBusinessChanged.InvokeAsync(true);

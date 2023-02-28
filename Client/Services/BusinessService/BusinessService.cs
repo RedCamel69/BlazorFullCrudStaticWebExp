@@ -1,8 +1,6 @@
-﻿using BlazorEcommerceStaticWebApp.Client.Pages;
-using BlazorEcommerceStaticWebApp.Shared;
+﻿using BlazorEcommerceStaticWebApp.Shared;
 using Microsoft.AspNetCore.Components;
 using System.Net.Http.Json;
-using static System.Net.WebRequestMethods;
 
 namespace BlazorEcommerceStaticWebApp.Client.Services.BusinessService
 {
@@ -13,7 +11,7 @@ namespace BlazorEcommerceStaticWebApp.Client.Services.BusinessService
 
         public event Action BusinessesChanged;
 
-        public BusinessService(HttpClient http, NavigationManager navigationManger) 
+        public BusinessService(HttpClient http, NavigationManager navigationManger)
         {
             _http = http;
             _navigationManger = navigationManger;
@@ -24,7 +22,7 @@ namespace BlazorEcommerceStaticWebApp.Client.Services.BusinessService
         public async Task CreateBusiness(Business business)
         {
             await _http.PostAsJsonAsync("api/business", business);
-          //  _navigationManger.NavigateTo("tutors");
+            //  _navigationManger.NavigateTo("tutors");
         }
 
         public async Task GetBusinesses()
@@ -36,7 +34,7 @@ namespace BlazorEcommerceStaticWebApp.Client.Services.BusinessService
 
             if (res != null && res.Data != null)
                 Businesses = res.Data;
-        
+
             BusinessesChanged.Invoke();
         }
     }

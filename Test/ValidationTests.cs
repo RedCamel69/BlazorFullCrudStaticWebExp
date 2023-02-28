@@ -6,14 +6,14 @@ namespace Test
     public class ValidationTests
     {
 
-     
+
 
         [Fact]
         public void Protopage_Validation_Returns_False_If_Protopage_Missing_From_Url()
         {
 
             // arrange
-            var value= "https://microsoft.com";
+            var value = "https://microsoft.com";
             var attrib = new ProtopageUrlAttribute();
 
             // act
@@ -46,4 +46,4 @@ namespace Test
 
 
     }
-} 
+}

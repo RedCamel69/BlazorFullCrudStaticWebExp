@@ -1,16 +1,12 @@
-using System;
-using System.IO;
-using System.Threading.Tasks;
+using Api.Services.BusinessService;
+using BlazorEcommerceStaticWebApp.Shared;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using Microsoft.EntityFrameworkCore;
-
-using Api.Services.BusinessService;
-using BlazorEcommerceStaticWebApp.Shared;
+using System.Threading.Tasks;
 
 namespace Api.Functions
 {
@@ -33,7 +29,7 @@ namespace Api.Functions
             return new OkObjectResult(_businessService.GetBusinesses());
         }
 
-      
+
 
         [FunctionName("CreateBusiness")]
         public async Task<IActionResult> CreateBusiness(
@@ -42,14 +38,14 @@ namespace Api.Functions
         {
             string result = await req.ReadAsStringAsync();
 
-            var j=  JsonConvert.DeserializeObject<Business>(result);
-    
+            var j = JsonConvert.DeserializeObject<Business>(result);
+
             log.LogInformation("C# HTTP POST trigger function processed api/business request.");
 
             return new OkObjectResult(await _businessService.CreateBusiness(j));
         }
 
 
-      
+
     }
 }

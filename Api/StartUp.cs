@@ -1,12 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Azure.Functions.Extensions.DependencyInjection;
-using BlazorEcommerceStaticWebApp.Api.Data;
-using System.IO;
-using System;
-using Microsoft.Extensions.Logging;
+﻿using Api.Services.BusinessService;
 using Api.Services.TutorService;
-using Api.Services.BusinessService;
+using BlazorEcommerceStaticWebApp.Api.Data;
+using Microsoft.Azure.Functions.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.IO;
 
 [assembly: FunctionsStartup(typeof(BlazorEcommerceStaticWebApp.Api.StartUp))]
 namespace BlazorEcommerceStaticWebApp.Api
@@ -14,7 +13,7 @@ namespace BlazorEcommerceStaticWebApp.Api
     public class StartUp : FunctionsStartup
     {
 
-      
+
 
         public override void Configure(IFunctionsHostBuilder builder)
         {
@@ -63,7 +62,7 @@ namespace BlazorEcommerceStaticWebApp.Api
             //    //           //.UseLoggerFactory(s.GetRequiredService<ILoggerFactory>())
             //    //           );
 
-       
+
             builder.Services.AddScoped<ITutorService, TutorService>();
             builder.Services.AddScoped<IBusinessService, BusinessService>();
 

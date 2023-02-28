@@ -1,5 +1,4 @@
 ﻿using BlazorEcommerceStaticWebApp.Shared;
-using System.Net.NetworkInformation;
 using System.ServiceModel.Syndication;
 using System.Xml;
 
@@ -29,7 +28,7 @@ namespace BlazorEcommerceStaticWebApp.Client.Services.NewsService
 
                 return _newsItems;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return new List<NewsItem>();
             }

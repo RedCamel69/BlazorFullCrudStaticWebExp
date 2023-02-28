@@ -1,16 +1,12 @@
-using System;
-using System.IO;
-using System.Threading.Tasks;
+using Api.Services.TutorService;
+using BlazorEcommerceStaticWebApp.Shared;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using Microsoft.EntityFrameworkCore;
-
-using Api.Services.TutorService;
-using BlazorEcommerceStaticWebApp.Shared;
+using System.Threading.Tasks;
 
 namespace Api.Functions
 {
@@ -51,11 +47,11 @@ ILogger log)
         {
             string result = await req.ReadAsStringAsync();
 
-            var j=  JsonConvert.DeserializeObject<Tutor>(result);
-    
+            var j = JsonConvert.DeserializeObject<Tutor>(result);
+
             log.LogInformation("C# HTTP POST trigger function processed api/tutor request.");
 
-             return new OkObjectResult(_tutorService.CreateTutor(j));
+            return new OkObjectResult(_tutorService.CreateTutor(j));
         }
 
 
@@ -79,7 +75,7 @@ ILogger log)
             return new OkObjectResult(_tutorService.UpdateTutor(j));
         }
 
-       
+
         [FunctionName("DeleteTutor")]
         public async Task<IActionResult> DeleteTutor(
           [HttpTrigger(AuthorizationLevel.Anonymous, "delete", Route = "tutor/{tutorId:int}")] HttpRequest req,
@@ -90,7 +86,7 @@ ILogger log)
             log.LogInformation("C# HTTP DELETE trigger function processed api/tutor request.");
             return new OkObjectResult(await _tutorService.DeleteTutorAsync(tutorId));
         }
-           
+
 
     }
 }

@@ -23,9 +23,9 @@ namespace BlazorEcommerceStaticWebApp.Client.Services.TutorService
 
         public async Task GetTutors()
         {
-            var res = 
+            var res =
                 await _http.GetFromJsonAsync<ServiceResponse<List<Tutor>>>("api/Tutors");
-           
+
 
 
             if (res != null && res.Data != null)
@@ -52,7 +52,7 @@ namespace BlazorEcommerceStaticWebApp.Client.Services.TutorService
             var result = await _http.GetAsync($"api/tutor/{id}");
             if (result.StatusCode == HttpStatusCode.OK)
             {
-                var result2=  await result.Content.ReadFromJsonAsync<ServiceResponse<Tutor>>();
+                var result2 = await result.Content.ReadFromJsonAsync<ServiceResponse<Tutor>>();
                 return result2.Data;
             }
             return null;
@@ -60,8 +60,8 @@ namespace BlazorEcommerceStaticWebApp.Client.Services.TutorService
 
         public async Task CreateTutor(Tutor tutor)
         {
-                await _http.PostAsJsonAsync("api/tutor", tutor);
-                _navigationManger.NavigateTo("tutors");
+            await _http.PostAsJsonAsync("api/tutor", tutor);
+            _navigationManger.NavigateTo("tutors");
         }
 
         public async Task UpdateTutor(Tutor tutor)

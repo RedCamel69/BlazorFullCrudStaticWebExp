@@ -1,6 +1,5 @@
 ﻿using BlazorEcommerceStaticWebApp.Shared;
 using System.Net.Http.Json;
-using static System.Net.WebRequestMethods;
 
 namespace BlazorEcommerceStaticWebApp.Client.Services.ProductService
 {
@@ -84,7 +83,7 @@ namespace BlazorEcommerceStaticWebApp.Client.Services.ProductService
             if (Products.Count == 0) Message = "No Products Found";
 
             // todo reinsert event
-            ProductsChanged.Invoke();  
+            ProductsChanged.Invoke();
         }
 
         public Task<Product> UpdateProduct(Product product)

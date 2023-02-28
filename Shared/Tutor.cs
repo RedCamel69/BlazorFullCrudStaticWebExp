@@ -1,11 +1,6 @@
 ﻿using BlazorEcommerceStaticWebApp.Shared.Validations;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BlazorEcommerceStaticWebApp.Shared
 {
@@ -25,7 +20,7 @@ namespace BlazorEcommerceStaticWebApp.Shared
 
         [Required]
         [Url]
-        [ProtopageUrl(ErrorMessage ="Not a valid Protopage Url")]
+        [ProtopageUrl(ErrorMessage = "Not a valid Protopage Url")]
         public string ProtopageUrl { get; set; }
 
         [Required]
@@ -39,9 +34,9 @@ namespace BlazorEcommerceStaticWebApp.Shared
         [Phone]
         public string? MobilePhone { get; set; }
 
-        [Required(ErrorMessage ="Please select a business")]
-       public int? BusinessId { get; set; }
+        [Required(ErrorMessage = "Please select a business")]
+        public int? BusinessId { get; set; }
 
-        public Business Business { get; set; }  
+        public Business Business { get; set; }
     }
 }
