@@ -6,3 +6,7 @@ export function SetFocusToElement (element)  {
     element.focus();
 };
 
+export function SetBusinessDropDownIndex(index) {
+    document.getElementById("SelectBusiness").selectedIndex = index;
+};
+

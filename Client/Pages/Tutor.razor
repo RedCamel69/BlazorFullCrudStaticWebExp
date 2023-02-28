@@ -76,12 +76,9 @@ else
             }
         </select>
 
-
       @*<InputText  @bind-Value="tutor.Business.Name" class="form-control" />*@
         <ValidationMessage For="@(() => tutor.BusinessId)" />
         <InputNumber id="BusinessId" @bind-Value="tutor.BusinessId" class="form-control" hidden />
-       
-
     </div>
     <br />
     <button type="submit" class="btn btn-primary">@btnText</button>
@@ -150,7 +147,12 @@ else
             DisplayDeleteButton = true;
             var result = await TutorService.GetTutorById((int)Id);
             if (result is not null)
+            {
                 tutor = result;
+
+                //set selected business dropdown
+                //await _jsModule.InvokeVoidAsync("SetBusinessDropDownIndex", tutor.BusinessId);
+            }
             else
                 NavigationManager.NavigateTo("/tutor");
         }
@@ -160,6 +162,22 @@ else
         }
 
 
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        // execute conditionally for loading data, otherwise this will load
+        // every time the page refreshes
+        //if (firstRender)
+        //{
+        //    //set selected business dropdown
+        //    await _jsModule.InvokeVoidAsync("SetBusinessDropDownIndex", tutor.BusinessId);
+        //}
+
+        if (tutor.BusinessId != null)
+        {
+            await _jsModule.InvokeVoidAsync("SetBusinessDropDownIndex", tutor.BusinessId);
+        }
     }
 
     async Task HandleSubmit()
@@ -207,12 +225,8 @@ else
     {
         if (addConfirmed)
         {
-            //    //await JS.InvokeVoidAsync("alert", "Not Implemented!");
-            //    //await TutorService.DeleteTutor(tutor);
-            //    //StateHasChanged();
-            await BusinessService.GetBusinesses();
-
-            await JS.InvokeVoidAsync("SetFocusToElement", SelectBusinessElement);
+            await BusinessService.GetBusinesses();           
+            await _jsModule.InvokeVoidAsync("SetFocusToElement", SelectBusinessElement);
 
         }
 
@@ -222,8 +236,6 @@ else
     {
         AddBusinessModal.Show();
 
-        //  await TutorService.DeleteTutor(tutor);
-
         //js variants
         //await JS.InvokeVoidAsync("NoImplento");
         //await JS.InvokeVoidAsync("alert", "Not Implemented! Will delete tutor with id : " + Id);
@@ -232,17 +244,11 @@ else
 
     async Task SelectBusiness(ChangeEventArgs e)
     {
-        int businessId = Convert.ToInt32(e.Value);
-
-        // await BusinessService.GetBusinesses();
-
+        int businessId = Convert.ToInt32(e.Value);       
         var selectedBusiness = BusinessService.Businesses.FirstOrDefault(x => x.BusinessId == businessId);
-
-        await JS.InvokeVoidAsync("alert", "Not Implemented! Will delete tutor with id : " + selectedBusiness.Name);
-
         tutor.Business = selectedBusiness;
-
         tutor.BusinessId = selectedBusiness.BusinessId;
+
 
     }
 }

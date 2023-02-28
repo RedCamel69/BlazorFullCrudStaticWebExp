@@ -75,6 +75,7 @@ namespace Api.Services.TutorService
             var response = new ServiceResponse<Tutor>
             {
                 Data = _context.Tutors
+                .Include(x => x.Business)
                                 .FirstOrDefault(x => x.Id == Id)
             };
 
