@@ -25,8 +25,8 @@ else
 
     @*<h3>@FormSubmitMessage</h3>*@
     <DataAnnotationsValidator/>
-     <ValidationSummary/>
-     
+    <ValidationSummary/>
+
     <div class="form-group">
         <label for="title">FirstName</label>
         <InputText id="FirstName" @bind-Value="tutor.FirstName" class="form-control" />
@@ -49,7 +49,7 @@ else
                 <span class="input-group-text">@@</span>
             </div>
             <InputText id="Email" @bind-Value="tutor.Email" class="form-control" type="email" />
-          
+
         </div>
         <ValidationMessage For="@(() => tutor.Email)" />
     </div>
@@ -64,10 +64,10 @@ else
         <ValidationMessage For="@(() => tutor.MobilePhone)" />
     </div>
     <div>
-     <label for="BusinessId">Business</label>
+        <label for="BusinessId">Business</label>
 
         <p>Either select a business from the list or <a @onclick="AddBusiness" class="addBusinessLink">add a new one</a></p>
-        
+
         <select id="SelectBusiness" @ref="SelectBusinessElement" name="number" @onchange="SelectBusiness">
             <option value="">Select a business</option>            
             @foreach (Business b in BusinessService.Businesses)
@@ -76,28 +76,28 @@ else
             }
         </select>
 
-      @*<InputText  @bind-Value="tutor.Business.Name" class="form-control" />*@
+        @*<InputText  @bind-Value="tutor.Business.Name" class="form-control" />*@
         <ValidationMessage For="@(() => tutor.BusinessId)" />
         <InputNumber id="BusinessId" @bind-Value="tutor.BusinessId" class="form-control" hidden />
     </div>
     <br />
     <button type="submit" class="btn btn-primary">@btnText</button>
 
-    @if (DisplayDeleteButton)
-        {
-            <button type="button" class="btn btn-danger"
+    @if (_displayDeleteButton)
+    {
+        <button type="button" class="btn btn-danger"
                     @onclick="DeleteProduct">
-                Delete Tutor
-            </button>
-        }
+            Delete Tutor
+        </button>
+    }
 
 </EditForm>
 
 
-  <Confirm @ref="DeleteConfirmation"
+<Confirm @ref="DeleteConfirmation"
       ConfirmationChanged ="ConfirmDelete_Click"
        ConfirmationMessage=@($"Are you sure you want to delete tutor \"{tutor.FirstName} {tutor.LastName}\" ?")>
-    </Confirm>
+</Confirm>
 
 <AddBusinessRazor @ref="AddBusinessModal" 
     AddBusinessChanged="ConfirmAddBusiness_Click" 
@@ -105,25 +105,24 @@ else
 </AddBusinessRazor>
 
 @code {
+    protected ConfirmBase DeleteConfirmation { get; set; } = new ConfirmBase();
+    protected AddBusinessBase? AddBusinessModal { get; set; }
+    protected ElementReference? SelectBusinessElement;  // set the @ref for attribute
 
-    protected ConfirmBase DeleteConfirmation { get; set; }
-    protected AddBusinessBase AddBusinessModal { get; set; }
-    private bool DisplayDeleteButton { get; set; }
-
-    protected ElementReference SelectBusinessElement;  // set the @ref for attribute
-
+    private bool _displayDeleteButton { get; set; }
+    private IJSObjectReference? _jsModule;
 
     [Parameter]
     public int? Id { get; set; }
 
-    string btnText = string.Empty;
+    private string btnText = string.Empty;
     public string FormSubmitMessage { get; set; } = "Form Data Not Submitted";
     public bool InvalidSubmit { get; set; } = false;
 
-    BlazorEcommerceStaticWebApp.Shared.Tutor tutor =
+    private BlazorEcommerceStaticWebApp.Shared.Tutor tutor =
         new BlazorEcommerceStaticWebApp.Shared.Tutor { };
 
-    private IJSObjectReference _jsModule;
+
 
     protected override void OnInitialized()
     {
@@ -144,21 +143,18 @@ else
     {
         if (Id is not null)
         {
-            DisplayDeleteButton = true;
+            _displayDeleteButton = true;
             var result = await TutorService.GetTutorById((int)Id);
             if (result is not null)
             {
                 tutor = result;
-
-                //set selected business dropdown
-                //await _jsModule.InvokeVoidAsync("SetBusinessDropDownIndex", tutor.BusinessId);
             }
             else
                 NavigationManager.NavigateTo("/tutor");
         }
         else
         {
-            DisplayDeleteButton = false;
+            _displayDeleteButton = false;
         }
 
 
@@ -166,14 +162,6 @@ else
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        // execute conditionally for loading data, otherwise this will load
-        // every time the page refreshes
-        //if (firstRender)
-        //{
-        //    //set selected business dropdown
-        //    await _jsModule.InvokeVoidAsync("SetBusinessDropDownIndex", tutor.BusinessId);
-        //}
-
         if (tutor.BusinessId != null)
         {
             await _jsModule.InvokeVoidAsync("SetBusinessDropDownIndex", tutor.BusinessId);
@@ -200,16 +188,9 @@ else
         InvalidSubmit = true;
     }
 
-    async Task DeleteProduct()
-    {
-        DeleteConfirmation.Show();
-
-        //  await TutorService.DeleteTutor(tutor);
-
-        //js variants
-        //await JS.InvokeVoidAsync("NoImplento");
-        //await JS.InvokeVoidAsync("alert", "Not Implemented! Will delete tutor with id : " + Id);
-        //await _jsModule.InvokeVoidAsync("showAlert", "JS function called from .NET");
+    protected void DeleteProduct() 
+    {        
+        DeleteConfirmation.Show();        
     }
 
     protected async Task ConfirmDelete_Click(bool deleteConfirmed)
@@ -242,12 +223,19 @@ else
         //await _jsModule.InvokeVoidAsync("showAlert", "JS function called from .NET");
     }
 
-    async Task SelectBusiness(ChangeEventArgs e)
+    protected void SelectBusiness(ChangeEventArgs e)
     {
         int businessId = Convert.ToInt32(e.Value);       
         var selectedBusiness = BusinessService.Businesses.FirstOrDefault(x => x.BusinessId == businessId);
-        tutor.Business = selectedBusiness;
-        tutor.BusinessId = selectedBusiness.BusinessId;
+        if (selectedBusiness != null)
+        {
+            tutor.Business = selectedBusiness;
+            tutor.BusinessId = selectedBusiness.BusinessId;
+        }
+        else
+        {
+            //todo diagnostics - error getting business details
+        }
 
 
     }

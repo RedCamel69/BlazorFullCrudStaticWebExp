@@ -6,15 +6,20 @@ namespace BlazorEcommerceStaticWebApp.Shared.Validations
     {
         public override bool IsValid(object value)
         {
-            var urlToInspect = value as string;
-
-            if (urlToInspect.Contains("//www.protopage.com") || (urlToInspect.Contains("//protopage.com")))
+            try
             {
-                return true;
+                var urlToInspect = value as string;
+
+                if (urlToInspect != null)
+                {
+                    if (urlToInspect.Contains("//www.protopage.com") || (urlToInspect.Contains("//protopage.com")))
+                    {
+                        return true;
+                    }
+                }
+                return false;
             }
-
-            return false;
-
+            catch { return false; }
         }
     }
 }
