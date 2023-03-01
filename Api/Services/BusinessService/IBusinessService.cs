@@ -9,5 +9,9 @@ namespace Api.Services.BusinessService
         ServiceResponse<List<Business>> GetBusinesses();
 
         Task<ServiceResponse<Business>> CreateBusiness(Business business);
+
+        Task<ServiceResponse<bool>> DeleteBusinessAsync(int businessId);
+
+        ServiceResponse<bool> DeleteBusiness(int businessId);
     }
 }
