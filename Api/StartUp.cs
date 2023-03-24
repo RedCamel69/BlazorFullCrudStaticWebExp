@@ -1,4 +1,5 @@
 ﻿using Api.Services.BusinessService;
+using Api.Services.StudentService;
 using Api.Services.TutorService;
 using BlazorEcommerceStaticWebApp.Api.Data;
 using Microsoft.Azure.Functions.Extensions.DependencyInjection;
@@ -62,7 +63,7 @@ namespace BlazorEcommerceStaticWebApp.Api
             //    //           //.UseLoggerFactory(s.GetRequiredService<ILoggerFactory>())
             //    //           );
 
-
+            builder.Services.AddScoped<IStudentService, StudentService>();
             builder.Services.AddScoped<ITutorService, TutorService>();
             builder.Services.AddScoped<IBusinessService, BusinessService>();
 

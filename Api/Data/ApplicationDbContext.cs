@@ -12,6 +12,8 @@ public class ApplicationDbContext : DbContext
 
     public virtual DbSet<Business> Businesses { get; set; }
 
+    public virtual DbSet<Student> Students { get; set; }
+
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -23,6 +25,8 @@ public class ApplicationDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<Student>()
+            .HasKey(x => new { x.StudentId });
 
         modelBuilder.Entity<Business>()
             .HasKey(x => new { x.BusinessId });
