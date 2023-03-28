@@ -1,6 +1,6 @@
-﻿using BlazorEcommerceStaticWebApp.Client.Pages;
-using BlazorEcommerceStaticWebApp.Shared;
+﻿using BlazorEcommerceStaticWebApp.Shared;
 using Microsoft.AspNetCore.Components;
+using System.Net;
 using System.Net.Http.Json;
 using static System.Net.WebRequestMethods;
 
@@ -30,9 +30,21 @@ namespace BlazorEcommerceStaticWebApp.Client.Services.StudentService
             throw new NotImplementedException();
         }
 
-        public Task<Student?> GetStudentById(int id)
+        public async Task<Student?> GetStudentById(int id)
         {
-            throw new NotImplementedException();
+            var result = await _http.GetAsync($"api/student/{id}");
+            if (result.StatusCode == HttpStatusCode.OK)
+            {
+                var serviceRespnse = await result.Content.ReadFromJsonAsync<ServiceResponse<Student>>();
+
+                //todo: Inspect response for errors
+                if(serviceRespnse != null)
+                {
+                    return serviceRespnse.Data;
+                }
+            }
+
+            return null;
         }
 
         public async Task GetStudents()

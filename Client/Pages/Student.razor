@@ -1,0 +1,52 @@
+﻿@page "/student"
+@page "/student/{id:int}"
+
+@using BlazorEcommerceStaticWebApp.Client.Services.StudentService;
+@using BlazorEcommerceStaticWebApp.Shared;
+
+@inject IStudentService StudentService
+
+@if (Id is null)
+{
+    <PageTitle>Create a new Student</PageTitle>
+    <h3>Create a new Student</h3>
+}
+else
+{
+    <PageTitle>Edit @student.FirstName @student.FirstName </PageTitle>
+    <h3>Edit @student.FirstName @student.LastName </h3>
+}
+
+@student.FirstName
+
+@code {
+
+    [Parameter]
+    public int? Id { get; set; }
+
+    private string btnText = string.Empty;
+    private BlazorEcommerceStaticWebApp.Shared.Student student = new BlazorEcommerceStaticWebApp.Shared.Student { };
+
+    protected override void OnInitialized()
+    {
+        btnText = Id == null ? "Save New Student" : "Update Student";
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (Id is not null)
+        {
+            var result = await StudentService.GetStudentById((int)Id);
+            if (result is not null)
+            {
+                student = result;
+            }          
+        }
+        else
+        {
+           
+        }
+
+
+    }
+}
