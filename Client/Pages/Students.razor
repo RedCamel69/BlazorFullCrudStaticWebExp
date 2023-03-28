@@ -1,0 +1,100 @@
+﻿@inject IStudentService StudentService
+@inject NavigationManager NavigationManager
+
+@page "/students"
+@using BlazorEcommerceStaticWebApp.Client.Services.StudentService;
+@using BlazorEcommerceStaticWebApp.Shared
+
+@inject HttpClient Http
+
+<div class="align-content-xl-around">
+
+    <div class="table-title">
+          <div class="row">
+            <div class="col-sm-6">
+                <h2>Manage <b>Students</b></h2>
+            </div>
+         @*   <div class="col-sm-6">
+                <a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i class="material-icons"></i> <span>Add New Tutor</span></a>
+                <a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons"></i> <span>Delete</span></a>
+           </div>*@
+        </div>
+    </div>
+    <div class="table-responsive">
+
+        <table class="table table-striped table-hover table-bordered">
+    <thead>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>School</th>       
+            <th></th>
+        </tr>
+    </thead>
+
+            @if (StudentService.Students== null || StudentService.Students.Count == 0)
+            {
+                <img src="images/Loading_2.gif">
+            }
+            else
+            {
+                <tbody>
+
+                    @foreach (var student in StudentService.Students)
+                    {
+                        <tr>
+                            <td>@student.FirstName</td>
+                            <td>@student.LastName </td>
+                            <td>@student.School</td>
+                            <td>
+                                <button class="btn btn-primary"
+                                @onclick="(() => ShowStudent(student.StudentId))">
+                                    <i class="oi oi-pencil"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+
+            }
+</table>
+<button class="btn btn-primary"
+        @onclick="CreateNewStudent">
+    Create New Student
+</button>
+
+    </div>
+</div>
+
+
+@code {
+
+    
+
+    protected override void OnInitialized()
+    {
+        StudentService.StudentsChanged += StateHasChanged;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            await StudentService.GetStudents();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+        }
+    }
+
+    void ShowStudent(int id)
+    {
+        NavigationManager.NavigateTo($"student/{id}");
+    }
+
+    void CreateNewStudent()
+    {
+        NavigationManager.NavigateTo("/student");
+    }
+}

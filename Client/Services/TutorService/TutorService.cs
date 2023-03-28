@@ -7,7 +7,7 @@ namespace BlazorEcommerceStaticWebApp.Client.Services.TutorService
 {
     public class TutorService : ITutorService
     {
-        //
+        
         private readonly HttpClient _http;
         private readonly NavigationManager _navigationManger;
 

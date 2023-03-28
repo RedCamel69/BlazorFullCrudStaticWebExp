@@ -26,6 +26,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="Pages\Students.razor">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </Content>
     <Content Update="wwwroot\scripts\Helper.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
