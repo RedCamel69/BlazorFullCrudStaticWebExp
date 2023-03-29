@@ -23,7 +23,7 @@ else
 
 <EditForm Model="tutor" OnValidSubmit="HandleSubmit" OnInvalidSubmit="HandleInvalidSubmit" Context="CurrentEditContext">
 
-    @*<h3>@FormSubmitMessage</h3>*@
+    <h3>@FormSubmitMessage</h3>
     <DataAnnotationsValidator/>
     <ValidationSummary/>
 
@@ -121,8 +121,6 @@ else
 
     private BlazorEcommerceStaticWebApp.Shared.Tutor tutor =
         new BlazorEcommerceStaticWebApp.Shared.Tutor { };
-
-
 
     protected override void OnInitialized()
     {

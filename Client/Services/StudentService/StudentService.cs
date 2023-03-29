@@ -20,14 +20,16 @@ namespace BlazorEcommerceStaticWebApp.Client.Services.StudentService
             _http = http;
             _navigationManger = navigationManger;
         }
-        public Task CreateStudent(Student student)
+        public async Task CreateStudent(Student student)
         {
-            throw new NotImplementedException();
+            await _http.PostAsJsonAsync("api/student", student);
+            _navigationManger.NavigateTo("students");
         }
 
-        public Task DeleteStudent(Student student)
-        {
-            throw new NotImplementedException();
+        public async Task DeleteStudent(Student student)
+        {            
+            await _http.DeleteAsync($"api/student/{student.StudentId}");
+            _navigationManger.NavigateTo("students");
         }
 
         public async Task<Student?> GetStudentById(int id)

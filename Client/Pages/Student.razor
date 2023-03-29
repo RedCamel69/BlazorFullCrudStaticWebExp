@@ -1,6 +1,7 @@
 ﻿@page "/student"
 @page "/student/{id:int}"
 
+@using BlazorEcommerceStaticWebApp.Client.Components;
 @using BlazorEcommerceStaticWebApp.Client.Services.StudentService;
 @using BlazorEcommerceStaticWebApp.Shared;
 
@@ -17,25 +18,71 @@ else
     <h3>Edit @student.FirstName @student.LastName </h3>
 }
 
-@student.FirstName
+<EditForm Model="student" OnValidSubmit="HandleSubmit" OnInvalidSubmit="HandleInvalidSubmit" Context="CurrentEditContext">
+    
+    @*<h3>@FormSubmitMessage</h3>*@
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="form-group">
+        <label for="title">FirstName</label>
+        <InputText id="FirstName" @bind-Value="student.FirstName" class="form-control" />
+        <ValidationMessage For="@(() => student.FirstName)" />
+    </div>
+
+    <div class="form-group">
+        <label for="title">LastName</label>
+        <InputText id="FirstName" @bind-Value="student.LastName" class="form-control" />
+        <ValidationMessage For="@(() => student.LastName)" />
+    </div>
+
+    <div class="form-group">
+        <label for="title">School</label>
+        <InputText id="FirstName" @bind-Value="student.School" class="form-control" />
+        <ValidationMessage For="@(() => student.School)" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">@_btnText</button>
+
+    @if (_displayDeleteButton)
+    {
+        <button type="button" class="btn btn-danger"
+            @onclick="DeleteStudent">
+            Delete Student
+        </button>
+    }
+   </EditForm>
+
+<h2>@FormSubmitMessage</h2>
+
+<Confirm @ref="DeleteConfirmation"
+         ConfirmationChanged="ConfirmDelete_Click"
+         ConfirmationMessage=@($"Are you sure you want to delete student \"{student.FirstName} {student.LastName}\" ?")>
+</Confirm>
 
 @code {
 
     [Parameter]
     public int? Id { get; set; }
 
-    private string btnText = string.Empty;
+    protected ConfirmBase DeleteConfirmation { get; set; } = new ConfirmBase();
+
+    private string _btnText = string.Empty;
     private BlazorEcommerceStaticWebApp.Shared.Student student = new BlazorEcommerceStaticWebApp.Shared.Student { };
+    private bool InvalidSubmit;
+    private string? FormSubmitMessage;
+    private bool _displayDeleteButton { get; set; }
 
     protected override void OnInitialized()
     {
-        btnText = Id == null ? "Save New Student" : "Update Student";
+        _btnText = Id == null ? "Save New Student" : "Update Student";
     }
 
     protected override async Task OnParametersSetAsync()
     {
         if (Id is not null)
         {
+            _displayDeleteButton = true;
             var result = await StudentService.GetStudentById((int)Id);
             if (result is not null)
             {
@@ -44,9 +91,56 @@ else
         }
         else
         {
-           
+
         }
+    }
+
+    async Task HandleSubmit()
+    {
+        try
+        {
+            InvalidSubmit = false;
+
+            if (Id is null)
+            {
+                await StudentService.CreateStudent(student);
+            }
+            else
+            {
+                await StudentService.UpdateStudent(student);
+            }
+        }
+        catch(Exception ex)
+        {
+            FormSubmitMessage = "Error Updating / Creating Student";
+        }
+    }
+
+    public void HandleInvalidSubmit()
+    {
+        FormSubmitMessage = "Invalid Data Submitted";
+        InvalidSubmit = true;
+    }
+
+    protected void DeleteStudent()
+    {
+        DeleteConfirmation.Show();
+    }
 
 
+
+    protected async Task ConfirmDelete_Click(bool deleteConfirmed)
+    {
+        try
+        {
+            if (deleteConfirmed)
+            {
+                await StudentService.DeleteStudent(student);
+            }
+        }
+        catch (Exception ex)
+        {
+            FormSubmitMessage = "Error Deleting Student";
+        }
     }
 }
