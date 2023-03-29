@@ -75,9 +75,10 @@ namespace BlazorEcommerceStaticWebApp.Client.Services.StudentService
             StudentsChanged.Invoke();
         }
 
-        public Task UpdateStudent(Student student)
+        public async Task UpdateStudent(Student student)
         {
-            throw new NotImplementedException();
+            await _http.PutAsJsonAsync("api/student", student);
+            _navigationManger.NavigateTo("students");
         }
     }
 }
