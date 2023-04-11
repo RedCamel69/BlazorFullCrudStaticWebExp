@@ -14,6 +14,8 @@ public class ApplicationDbContext : DbContext
 
     public virtual DbSet<Student> Students { get; set; }
 
+    public virtual DbSet<Language> Languages { get; set; }
+
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -51,6 +53,28 @@ public class ApplicationDbContext : DbContext
         //        Phone = "0161 454545", 
         //        ProtopageUrl = "https://www.protopage.co,/demo1", 
         //        BusinessId = 1});
+
+        modelBuilder.Entity<Language>()
+                    .HasData(
+            new Language()
+            {
+                LanguageId=1,
+                Name="English",
+                Code="en"
+            },
+            new Language()
+            {
+                LanguageId = 2,
+                Name = "French",
+                Code="fr"
+            },
+            new Language()
+            {
+                LanguageId = 3,
+                Name = "Spanish",
+                Code = "sp"
+            }
+            );
 
 
     }

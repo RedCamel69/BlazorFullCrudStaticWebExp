@@ -15,6 +15,10 @@ public class Student
     [Required]
     public string LastName { get; set; }
 
+    public string NickName { get; set; }
+
+    public int? LanguageId { get; set; }
+
     [Required]
     public string School { get; set; }
 }
