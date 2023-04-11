@@ -27,8 +27,49 @@ public class ApplicationDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<Language>()
+            .HasData(
+                new Language()
+                {
+                    LanguageId = 1,
+                    Name = "English",
+                    Code = "en"
+                },
+                new Language()
+                {
+                    LanguageId = 2,
+                    Name = "French",
+                    Code = "fr"
+                },
+                new Language()
+                {
+                    LanguageId = 3,
+                    Name = "Spanish",
+                    Code = "sp"
+                }
+                        );
+      
         modelBuilder.Entity<Student>()
             .HasKey(x => new { x.StudentId });
+
+        modelBuilder.Entity<Student>()
+                    .HasData(
+            new Student()
+            {
+                StudentId=1,
+                LanguageId=1,
+                FirstName = "Bill",
+                LastName = "Smith",
+                NickName="Forest"
+            },
+                new Student()
+                {
+                    StudentId = 2,
+                    LanguageId = 1,
+                    FirstName = "Arnold",
+                    LastName = "Jones",
+                    NickName = "Arnie"
+                });
 
         modelBuilder.Entity<Business>()
             .HasKey(x => new { x.BusinessId });
@@ -54,27 +95,7 @@ public class ApplicationDbContext : DbContext
         //        ProtopageUrl = "https://www.protopage.co,/demo1", 
         //        BusinessId = 1});
 
-        modelBuilder.Entity<Language>()
-                    .HasData(
-            new Language()
-            {
-                LanguageId=1,
-                Name="English",
-                Code="en"
-            },
-            new Language()
-            {
-                LanguageId = 2,
-                Name = "French",
-                Code="fr"
-            },
-            new Language()
-            {
-                LanguageId = 3,
-                Name = "Spanish",
-                Code = "sp"
-            }
-            );
+
 
 
     }
