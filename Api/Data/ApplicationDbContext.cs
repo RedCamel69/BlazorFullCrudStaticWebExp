@@ -57,6 +57,7 @@ public class ApplicationDbContext : DbContext
             new Student()
             {
                 StudentId=1,
+                 School= "Green Fields Comp",
                 LanguageId=1,
                 FirstName = "Bill",
                 LastName = "Smith",
@@ -65,6 +66,7 @@ public class ApplicationDbContext : DbContext
                 new Student()
                 {
                     StudentId = 2,
+                    School = "Green Fields Comp",
                     LanguageId = 1,
                     FirstName = "Arnold",
                     LastName = "Jones",
