@@ -132,7 +132,9 @@ namespace Api.Services.StudentService
             var response = new ServiceResponse<List<Student>>();
             try
             {
-                response.Data = _context.Students.ToList();
+                response.Data = _context.Students
+                    .Include(x=>x.Language)
+                    .ToList();
                 response.Success = true;
                 response.Message = "Students successfully retrieved";
             }

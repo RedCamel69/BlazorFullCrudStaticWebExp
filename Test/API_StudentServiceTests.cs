@@ -25,7 +25,7 @@ namespace Test
         {
             var data = new List<Student>
             {
-                new Student { StudentId=1, FirstName="John", LastName="Lennon", School="School 1"},
+                new Student { StudentId=1, FirstName="John", LastName="Lennon", School="School 1", Language = new BlazorEcommerceStaticWebApp.Shared.Language(){ LanguageId=1, Name="English", Code="en" }, LanguageId= 1, NickName="Test Nick Name" },
                 new Student { StudentId=2, FirstName="Paul", LastName="McCartney", School="School 2"},
                 new Student { StudentId=3, FirstName="Ringo", LastName="Starr", School="School 1"},
                 new Student { StudentId=4, FirstName="George", LastName="Harrison", School="School 1"}
@@ -84,6 +84,23 @@ namespace Test
             Assert.Contains("ServiceResponse", students.GetType().Name);
             Assert.True(students.Data.Count == 4);
             Assert.True(students.Data.FirstOrDefault().FirstName == "John");           
+        }
+
+        [Fact]
+        public void GetStudents_Returns_Students_With_Language()
+        {
+
+            //arrange
+            Mock<ApplicationDbContext> mockContext = BuildMockContext();
+            var service = new StudentService(mockContext.Object);
+
+            //act
+            var students = service.GetStudents();
+
+            //assert
+            Assert.True(students.Data.Count == 4);
+            Assert.True(students.Data.FirstOrDefault().LanguageId == 1);
+            Assert.True(students.Data.FirstOrDefault().Language != null);
         }
 
         [Fact]
@@ -199,7 +216,9 @@ namespace Test
             {
                 FirstName = "Test",
                 LastName = "Student 1",
-                School = "Test School"
+                School = "Test School",
+                 NickName= "Test",
+                 LanguageId=1
             };
 
             //act
