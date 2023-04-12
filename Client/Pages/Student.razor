@@ -3,9 +3,11 @@
 
 @using BlazorEcommerceStaticWebApp.Client.Components;
 @using BlazorEcommerceStaticWebApp.Client.Services.StudentService;
+@using BlazorEcommerceStaticWebApp.Client.Services.LanguageService;
 @using BlazorEcommerceStaticWebApp.Shared;
 
 @inject IStudentService StudentService
+@inject ILanguageService LanguageService
 
 @if (Id is null)
 {
@@ -49,8 +51,17 @@ else
     </div>
 
     <div class="form-group">
-        <label for="Language">School</label>
+        <label for="Language">Language</label>
         <InputNumber id="Language" @bind-Value="student.LanguageId" class="form-control" />
+
+        <select id="SelectLanguage" @ref="SelectLanguageElement" name="number" @onchange="SelectLanguage">
+            <option value="">Select a language</option>
+            @foreach (Language l in LanguageService.Languages)
+            {
+                <option value="@l.LanguageId">@l.Name</option>
+            }
+        </select>
+
         <ValidationMessage For="@(() => student.LanguageId)" />
     </div>
 
@@ -79,6 +90,7 @@ else
 
     protected ConfirmBase DeleteConfirmation { get; set; } = new ConfirmBase();
 
+    protected ElementReference? SelectLanguageElement;  // set the @ref for attribute
     private string _btnText = string.Empty;
     private BlazorEcommerceStaticWebApp.Shared.Student student = new BlazorEcommerceStaticWebApp.Shared.Student { };
     private bool InvalidSubmit;
@@ -87,7 +99,15 @@ else
 
     protected override void OnInitialized()
     {
+
         _btnText = Id == null ? "Save New Student" : "Update Student";
+        LanguageService.LanguagesChanged += StateHasChanged;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LanguageService.GetLanguages();
+
     }
 
     protected override async Task OnParametersSetAsync()
@@ -154,5 +174,21 @@ else
         {
             FormSubmitMessage = "Error Deleting Student";
         }
+    }
+
+    protected void SelectLanguage(ChangeEventArgs e)
+    {
+        int languageId = Convert.ToInt32(e.Value);
+        var selectedLanguage = LanguageService.Languages.FirstOrDefault(x => x.LanguageId== languageId);
+        if (selectedLanguage != null)
+        {
+            student.Language = selectedLanguage;
+            student.LanguageId = selectedLanguage.LanguageId;
+        }
+        else
+        {
+            //todo diagnostics - error getting business details
+        }
+        
     }
 }
