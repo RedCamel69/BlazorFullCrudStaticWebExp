@@ -26,6 +26,7 @@ namespace Api.Services.StudentService
 
             try
             {
+                student.Language = null; //ef workaround to stop new language being created
                 _context.Students.Add(student);
 
                 await _context.SaveChangesAsync();
