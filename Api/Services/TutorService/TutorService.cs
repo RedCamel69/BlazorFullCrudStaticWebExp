@@ -128,5 +128,29 @@ namespace Api.Services.TutorService
             _context.SaveChanges();
             return new ServiceResponse<bool> { Data = true };
         }
+
+        public async Task<ServiceResponse<List<Tutor>>> GetTutorsAsync()
+        {
+            var response = new ServiceResponse<List<Tutor>>
+            {
+                Data = await _context.Tutors
+                            .Include(x => x.Business)
+                            .ToListAsync()
+            };
+
+            return response;
+        }
+
+        public async Task<ServiceResponse<Tutor>> GetTutorAsync(int Id)
+        {
+            var response = new ServiceResponse<Tutor>
+            {
+                Data = await _context.Tutors
+                            .Include(x => x.Business)
+                            .FirstOrDefaultAsync(t=>t.Id == Id)
+            };
+
+            return response;
+        }
     }
 }

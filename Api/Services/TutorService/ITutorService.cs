@@ -8,7 +8,11 @@ namespace Api.Services.TutorService
     {
         ServiceResponse<List<Tutor>> GetTutors();
 
+        Task<ServiceResponse<List<Tutor>>> GetTutorsAsync();
+
         ServiceResponse<Tutor> GetTutor(int Id);
+
+        Task<ServiceResponse<Tutor>> GetTutorAsync(int Id);
 
         Task<ServiceResponse<Tutor>> UpdateTutor(Tutor tutor);
 
