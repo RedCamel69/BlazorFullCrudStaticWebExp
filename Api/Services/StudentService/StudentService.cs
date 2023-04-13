@@ -80,22 +80,35 @@ namespace Api.Services.StudentService
 
         public async Task<ServiceResponse<bool>> DeleteStudentAsync(int Id)
         {
-            var dbStudent = await _context.Students.FirstOrDefaultAsync(x => x.StudentId == Id);
-            if (dbStudent == null)
+            var response = new ServiceResponse<bool>();
+            try
             {
-                return new ServiceResponse<bool>
+                var dbStudent = await _context.Students.FirstOrDefaultAsync(x => x.StudentId == Id);
+                if (dbStudent == null)
                 {
-                    Success = false,
-                    Data = false,
-                    Message = "Student not found."
-                };
+                    return new ServiceResponse<bool>
+                    {
+                        Success = false,
+                        Data = false,
+                        Message = "Student not found."
+                    };
+                }
+
+                //dbTutor.Deleted = true;
+                _context.Students.Remove(dbStudent);
+
+                await _context.SaveChangesAsync();
+                response.Success = true;
+                response.Data = true;
+                response.Message = $"Student {dbStudent.StudentId} {dbStudent.FirstName + " " + dbStudent.LastName} deleted.";
             }
-
-            //dbTutor.Deleted = true;
-            _context.Students.Remove(dbStudent);
-
-            await _context.SaveChangesAsync();
-            return new ServiceResponse<bool> { Data = true };
+            catch(Exception ex)
+            {
+                response.Success = false;
+                response.Data = false;
+                response.Message = $"Error deleting student {Id} : {ex.Message} ";
+            }
+            return response;
         }
 
         public ServiceResponse<Student> GetStudent(int Id)

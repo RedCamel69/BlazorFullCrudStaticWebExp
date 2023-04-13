@@ -42,8 +42,6 @@ namespace Api.Services.TutorService
                 response.Message = ex.Message;
             }
 
-
-
             return response;
 
         }
