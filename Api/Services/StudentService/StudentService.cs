@@ -128,6 +128,36 @@ namespace Api.Services.StudentService
             return response;
         }
 
+        public async Task<ServiceResponse<Student>> GetStudentAsync(int Id)
+        {
+            var response = new ServiceResponse<Student>();
+            try
+            {
+                var student = await _context.Students.FirstOrDefaultAsync(x => x.StudentId == Id);
+
+                if (student == null)
+                {
+                    response.Data = student;
+                    response.Success = false;
+                    response.Message = $"Student with id of {Id} could not be found.";
+                }
+                else
+                {
+                    response.Data = student;
+                    response.Success = true;
+                    response.Message = "Students successfully retrieved";
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Data = null;
+                response.Message = "Students could not be retrieved : " + ex.Message;
+                response.Success = false;
+            }
+
+            return response;
+        }
+
         public ServiceResponse<List<Student>> GetStudents()
         {
             var response = new ServiceResponse<List<Student>>();
@@ -140,6 +170,28 @@ namespace Api.Services.StudentService
                 response.Message = "Students successfully retrieved";
             }
             catch(Exception ex)
+            {
+                response.Data = null;
+                response.Message = "Students could not be retrieved : " + ex.Message;
+                response.Success = false;
+            }
+
+            return response;
+
+        }
+
+        public async Task<ServiceResponse<List<Student>>> GetStudentsAsync()
+        {
+            var response = new ServiceResponse<List<Student>>();
+            try
+            {
+                response.Data = await _context.Students
+                    .Include(x => x.Language)
+                    .ToListAsync();
+                response.Success = true;
+                response.Message = "Students successfully retrieved";
+            }
+            catch (Exception ex)
             {
                 response.Data = null;
                 response.Message = "Students could not be retrieved : " + ex.Message;

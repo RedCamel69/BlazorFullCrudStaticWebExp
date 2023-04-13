@@ -11,7 +11,11 @@ namespace Api.Services.StudentService
     {
         ServiceResponse<List<Student>> GetStudents();
 
+        Task<ServiceResponse<List<Student>>> GetStudentsAsync();
+
         ServiceResponse<Student> GetStudent(int Id);
+
+        Task<ServiceResponse<Student>> GetStudentAsync(int Id);
 
         Task<ServiceResponse<Student>> UpdateStudent(Student tutor);
 

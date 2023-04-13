@@ -23,36 +23,34 @@ namespace Api.Functions
         }
 
         [FunctionName("Students")]
-        public IActionResult GetStudents(
-        [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "students")] HttpRequest req,
-        ILogger log)
+        public async Task<IActionResult> GetStudents(
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "students")] HttpRequest req,
+            ILogger log)
         {
             log.LogInformation("C# HTTP GET trigger function processed api/students request.");
-            return new OkObjectResult(_studentService.GetStudents());
+            return new OkObjectResult(await _studentService.GetStudentsAsync());
         }
 
         [FunctionName("Student")]
-        public IActionResult GetStudent(
-[HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "student/{studentId}")] HttpRequest req,
-int studentId,
-ILogger log)
+        public async Task<IActionResult> GetStudent(
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "student/{studentId}")] HttpRequest req,
+            int studentId,
+            ILogger log)
         {
             log.LogInformation("C# HTTP GET trigger function processed api/student request.");
-            return new OkObjectResult(_studentService.GetStudent(studentId));
+            return new OkObjectResult(await _studentService.GetStudentAsync(studentId));
         }
 
         [FunctionName("CreateStudent")]
         public async Task<IActionResult> CreateStudent(
-[HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "student")] HttpRequest req,
-//Tutor tutor,
-ILogger log)
+            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "student")] HttpRequest req,
+            //Tutor tutor,
+            ILogger log)
         {
             string result = await req.ReadAsStringAsync();
-
             var student = JsonConvert.DeserializeObject<Student>(result);
 
             log.LogInformation("C# HTTP POST trigger function processed api/student request.");
-
             return new OkObjectResult(_studentService.CreateStudent(student));
         }
 
