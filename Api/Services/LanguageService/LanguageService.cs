@@ -20,13 +20,14 @@ namespace Api.Services.LanguageService
         public ServiceResponse<List<Language>> GetLanguages()
         {
             var response = new ServiceResponse<List<Language>>();
-            try { 
+            try
+            {
                 response.Data = _context.Languages.ToList<Language>();
                 response.Success = true;
                 response.Message = "Successfully retrieved languages";
 
             }
-            catch ( Exception ex )
+            catch (Exception ex)
             {
                 response.Data = null;
                 response.Success = false;

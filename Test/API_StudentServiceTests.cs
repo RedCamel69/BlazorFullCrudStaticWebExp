@@ -1,12 +1,8 @@
-using Api.Migrations;
 using Api.Services.StudentService;
-using Api.Services.TutorService;
 using BlazorEcommerceStaticWebApp.Api.Data;
 using BlazorEcommerceStaticWebApp.Shared;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Moq;
-using System.Net.Sockets;
 
 
 namespace Test
@@ -66,7 +62,7 @@ namespace Test
 
             //assert
             Assert.Contains("ServiceResponse", students.GetType().Name);
-           
+
         }
 
         [Fact]
@@ -83,7 +79,7 @@ namespace Test
             //assert
             Assert.Contains("ServiceResponse", students.GetType().Name);
             Assert.True(students.Data.Count == 4);
-            Assert.True(students.Data.FirstOrDefault().FirstName == "John");           
+            Assert.True(students.Data.FirstOrDefault().FirstName == "John");
         }
 
         [Fact]
@@ -131,7 +127,7 @@ namespace Test
 
             //assert
             Assert.Contains("Students successfully retrieved", student.Message);
-            Assert.True(student.Success==true);
+            Assert.True(student.Success == true);
             Assert.True(student.Data.StudentId == studentId);
         }
 
@@ -168,7 +164,7 @@ namespace Test
             Assert.Contains("ServiceResponse", res.GetType().Name);
             Assert.True(mockContext.Object.Students.Count() == 3);
             Assert.True(mockContext.Object.Students.FirstOrDefault().FirstName == "John");
-          
+
         }
 
         [Fact]
@@ -217,8 +213,8 @@ namespace Test
                 FirstName = "Test",
                 LastName = "Student 1",
                 School = "Test School",
-                 NickName= "Test",
-                 LanguageId=1
+                NickName = "Test",
+                LanguageId = 1
             };
 
             //act
@@ -226,7 +222,7 @@ namespace Test
 
             //assert
             Assert.Contains("ServiceResponse", res.GetType().Name);
-          
+
         }
 
         [Fact]
@@ -250,7 +246,7 @@ namespace Test
             Assert.Contains("ServiceResponse", res.GetType().Name);
 
         }
-       
+
         [Fact]
         public void Update_Returns_ServiceResponse()
         {
@@ -263,7 +259,7 @@ namespace Test
                 FirstName = "Updated First",
                 LastName = "Updated Last",
                 School = "Updated School",
-                StudentId=1
+                StudentId = 1
             };
 
             //act

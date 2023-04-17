@@ -69,7 +69,7 @@ namespace Api.Services.TutorService
                 response.Data = true;
                 response.Message = $"Tutor {dbTutor.Id} {dbTutor.FirstName + " " + dbTutor.LastName} deleted.";
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 response.Success = false;
                 response.Data = false;
@@ -158,7 +158,7 @@ namespace Api.Services.TutorService
             {
                 Data = await _context.Tutors
                             .Include(x => x.Business)
-                            .FirstOrDefaultAsync(t=>t.Id == Id)
+                            .FirstOrDefaultAsync(t => t.Id == Id)
             };
 
             return response;

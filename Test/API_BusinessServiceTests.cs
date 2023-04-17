@@ -1,8 +1,6 @@
 using Api.Services.BusinessService;
-using Api.Services.TutorService;
 using BlazorEcommerceStaticWebApp.Api.Data;
 using BlazorEcommerceStaticWebApp.Shared;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 
@@ -52,15 +50,15 @@ namespace Test
             //arrange
             Mock<ApplicationDbContext> mockContext = BuildMockContext();
             var service = new BusinessService(mockContext.Object);
-            
+
             //act
             var businesses = service.GetBusinesses();
 
             //assert
-            Assert.Contains("ServiceResponse", businesses.GetType().Name);          
+            Assert.Contains("ServiceResponse", businesses.GetType().Name);
         }
 
-     
+
 
         [Fact]
         public void GetBusiness_Returns_ServiceResponse_Containing_Expected_Businesses()
@@ -68,7 +66,7 @@ namespace Test
             //arrange
             Mock<ApplicationDbContext> mockContext = BuildMockContext();
             var service = new BusinessService(mockContext.Object);
-            
+
             //act
             var businesses = service.GetBusinesses();
 
@@ -84,7 +82,7 @@ namespace Test
             //arrange
             Mock<ApplicationDbContext> mockContext = BuildMockContext();
             var service = new BusinessService(mockContext.Object);
-            
+
             //act
             var res = service.DeleteBusiness(1);
 
@@ -94,7 +92,7 @@ namespace Test
 
         [Fact]
         public void Delete_Returns_ServiceResponse_If_Tutor_Not_Found()
-        {            
+        {
             //arrange
             Mock<ApplicationDbContext> mockContext = BuildMockContext();
             var service = new BusinessService(mockContext.Object);
@@ -114,10 +112,10 @@ namespace Test
             //arrange
             Mock<ApplicationDbContext> mockContext = BuildMockContext();
             var service = new BusinessService(mockContext.Object);
-            
+
             //act
             var res = service.DeleteBusiness(2);
-            var deletedBusiness= mockContext.Object.Businesses.FirstOrDefault(x => x.BusinessId == 2);
+            var deletedBusiness = mockContext.Object.Businesses.FirstOrDefault(x => x.BusinessId == 2);
             var remainingBusiness = mockContext.Object.Businesses.FirstOrDefault(x => x.BusinessId == 1);
 
             //assert
@@ -126,7 +124,7 @@ namespace Test
             Assert.True(remainingBusiness != null);
             Assert.True(mockContext.Object.Businesses.Count() == 2);
 
-            
+
         }
     }
 }

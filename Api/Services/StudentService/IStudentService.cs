@@ -1,14 +1,13 @@
 ﻿using BlazorEcommerceStaticWebApp.Shared;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Api.Services.StudentService
 {
     public interface IStudentService
     {
+
+
         ServiceResponse<List<Student>> GetStudents();
 
         Task<ServiceResponse<List<Student>>> GetStudentsAsync();

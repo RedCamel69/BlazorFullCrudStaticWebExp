@@ -48,7 +48,7 @@ public class ApplicationDbContext : DbContext
                     Code = "sp"
                 }
                         );
-      
+
         modelBuilder.Entity<Student>()
             .HasKey(x => new { x.StudentId });
 
@@ -56,12 +56,12 @@ public class ApplicationDbContext : DbContext
                     .HasData(
             new Student()
             {
-                StudentId=1,
-                 School= "Green Fields Comp",
-                LanguageId=1,
+                StudentId = 1,
+                School = "Green Fields Comp",
+                LanguageId = 1,
                 FirstName = "Bill",
                 LastName = "Smith",
-                NickName="Forest"
+                NickName = "Forest"
             },
                 new Student()
                 {

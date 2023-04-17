@@ -1,12 +1,8 @@
 using Api.Services.LanguageService;
-using Api.Services.StudentService;
-using Api.Services.TutorService;
 using BlazorEcommerceStaticWebApp.Api.Data;
 using BlazorEcommerceStaticWebApp.Shared;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Moq;
-using System.Net.Sockets;
 
 
 namespace Test
@@ -14,7 +10,7 @@ namespace Test
     public class API_LanguageServiceTests
     {
 
-      
+
         private static Mock<ApplicationDbContext> BuildMockContext()
         {
             var data = new List<Language>
@@ -58,7 +54,7 @@ namespace Test
 
             //assert
             Assert.Contains("ServiceResponse", languages.GetType().Name);
-           
+
         }
 
         [Fact]
@@ -75,9 +71,9 @@ namespace Test
             //assert
             Assert.Contains("ServiceResponse", languages.GetType().Name);
             Assert.True(languages.Data.Count == 2);
-            Assert.True(languages.Data.FirstOrDefault().Name == "English");           
+            Assert.True(languages.Data.FirstOrDefault().Name == "English");
         }
 
-        
+
     }
 }

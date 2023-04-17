@@ -1,15 +1,9 @@
-using Api.Migrations;
 using Api.Services.LanguageService;
-using Api.Services.StudentService;
-using Api.Services.TutorService;
-using BlazorEcommerceStaticWebApp.Shared;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
-using System.Threading.Tasks;
 
 namespace Api.Functions
 {
@@ -32,7 +26,7 @@ namespace Api.Functions
             return new OkObjectResult(_languageService.GetLanguages());
         }
 
-        
+
 
     }
 }

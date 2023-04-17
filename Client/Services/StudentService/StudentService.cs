@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Components;
 using System.Net;
 using System.Net.Http.Json;
-using static System.Net.WebRequestMethods;
 
 namespace BlazorEcommerceStaticWebApp.Client.Services.StudentService
 {
@@ -10,10 +9,10 @@ namespace BlazorEcommerceStaticWebApp.Client.Services.StudentService
     {
         private readonly HttpClient _http;
         private readonly NavigationManager _navigationManger;
-       
-        public List<Student> Students { get; set; } = new List<Student>();
 
+        public List<Student> Students { get; set; } = new List<Student>();
         public event Action StudentsChanged;
+        public string Message { get; set; } = "";
 
         public StudentService(HttpClient http, NavigationManager navigationManger)
         {
@@ -27,7 +26,7 @@ namespace BlazorEcommerceStaticWebApp.Client.Services.StudentService
         }
 
         public async Task DeleteStudent(Student student)
-        {            
+        {
             await _http.DeleteAsync($"api/student/{student.StudentId}");
             _navigationManger.NavigateTo("students");
         }
@@ -40,9 +39,17 @@ namespace BlazorEcommerceStaticWebApp.Client.Services.StudentService
                 var serviceRespnse = await result.Content.ReadFromJsonAsync<ServiceResponse<Student>>();
 
                 //todo: Inspect response for errors
-                if(serviceRespnse != null)
+                if (serviceRespnse != null)
                 {
-                    return serviceRespnse.Data;
+                    if (serviceRespnse.Data != null && serviceRespnse.Success == true)
+                    {
+                        return serviceRespnse.Data;
+                    }
+                    else
+                    {
+                        Message = $"Error retrieving student. Service indicates the action failed : {serviceRespnse.Message}";
+                    }
+
                 }
             }
 

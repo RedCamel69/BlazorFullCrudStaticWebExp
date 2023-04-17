@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Api.Services.StudentService
@@ -39,7 +38,7 @@ namespace Api.Services.StudentService
             {
                 response.Success = false;
                 response.Data = null;
-                response.Message = $"Failed to add new tutor. Error {ex.Message }";
+                response.Message = $"Failed to add new tutor. Error {ex.Message}";
             }
 
             return response;
@@ -49,7 +48,8 @@ namespace Api.Services.StudentService
         {
             var response = new ServiceResponse<bool>();
 
-            try {
+            try
+            {
                 var dbStudent = _context.Students.FirstOrDefault(x => x.StudentId == Id);
 
                 if (dbStudent == null)
@@ -58,7 +58,8 @@ namespace Api.Services.StudentService
                     response.Data = false;
                     response.Message = "Student not found.";
                 }
-                else {
+                else
+                {
                     //dbTutor.Deleted = true;
                     _context.Students.Remove(dbStudent);
                     _context.SaveChanges();
@@ -68,7 +69,7 @@ namespace Api.Services.StudentService
                     response.Message = $"Student {dbStudent.StudentId} {dbStudent.FirstName + " " + dbStudent.LastName} deleted.";
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 response.Success = false;
                 response.Data = false;
@@ -102,7 +103,7 @@ namespace Api.Services.StudentService
                 response.Data = true;
                 response.Message = $"Student {dbStudent.StudentId} {dbStudent.FirstName + " " + dbStudent.LastName} deleted.";
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 response.Success = false;
                 response.Data = false;
@@ -146,6 +147,8 @@ namespace Api.Services.StudentService
             var response = new ServiceResponse<Student>();
             try
             {
+                throw new Exception("Test Exception");
+
                 var student = await _context.Students.FirstOrDefaultAsync(x => x.StudentId == Id);
 
                 if (student == null)
@@ -177,12 +180,12 @@ namespace Api.Services.StudentService
             try
             {
                 response.Data = _context.Students
-                    .Include(x=>x.Language)
+                    .Include(x => x.Language)
                     .ToList();
                 response.Success = true;
                 response.Message = "Students successfully retrieved";
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 response.Data = null;
                 response.Message = "Students could not be retrieved : " + ex.Message;
@@ -218,7 +221,7 @@ namespace Api.Services.StudentService
         public async Task<ServiceResponse<Student>> UpdateStudent(Student student)
         {
             var response = new ServiceResponse<Student>();
-                                
+
             try
             {
                 _context.Students.Update(student);
@@ -236,7 +239,7 @@ namespace Api.Services.StudentService
             }
 
             return response;
-        
+
         }
     }
 }

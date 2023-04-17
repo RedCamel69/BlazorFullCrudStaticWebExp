@@ -46,7 +46,7 @@ namespace Api.Services.BusinessService
 
         public ServiceResponse<bool> DeleteBusiness(int businessId)
         {
-            var dbBusiness =  _context.Businesses.FirstOrDefault(x => x.BusinessId == businessId);
+            var dbBusiness = _context.Businesses.FirstOrDefault(x => x.BusinessId == businessId);
             if (dbBusiness == null)
             {
                 return new ServiceResponse<bool>
@@ -59,8 +59,8 @@ namespace Api.Services.BusinessService
 
             _context.Businesses.Attach(dbBusiness);
             _context.Businesses.Remove(dbBusiness);
-             _context.SaveChanges();
-            
+            _context.SaveChanges();
+
             return new ServiceResponse<bool> { Data = true };
         }
 
@@ -76,7 +76,7 @@ namespace Api.Services.BusinessService
                     Message = "Business not found."
                 };
             }
-         
+
             _context.Businesses.Remove(dbBusiness);
 
             await _context.SaveChangesAsync();

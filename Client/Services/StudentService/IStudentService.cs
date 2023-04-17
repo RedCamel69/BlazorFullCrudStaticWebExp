@@ -4,6 +4,8 @@ namespace BlazorEcommerceStaticWebApp.Client.Services.StudentService
 {
     public interface IStudentService
     {
+        string Message { get; set; }
+
         event Action StudentsChanged;
 
         List<Student> Students { get; set; }

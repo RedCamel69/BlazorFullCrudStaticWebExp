@@ -57,7 +57,7 @@ namespace Api.Functions
         public async Task<IActionResult> UpdateTutor(
             [HttpTrigger(AuthorizationLevel.Anonymous, "put", Route = "tutor")] HttpRequest req,
             //Tutor tutor,
-            ILogger log)            
+            ILogger log)
         {
             string result = await req.ReadAsStringAsync();
             var j = JsonConvert.DeserializeObject<Tutor>(result);
