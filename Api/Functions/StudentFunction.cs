@@ -76,11 +76,26 @@ namespace Api.Functions
             //Tutor tutor,
             ILogger log)
         {
-            string result = await req.ReadAsStringAsync();
-            var student = JsonConvert.DeserializeObject<Student>(result);
+            
 
-            log.LogInformation("C# HTTP POST trigger function processed api/student request.");
-            return new OkObjectResult(_studentService.CreateStudent(student));
+            try
+            {
+                string result = await req.ReadAsStringAsync();
+                var student = JsonConvert.DeserializeObject<Student>(result);
+
+                log.LogInformation("C# HTTP POST trigger function processed api/student request.");
+                return new OkObjectResult(_studentService.CreateStudent(student));
+            }
+            catch (Exception ex)
+            {
+                log.LogError($"C# HTTP POST trigger function api/student exception:{ex.Message}");
+                return new OkObjectResult(new ServiceResponse<Student>()
+                {
+                    Data = null,
+                    Message = "Failed to create student",
+                    Success = false
+                });
+            }
         }
 
 
@@ -90,23 +105,53 @@ namespace Api.Functions
             //Tutor tutor,
             ILogger log)
         {
-            string result = await req.ReadAsStringAsync();
-            var student = JsonConvert.DeserializeObject<Student>(result);
+           
 
-            log.LogInformation("C# HTTP POST trigger function processed api/student request.");
-            return new OkObjectResult(_studentService.UpdateStudent(student));
+            try
+            {
+                string result = await req.ReadAsStringAsync();
+                var student = JsonConvert.DeserializeObject<Student>(result);
+
+                log.LogInformation("C# HTTP PUT trigger function processed api/student request.");
+                return new OkObjectResult(_studentService.UpdateStudent(student));
+            }
+            catch (Exception ex)
+            {
+                log.LogError($"C# HTTP PUT trigger function api/student exception:{ex.Message}");
+                return new OkObjectResult(new ServiceResponse<Student>()
+                {
+                    Data = null,
+                    Message = "Failed to uodate student",
+                    Success = false
+                });
+            }
         }
 
 
         [FunctionName("DeleteStudent")]
-        public async Task<IActionResult> DeleteTutor(
+        public async Task<IActionResult> DeleteStudent(
           [HttpTrigger(AuthorizationLevel.Anonymous, "delete", Route = "student/{studentId:int}")] HttpRequest req,
           //Tutor tutor,
           int studentId,
           ILogger log)
         {
-            log.LogInformation("C# HTTP DELETE trigger function processed api/student request.");
-            return new OkObjectResult(_studentService.DeleteStudent(studentId));
+           
+            try
+            {
+                log.LogInformation("C# HTTP DELETE trigger function processed api/student request.");
+                return new OkObjectResult(_studentService.DeleteStudent(studentId));
+
+            }
+            catch (Exception ex)
+            {
+                log.LogError($"C# HTTP DELETE trigger function api/student/{studentId} exception:{ex.Message}");
+                return new OkObjectResult(new ServiceResponse<Student>()
+                {
+                    Data = null,
+                    Message = "Failed to delete student id : {studentId}",
+                    Success = false
+                });
+            }
         }
 
 

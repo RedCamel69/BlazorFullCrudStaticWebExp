@@ -1,4 +1,5 @@
-﻿using BlazorEcommerceStaticWebApp.Api.Data;
+﻿using Api.Services.HelperService;
+using BlazorEcommerceStaticWebApp.Api.Data;
 using BlazorEcommerceStaticWebApp.Shared;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -11,12 +12,14 @@ namespace Api.Services.StudentService
     public class StudentService : IStudentService
     {
         private readonly ApplicationDbContext _context;
+        private readonly IHelperService _helperService;
 
         public StudentService(
-            ApplicationDbContext context
+            ApplicationDbContext context, IHelperService helperService
             )
         {
             _context = context;
+            _helperService = helperService;
         }
 
         public async Task<ServiceResponse<Student>> CreateStudent(Student student)
@@ -147,7 +150,9 @@ namespace Api.Services.StudentService
             var response = new ServiceResponse<Student>();
             try
             {
-                throw new Exception("Test Exception");
+
+                if (_helperService.GetAppSetting("StudentService-GetStudents"))
+                    throw new Exception("Test Exception");
 
                 var student = await _context.Students.FirstOrDefaultAsync(x => x.StudentId == Id);
 

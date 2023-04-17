@@ -2,7 +2,8 @@
   "IsEncrypted": false,
   "Values": {
     "AzureWebJobsStorage": "",
-    "FUNCTIONS_WORKER_RUNTIME": "dotnet"
+    "FUNCTIONS_WORKER_RUNTIME": "dotnet",
+    "StudentService-GetStudents": false
   },
   "Host": {
     "LocalHttpPort": 7071,

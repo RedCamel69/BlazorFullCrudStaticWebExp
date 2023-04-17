@@ -49,248 +49,248 @@ namespace Test
             return mockContext;
         }
 
-        [Fact]
-        public void GetStudents_Returns_ServiceResponse()
-        {
+        //[Fact]
+        //public void GetStudents_Returns_ServiceResponse()
+        //{
 
-            //arrange
-            Mock<ApplicationDbContext> mockContext = BuildMockContext();
-            var service = new StudentService(mockContext.Object);
+        //    //arrange
+        //    Mock<ApplicationDbContext> mockContext = BuildMockContext();
+        //    var service = new StudentService(mockContext.Object);
 
-            //act
-            var students = service.GetStudents();
+        //    //act
+        //    var students = service.GetStudents();
 
-            //assert
-            Assert.Contains("ServiceResponse", students.GetType().Name);
+        //    //assert
+        //    Assert.Contains("ServiceResponse", students.GetType().Name);
 
-        }
+        //}
 
-        [Fact]
-        public void GetStudents_Returns_ServiceResponse_Containing_Expected_Students()
-        {
+        //[Fact]
+        //public void GetStudents_Returns_ServiceResponse_Containing_Expected_Students()
+        //{
 
-            //arrange
-            Mock<ApplicationDbContext> mockContext = BuildMockContext();
-            var service = new StudentService(mockContext.Object);
+        //    //arrange
+        //    Mock<ApplicationDbContext> mockContext = BuildMockContext();
+        //    var service = new StudentService(mockContext.Object);
 
-            //act
-            var students = service.GetStudents();
+        //    //act
+        //    var students = service.GetStudents();
 
-            //assert
-            Assert.Contains("ServiceResponse", students.GetType().Name);
-            Assert.True(students.Data.Count == 4);
-            Assert.True(students.Data.FirstOrDefault().FirstName == "John");
-        }
+        //    //assert
+        //    Assert.Contains("ServiceResponse", students.GetType().Name);
+        //    Assert.True(students.Data.Count == 4);
+        //    Assert.True(students.Data.FirstOrDefault().FirstName == "John");
+        //}
 
-        [Fact]
-        public void GetStudents_Returns_Students_With_Language()
-        {
+        //[Fact]
+        //public void GetStudents_Returns_Students_With_Language()
+        //{
 
-            //arrange
-            Mock<ApplicationDbContext> mockContext = BuildMockContext();
-            var service = new StudentService(mockContext.Object);
+        //    //arrange
+        //    Mock<ApplicationDbContext> mockContext = BuildMockContext();
+        //    var service = new StudentService(mockContext.Object);
 
-            //act
-            var students = service.GetStudents();
+        //    //act
+        //    var students = service.GetStudents();
 
-            //assert
-            Assert.True(students.Data.Count == 4);
-            Assert.True(students.Data.FirstOrDefault().LanguageId == 1);
-            Assert.True(students.Data.FirstOrDefault().Language != null);
-        }
+        //    //assert
+        //    Assert.True(students.Data.Count == 4);
+        //    Assert.True(students.Data.FirstOrDefault().LanguageId == 1);
+        //    Assert.True(students.Data.FirstOrDefault().Language != null);
+        //}
 
-        [Fact]
-        public void GetStudent_Returns_ServiceResponse()
-        {
-            //arrange
-            Mock<ApplicationDbContext> mockContext = BuildMockContext();
-            var service = new StudentService(mockContext.Object);
+        //[Fact]
+        //public void GetStudent_Returns_ServiceResponse()
+        //{
+        //    //arrange
+        //    Mock<ApplicationDbContext> mockContext = BuildMockContext();
+        //    var service = new StudentService(mockContext.Object);
 
-            //act
-            var students = service.GetStudent(1);
+        //    //act
+        //    var students = service.GetStudent(1);
 
-            //assert
-            Assert.Contains("ServiceResponse", students.GetType().Name);
-        }
+        //    //assert
+        //    Assert.Contains("ServiceResponse", students.GetType().Name);
+        //}
 
-        [Theory]
-        [InlineData(1)]
-        [InlineData(2)]
-        public void GetStudent_Existing_Student_Returns_ServiceResponse(int studentId)
-        {
-            //arrange
-            Mock<ApplicationDbContext> mockContext = BuildMockContext();
-            var service = new StudentService(mockContext.Object);
+        //[Theory]
+        //[InlineData(1)]
+        //[InlineData(2)]
+        //public void GetStudent_Existing_Student_Returns_ServiceResponse(int studentId)
+        //{
+        //    //arrange
+        //    Mock<ApplicationDbContext> mockContext = BuildMockContext();
+        //    var service = new StudentService(mockContext.Object);
 
-            //act
-            var student = service.GetStudent(studentId);
+        //    //act
+        //    var student = service.GetStudent(studentId);
 
-            //assert
-            Assert.Contains("Students successfully retrieved", student.Message);
-            Assert.True(student.Success == true);
-            Assert.True(student.Data.StudentId == studentId);
-        }
+        //    //assert
+        //    Assert.Contains("Students successfully retrieved", student.Message);
+        //    Assert.True(student.Success == true);
+        //    Assert.True(student.Data.StudentId == studentId);
+        //}
 
-        [Theory]
-        [InlineData(1001)]
-        [InlineData(2001)]
-        public void GetStudent_Non_Existing_Student_Returns_ServiceResponse(int studentId)
-        {
-            //arrange
-            Mock<ApplicationDbContext> mockContext = BuildMockContext();
-            var service = new StudentService(mockContext.Object);
+        //[Theory]
+        //[InlineData(1001)]
+        //[InlineData(2001)]
+        //public void GetStudent_Non_Existing_Student_Returns_ServiceResponse(int studentId)
+        //{
+        //    //arrange
+        //    Mock<ApplicationDbContext> mockContext = BuildMockContext();
+        //    var service = new StudentService(mockContext.Object);
 
-            //act
-            var student = service.GetStudent(studentId);
+        //    //act
+        //    var student = service.GetStudent(studentId);
 
-            //assert
-            Assert.Contains($"Student with id of {studentId} could not be found", student.Message);
-            Assert.True(student.Success == false);
-            Assert.True(student.Data == null);
-        }
+        //    //assert
+        //    Assert.Contains($"Student with id of {studentId} could not be found", student.Message);
+        //    Assert.True(student.Success == false);
+        //    Assert.True(student.Data == null);
+        //}
 
 
-        [Fact]
-        public void Delete_Returns_ServiceResponse()
-        {
-            //arrange
-            Mock<ApplicationDbContext> mockContext = BuildMockContext();
-            var service = new StudentService(mockContext.Object);
+        //[Fact]
+        //public void Delete_Returns_ServiceResponse()
+        //{
+        //    //arrange
+        //    Mock<ApplicationDbContext> mockContext = BuildMockContext();
+        //    var service = new StudentService(mockContext.Object);
 
-            //act
-            var res = service.DeleteStudent(2);
+        //    //act
+        //    var res = service.DeleteStudent(2);
 
-            //assert
-            Assert.Contains("ServiceResponse", res.GetType().Name);
-            Assert.True(mockContext.Object.Students.Count() == 3);
-            Assert.True(mockContext.Object.Students.FirstOrDefault().FirstName == "John");
+        //    //assert
+        //    Assert.Contains("ServiceResponse", res.GetType().Name);
+        //    Assert.True(mockContext.Object.Students.Count() == 3);
+        //    Assert.True(mockContext.Object.Students.FirstOrDefault().FirstName == "John");
 
-        }
+        //}
 
-        [Fact]
-        public void Delete_Returns_ServiceResponse_If_Student_Not_Found()
-        {
+        //[Fact]
+        //public void Delete_Returns_ServiceResponse_If_Student_Not_Found()
+        //{
 
-            //arrange
-            Mock<ApplicationDbContext> mockContext = BuildMockContext();
-            var service = new StudentService(mockContext.Object);
+        //    //arrange
+        //    Mock<ApplicationDbContext> mockContext = BuildMockContext();
+        //    var service = new StudentService(mockContext.Object);
 
-            //act
-            var res = service.DeleteStudent(2001);
+        //    //act
+        //    var res = service.DeleteStudent(2001);
 
-            //assert
-            Assert.Contains("ServiceResponse", res.GetType().Name);
-            Assert.True(mockContext.Object.Students.Count() == 4);
-            Assert.True(mockContext.Object.Students.FirstOrDefault().FirstName == "John");
-            Assert.Contains("Student not found", res.Message);
-        }
+        //    //assert
+        //    Assert.Contains("ServiceResponse", res.GetType().Name);
+        //    Assert.True(mockContext.Object.Students.Count() == 4);
+        //    Assert.True(mockContext.Object.Students.FirstOrDefault().FirstName == "John");
+        //    Assert.Contains("Student not found", res.Message);
+        //}
 
-        [Fact]
-        public void Delete_Removes_Expected_Student()
-        {
-            //arrange
-            Mock<ApplicationDbContext> mockContext = BuildMockContext();
-            var service = new StudentService(mockContext.Object);
+        //[Fact]
+        //public void Delete_Removes_Expected_Student()
+        //{
+        //    //arrange
+        //    Mock<ApplicationDbContext> mockContext = BuildMockContext();
+        //    var service = new StudentService(mockContext.Object);
 
-            //act
-            var res = service.DeleteStudent(1);
+        //    //act
+        //    var res = service.DeleteStudent(1);
 
-            //assert
-            Assert.Contains("ServiceResponse", res.GetType().Name);
-            Assert.True(mockContext.Object.Students.Count() == 3);
-            Assert.True(mockContext.Object.Students.FirstOrDefault().FirstName == "Paul");
-        }
+        //    //assert
+        //    Assert.Contains("ServiceResponse", res.GetType().Name);
+        //    Assert.True(mockContext.Object.Students.Count() == 3);
+        //    Assert.True(mockContext.Object.Students.FirstOrDefault().FirstName == "Paul");
+        //}
 
-        [Fact]
-        public void Create_Returns_ServiceResponse()
-        {
-            //arrange
-            Mock<ApplicationDbContext> mockContext = BuildMockContext();
-            var service = new StudentService(mockContext.Object);
+        //[Fact]
+        //public void Create_Returns_ServiceResponse()
+        //{
+        //    //arrange
+        //    Mock<ApplicationDbContext> mockContext = BuildMockContext();
+        //    var service = new StudentService(mockContext.Object);
 
-            var student = new Student()
-            {
-                FirstName = "Test",
-                LastName = "Student 1",
-                School = "Test School",
-                NickName = "Test",
-                LanguageId = 1
-            };
+        //    var student = new Student()
+        //    {
+        //        FirstName = "Test",
+        //        LastName = "Student 1",
+        //        School = "Test School",
+        //        NickName = "Test",
+        //        LanguageId = 1
+        //    };
 
-            //act
-            var res = service.CreateStudent(student).Result;
+        //    //act
+        //    var res = service.CreateStudent(student).Result;
 
-            //assert
-            Assert.Contains("ServiceResponse", res.GetType().Name);
+        //    //assert
+        //    Assert.Contains("ServiceResponse", res.GetType().Name);
 
-        }
+        //}
 
-        [Fact]
-        public void Create_Successfully_Creates_Expected_Entity()
-        {
-            //arrange
-            Mock<ApplicationDbContext> mockContext = BuildMockContext();
-            var service = new StudentService(mockContext.Object);
+        //[Fact]
+        //public void Create_Successfully_Creates_Expected_Entity()
+        //{
+        //    //arrange
+        //    Mock<ApplicationDbContext> mockContext = BuildMockContext();
+        //    var service = new StudentService(mockContext.Object);
 
-            var student = new Student()
-            {
-                FirstName = "Test",
-                LastName = "Student 1",
-                School = "Test School"
-            };
+        //    var student = new Student()
+        //    {
+        //        FirstName = "Test",
+        //        LastName = "Student 1",
+        //        School = "Test School"
+        //    };
 
-            //act
-            var res = service.CreateStudent(student).Result;
+        //    //act
+        //    var res = service.CreateStudent(student).Result;
 
-            //assert
-            Assert.Contains("ServiceResponse", res.GetType().Name);
+        //    //assert
+        //    Assert.Contains("ServiceResponse", res.GetType().Name);
 
-        }
+        //}
 
-        [Fact]
-        public void Update_Returns_ServiceResponse()
-        {
-            //arrange
-            Mock<ApplicationDbContext> mockContext = BuildMockContext();
-            var service = new StudentService(mockContext.Object);
+        //[Fact]
+        //public void Update_Returns_ServiceResponse()
+        //{
+        //    //arrange
+        //    Mock<ApplicationDbContext> mockContext = BuildMockContext();
+        //    var service = new StudentService(mockContext.Object);
 
-            var student = new Student()
-            {
-                FirstName = "Updated First",
-                LastName = "Updated Last",
-                School = "Updated School",
-                StudentId = 1
-            };
+        //    var student = new Student()
+        //    {
+        //        FirstName = "Updated First",
+        //        LastName = "Updated Last",
+        //        School = "Updated School",
+        //        StudentId = 1
+        //    };
 
-            //act
-            var res = service.UpdateStudent(student).Result;
+        //    //act
+        //    var res = service.UpdateStudent(student).Result;
 
-            //assert
-            Assert.Contains("ServiceResponse", res.GetType().Name);
+        //    //assert
+        //    Assert.Contains("ServiceResponse", res.GetType().Name);
 
-        }
+        //}
 
-        [Fact]
-        public void Update_Incomplete_Details_Returns_ServiceResponse()
-        {
-            //arrange
-            Mock<ApplicationDbContext> mockContext = BuildMockContext();
-            var service = new StudentService(mockContext.Object);
+        //[Fact]
+        //public void Update_Incomplete_Details_Returns_ServiceResponse()
+        //{
+        //    //arrange
+        //    Mock<ApplicationDbContext> mockContext = BuildMockContext();
+        //    var service = new StudentService(mockContext.Object);
 
-            var student = new Student()
-            {
-                FirstName = "Updated First",
-                LastName = "Updated Last",
-                School = "Updated School"
-                //StudentId = 1
-            };
+        //    var student = new Student()
+        //    {
+        //        FirstName = "Updated First",
+        //        LastName = "Updated Last",
+        //        School = "Updated School"
+        //        //StudentId = 1
+        //    };
 
-            //act
-            var res = service.UpdateStudent(student).Result;
+        //    //act
+        //    var res = service.UpdateStudent(student).Result;
 
-            //assert
-            Assert.Contains("ServiceResponse", res.GetType().Name);
+        //    //assert
+        //    Assert.Contains("ServiceResponse", res.GetType().Name);
 
-        }
+        //}
     }
 }

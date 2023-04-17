@@ -1,10 +1,12 @@
 ﻿using Api.Services.BusinessService;
+using Api.Services.HelperService;
 using Api.Services.LanguageService;
 using Api.Services.StudentService;
 using Api.Services.TutorService;
 using BlazorEcommerceStaticWebApp.Api.Data;
 using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.IO;
@@ -19,6 +21,15 @@ namespace BlazorEcommerceStaticWebApp.Api
 
         public override void Configure(IFunctionsHostBuilder builder)
         {
+
+            var config = new ConfigurationBuilder()
+                .SetBasePath(builder.GetContext().ApplicationRootPath)
+                .AddJsonFile("local.settings.json", optional: true, reloadOnChange: true)
+                .AddEnvironmentVariables()
+                .Build();
+            
+            var appSettingValue = config["StudentService-GetStudents"];
+
             if (Environment.GetEnvironmentVariable("AZURE_FUNCTIONS_ENVIRONMENT") != "Development")
             {
                 if (!File.Exists("D:\\home\\turin.db"))
@@ -68,6 +79,8 @@ namespace BlazorEcommerceStaticWebApp.Api
             builder.Services.AddScoped<ITutorService, TutorService>();
             builder.Services.AddScoped<IBusinessService, BusinessService>();
             builder.Services.AddScoped<ILanguageService, LanguageService>();
+
+            builder.Services.AddScoped<IHelperService, HelperService>();
 
         }
 
