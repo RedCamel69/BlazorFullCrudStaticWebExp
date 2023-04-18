@@ -151,7 +151,7 @@ namespace Api.Services.StudentService
             try
             {
 
-                if (_helperService.GetAppSetting("StudentService-GetStudents"))
+                if (_helperService.GetAppSetting("StudentService-GetStudents-Throw-Test-Exception"))
                     throw new Exception("Test Exception");
 
                 var student = await _context.Students.FirstOrDefaultAsync(x => x.StudentId == Id);
