@@ -3,6 +3,7 @@ using System;
 using BlazorEcommerceStaticWebApp.Api.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230425102407_CoursesInitial")]
+    partial class CoursesInitial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.3");
@@ -65,35 +67,6 @@ namespace Api.Migrations
                     b.HasIndex("TutorId");
 
                     b.ToTable("Courses");
-
-                    b.HasData(
-                        new
-                        {
-                            CourseId = 1,
-                            EndDate = new DateTime(2023, 2, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LanguageId = 1,
-                            Name = "An Introduction to the Movies of Stanley Kubrick",
-                            StartDate = new DateTime(2023, 8, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            TutorId = 2
-                        },
-                        new
-                        {
-                            CourseId = 2,
-                            EndDate = new DateTime(2023, 2, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LanguageId = 1,
-                            Name = "An Introduction to the Movies of David Cronenberg",
-                            StartDate = new DateTime(2023, 8, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            TutorId = 2
-                        },
-                        new
-                        {
-                            CourseId = 3,
-                            EndDate = new DateTime(2023, 2, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LanguageId = 1,
-                            Name = "An Introduction to the Movies of William Freidkin",
-                            StartDate = new DateTime(2023, 8, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            TutorId = 2
-                        });
                 });
 
             modelBuilder.Entity("BlazorEcommerceStaticWebApp.Shared.Language", b =>

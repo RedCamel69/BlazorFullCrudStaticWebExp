@@ -1,5 +1,6 @@
 using BlazorEcommerceStaticWebApp.Shared;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace BlazorEcommerceStaticWebApp.Api.Data;
 
@@ -15,6 +16,8 @@ public class ApplicationDbContext : DbContext
     public virtual DbSet<Student> Students { get; set; }
 
     public virtual DbSet<Language> Languages { get; set; }
+
+    public virtual DbSet<Course> Courses { get; set; }
 
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -98,7 +101,36 @@ public class ApplicationDbContext : DbContext
         //        BusinessId = 1});
 
 
-
+        modelBuilder.Entity<Course>()
+            .HasData(
+                new Course()
+                {
+                    CourseId=1,
+                    Name = "An Introduction to the Movies of Stanley Kubrick",
+                    StartDate= new DateTime(2023, 8, 12),
+                    EndDate= new DateTime(2023,2,24),
+                    LanguageId=1,
+                    TutorId=2
+                },
+                new Course()
+                {
+                    CourseId = 2,
+                    Name = "An Introduction to the Movies of David Cronenberg",
+                    StartDate = new DateTime(2023, 8, 12),
+                    EndDate = new DateTime(2023, 2, 24),
+                    LanguageId = 1,
+                    TutorId = 2
+                },
+                new Course()
+                {
+                    CourseId = 3,
+                    Name = "An Introduction to the Movies of William Freidkin",
+                    StartDate = new DateTime(2023, 8, 12),
+                    EndDate = new DateTime(2023, 2, 24),
+                    LanguageId = 1,
+                    TutorId = 2
+                }
+                        );
 
     }
 }
