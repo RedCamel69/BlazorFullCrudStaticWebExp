@@ -1,4 +1,5 @@
 ﻿using Api.Services.BusinessService;
+using Api.Services.CourseService;
 using Api.Services.HelperService;
 using Api.Services.LanguageService;
 using Api.Services.StudentService;
@@ -81,6 +82,7 @@ namespace BlazorEcommerceStaticWebApp.Api
             builder.Services.AddScoped<ILanguageService, LanguageService>();
 
             builder.Services.AddScoped<IHelperService, HelperService>();
+            builder.Services.AddScoped<ICourseService, CourseService>();
 
         }
 
