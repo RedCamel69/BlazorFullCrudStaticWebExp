@@ -31,6 +31,12 @@ namespace Test
                     EndDate=DateTime.Now.AddDays(365), 
                     LanguageId=1, 
                     TutorId = 1, 
+                    Tutor=new Tutor()
+                    {
+                         Id=1,
+                         FirstName="Tutor 1 FName",
+                         LastName = "Tutor 1 LName"
+                    },
                     Language=new Language(){  
                         LanguageId=1, 
                         Name = "English", 
@@ -128,6 +134,26 @@ namespace Test
             Assert.True(courses.Data.Count == 3);
             Assert.True(courses.Data.FirstOrDefault().Name == "Course 1");
         }
+
+        [Fact]
+        public void GetCourses_Returns_ServiceResponse_Containing_Expected_Course_Containing_Tutor()
+        {
+            //arrange
+            Mock<ApplicationDbContext> mockContext = BuildMockContext();
+            var mockHelperService = new Mock<IHelperService>();
+            var service = new CourseService(mockContext.Object, mockHelperService.Object);
+
+            //act
+            var courses = service.GetCourses();
+
+
+            //assert
+            Assert.Contains("ServiceResponse", courses.GetType().Name);
+            Assert.True(courses.Data.Count == 3);
+            Assert.True(courses.Data.FirstOrDefault().Name == "Course 1");
+            Assert.True(courses.Data.FirstOrDefault().Tutor.FirstName == "Tutor 1 FName");
+        }
+
 
         [Fact]
         public void Delete_Returns_ServiceResponse()

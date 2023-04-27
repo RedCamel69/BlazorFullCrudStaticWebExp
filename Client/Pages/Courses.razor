@@ -1,0 +1,107 @@
+﻿@inject ICourseService CourseService
+@inject NavigationManager NavigationManager
+
+@page "/courses"
+@using BlazorEcommerceStaticWebApp.Client.Services.CourseService;
+@using BlazorEcommerceStaticWebApp.Client.Services.StudentService;
+@using BlazorEcommerceStaticWebApp.Shared
+
+@inject HttpClient Http
+
+<div class="align-content-xl-around">
+
+    <div class="table-title">
+          <div class="row">
+            <div class="col-sm-6">
+                <h2>Manage <b>Courses</b></h2>
+            </div>
+         @*   <div class="col-sm-6">
+                <a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i class="material-icons"></i> <span>Add New Tutor</span></a>
+                <a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons"></i> <span>Delete</span></a>
+           </div>*@
+        </div>
+    </div>
+    <div class="table-responsive">
+
+        <table class="table table-striped table-hover table-bordered">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Tutor</th>
+            <th>Language</th>
+            <th>Capacity</th>
+            <th></th>
+        </tr>
+    </thead>
+
+            @if (CourseService.Courses == null || CourseService.Courses.Count == 0)
+            {
+                <img src="images/Loading_2.gif">
+            }
+            else
+            {
+                <tbody>
+
+                    @foreach (var course in CourseService.Courses)
+                    {
+                        <tr>
+                            <td>@course.Name</td>
+                            <td>@course.StartDate</td>
+                            <td>@course.EndDate</td>
+                            <td>@course.Tutor.FirstName @course.Tutor.LastName</td>
+                            <td>@course.Language.Code</td>
+                            <td>@course.studentCapacity</td>
+                            <td>
+                                <button class="btn btn-primary"
+                                @onclick="(() => ShowCourse(course.CourseId))">
+                                    <i class="oi oi-pencil"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+
+            }
+</table>
+<button class="btn btn-primary"
+                @onclick="CreateNewCourse">
+    Create New Course
+</button>
+
+    </div>
+</div>
+
+
+@code {
+
+    
+
+    protected override void OnInitialized()
+    {
+        CourseService.CoursesChanged += StateHasChanged;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            await CourseService.GetCourses();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+        }
+    }
+
+    void ShowCourse(int id)
+    {
+        NavigationManager.NavigateTo($"course/{id}");
+    }
+
+    void CreateNewCourse()
+    {
+        NavigationManager.NavigateTo("/course");
+    }
+}

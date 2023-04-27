@@ -212,6 +212,7 @@ namespace Api.Services.CourseService
             {
                 response.Data = await _context.Courses
                     .Include(x => x.Language)
+                    .Include(t=>t.Tutor)
                     .ToListAsync();
                 response.Success = true;
                 response.Message = "Courses successfully retrieved";
