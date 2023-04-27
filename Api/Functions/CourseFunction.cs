@@ -100,60 +100,60 @@ namespace Api.Functions
         }
 
 
-        //[FunctionName("UpdateStudent")]
-        //public async Task<IActionResult> UpdateStudent(
-        //    [HttpTrigger(AuthorizationLevel.Anonymous, "put", Route = "student")] HttpRequest req,
-        //    //Tutor tutor,
-        //    ILogger log)
-        //{
+        [FunctionName("UpdateCourse")]
+        public async Task<IActionResult> UpdateCourse(
+            [HttpTrigger(AuthorizationLevel.Anonymous, "put", Route = "course")] HttpRequest req,
+            //Tutor tutor,
+            ILogger log)
+        {
 
 
-        //    try
-        //    {
-        //        string result = await req.ReadAsStringAsync();
-        //        var student = JsonConvert.DeserializeObject<Student>(result);
+            try
+            {
+                string result = await req.ReadAsStringAsync();
+                var course = JsonConvert.DeserializeObject<Course>(result);
 
-        //        log.LogInformation("C# HTTP PUT trigger function processed api/student request.");
-        //        return new OkObjectResult(_studentService.UpdateStudent(student));
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        log.LogError($"C# HTTP PUT trigger function api/student exception:{ex.Message}");
-        //        return new OkObjectResult(new ServiceResponse<Student>()
-        //        {
-        //            Data = null,
-        //            Message = "Failed to uodate student",
-        //            Success = false
-        //        });
-        //    }
-        //}
+                log.LogInformation("C# HTTP PUT trigger function processed api/courserequest.");
+                return new OkObjectResult(await _courseService.UpdateCourseAsync(course));
+            }
+            catch (Exception ex)
+            {
+                log.LogError($"C# HTTP PUT trigger function api/course exception:{ex.Message}");
+                return new OkObjectResult(new ServiceResponse<Course>()
+                {
+                    Data = null,
+                    Message = "Failed to uodate course",
+                    Success = false
+                });
+            }
+        }
 
 
-        //[FunctionName("DeleteStudent")]
-        //public async Task<IActionResult> DeleteStudent(
-        //  [HttpTrigger(AuthorizationLevel.Anonymous, "delete", Route = "student/{studentId:int}")] HttpRequest req,
-        //  //Tutor tutor,
-        //  int studentId,
-        //  ILogger log)
-        //{
+        [FunctionName("DeleteCourse")] 
+        public async Task<IActionResult> DeleteCourse(
+          [HttpTrigger(AuthorizationLevel.Anonymous, "delete", Route = "course/{courseId:int}")] HttpRequest req,
+          //Tutor tutor,
+          int courseId,
+          ILogger log)
+        {
 
-        //    try
-        //    {
-        //        log.LogInformation("C# HTTP DELETE trigger function processed api/student request.");
-        //        return new OkObjectResult(_studentService.DeleteStudent(studentId));
+            try
+            {
+                log.LogInformation("C# HTTP DELETE trigger function processed api/course request.");
+                return new OkObjectResult(await _courseService.DeleteCourseAsync(courseId));
 
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        log.LogError($"C# HTTP DELETE trigger function api/student/{studentId} exception:{ex.Message}");
-        //        return new OkObjectResult(new ServiceResponse<Student>()
-        //        {
-        //            Data = null,
-        //            Message = "Failed to delete student id : {studentId}",
-        //            Success = false
-        //        });
-        //    }
-        //}
+            }
+            catch (Exception ex)
+            {
+                log.LogError($"C# HTTP DELETE trigger function api/course/{courseId} exception:{ex.Message}");
+                return new OkObjectResult(new ServiceResponse<Course>()
+                {
+                    Data = null,
+                    Message = $"Failed to delete course id : {courseId}",
+                    Success = false
+                });
+            }
+        }
 
 
     }

@@ -47,13 +47,50 @@ namespace Api.Services.CourseService
             return response;
         }
 
-        public ServiceResponse<bool> DeleteCourse(int Id)
+        public async Task<ServiceResponse<bool>> DeleteCourseAsync(int Id)
         {
             var response = new ServiceResponse<bool>();
 
             try
             {
                 var dbCourse = _context.Courses.FirstOrDefault(x => x.CourseId== Id);
+
+                if (dbCourse == null)
+                {
+                    response.Success = false;
+                    response.Data = false;
+                    response.Message = "Course not found.";
+                }
+                else
+                {
+                    //dbTutor.Deleted = true;
+                    _context.Courses.Remove(dbCourse);
+                    await _context.SaveChangesAsync();
+
+                    response.Success = true;
+                    response.Data = true;
+                    response.Message = $"Course {dbCourse.CourseId} {dbCourse.Name} deleted.";
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Data = false;
+                response.Message = $"Error deleting course {Id} : {ex.Message} ";
+            }
+
+            return response;
+
+        }
+
+
+        public ServiceResponse<bool> DeleteCourse(int Id)
+        {
+            var response = new ServiceResponse<bool>();
+
+            try
+            {
+                var dbCourse = _context.Courses.FirstOrDefault(x => x.CourseId == Id);
 
                 if (dbCourse == null)
                 {
@@ -81,41 +118,6 @@ namespace Api.Services.CourseService
 
             return response;
 
-        }
-
-        public async Task<ServiceResponse<bool>> DeleteCourseAsync(int Id)
-        {
-            var response = new ServiceResponse<bool>();
-
-            try
-            {
-                var dbCourse = _context.Courses.FirstOrDefault(x => x.CourseId == Id);
-
-                if (dbCourse == null)
-                {
-                    response.Success = false;
-                    response.Data = false;
-                    response.Message = "Course not found.";
-                }
-                else
-                {
-                    //dbTutor.Deleted = true;
-                    _context.Courses.Remove(dbCourse);
-                    await _context.SaveChangesAsync();
-
-                    response.Success = true;
-                    response.Data = true;
-                    response.Message = $"Course {dbCourse.CourseId} {dbCourse.Name} deleted.";
-                }
-            }
-            catch (Exception ex)
-            {
-                response.Success = false;
-                response.Data = false;
-                response.Message = $"Error deleting course {Id} : {ex.Message} ";
-            }
-
-            return response;
         }
 
         public ServiceResponse<Course> GetCourse(int Id)
