@@ -22,9 +22,29 @@ namespace Api.Services.CourseService
             _helperService = helperService;
         }
 
-        public Task<ServiceResponse<Course>> CreateCourse(Course course)
+        public async Task<ServiceResponse<Course>> CreateCourseAsync(Course course)
         {
-            throw new NotImplementedException();
+            var response = new ServiceResponse<Course>();
+
+            try
+            {
+                course.Language = null; //ef workaround to stop new language being created
+                _context.Courses.Add(course);
+
+                await _context.SaveChangesAsync();
+
+                response.Data = course;
+                response.Message = "Successfully added new course";
+                response.Success = true;
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Data = null;
+                response.Message = $"Failed to add new course. Error {ex.Message}";
+            }
+
+            return response;
         }
 
         public ServiceResponse<bool> DeleteCourse(int Id)

@@ -20,7 +20,7 @@ namespace Api.Services.CourseService
 
         ServiceResponse<Course> UpdateCourse(Course course);
 
-        Task<ServiceResponse<Course>> CreateCourse(Course course);
+        Task<ServiceResponse<Course>> CreateCourseAsync(Course course);
 
 
         Task<ServiceResponse<bool>> DeleteCourseAsync(int Id);

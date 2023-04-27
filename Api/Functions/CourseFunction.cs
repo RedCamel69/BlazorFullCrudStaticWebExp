@@ -70,34 +70,34 @@ namespace Api.Functions
             }
         }
 
-        //[FunctionName("CreateStudent")]
-        //public async Task<IActionResult> CreateStudent(
-        //    [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "student")] 
-        //    HttpRequest req,
-        //    //Tutor tutor,
-        //    ILogger log)
-        //{
-            
+        [FunctionName("CreateCourse")]
+        public async Task<IActionResult> CreateCourse(
+            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "course")]
+            HttpRequest req,
+            //Tutor tutor,
+            ILogger log)
+        {
 
-        //    try
-        //    {
-        //        string result = await req.ReadAsStringAsync();
-        //        var student = JsonConvert.DeserializeObject<Student>(result);
 
-        //        log.LogInformation("C# HTTP POST trigger function processed api/student request.");
-        //        return new OkObjectResult(_studentService.CreateStudent(student));
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        log.LogError($"C# HTTP POST trigger function api/student exception:{ex.Message}");
-        //        return new OkObjectResult(new ServiceResponse<Student>()
-        //        {
-        //            Data = null,
-        //            Message = "Failed to create student",
-        //            Success = false
-        //        });
-        //    }
-        //}
+            try
+            {
+                string result = await req.ReadAsStringAsync();
+                var course = JsonConvert.DeserializeObject<Course>(result);
+
+                log.LogInformation("C# HTTP POST trigger function processed api/student request.");
+                return new OkObjectResult(await _courseService.CreateCourseAsync(course));
+            }
+            catch (Exception ex)
+            {
+                log.LogError($"C# HTTP POST trigger function api/course exception:{ex.Message}");
+                return new OkObjectResult(new ServiceResponse<Course>()
+                {
+                    Data = null,
+                    Message = "Failed to create course",
+                    Success = false
+                });
+            }
+        }
 
 
         //[FunctionName("UpdateStudent")]
@@ -106,7 +106,7 @@ namespace Api.Functions
         //    //Tutor tutor,
         //    ILogger log)
         //{
-           
+
 
         //    try
         //    {
@@ -136,7 +136,7 @@ namespace Api.Functions
         //  int studentId,
         //  ILogger log)
         //{
-           
+
         //    try
         //    {
         //        log.LogInformation("C# HTTP DELETE trigger function processed api/student request.");
