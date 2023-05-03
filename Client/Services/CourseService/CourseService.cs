@@ -1,4 +1,4 @@
-﻿using BlazorEcommerceStaticWebApp.Client.Pages;
+﻿//using BlazorEcommerceStaticWebApp.Client.Pages;
 using BlazorEcommerceStaticWebApp.Shared;
 using Microsoft.AspNetCore.Components;
 using System.Net;

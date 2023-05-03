@@ -1,0 +1,90 @@
+﻿
+
+@page "/course"
+@page "/course/{id:int}"
+@using BlazorEcommerceStaticWebApp.Client.Components;
+@using BlazorEcommerceStaticWebApp.Client.Services.CourseService;
+@using BlazorEcommerceStaticWebApp.Client.Services.StudentService;
+@using BlazorEcommerceStaticWebApp.Shared
+
+@inject HttpClient Http
+@inject ICourseService CourseService
+@inject NavigationManager NavigationManager
+@inject IJSRuntime JS
+
+@if (Id is null)
+{
+    <PageTitle>Create a new Course</PageTitle>
+    <h3>Create a new Course</h3>
+}
+else
+{
+    <PageTitle>Edit @course.Name </PageTitle>
+    <h3>Edit @course.Name  </h3>
+}
+
+<EditForm Model="course" OnValidSubmit="HandleSubmit" OnInvalidSubmit="HandleInvalidSubmit" Context="CurrentEditContext">
+
+    <h3>@FormSubmitMessage</h3>
+    <DataAnnotationsValidator/>
+    <ValidationSummary/>
+
+    <div class="form-group">
+        <label for="title">Name</label>
+        <InputText id="FirstName" @bind-Value="course.Name" class="form-control" />
+        <ValidationMessage For="@(() => course.Name)" />
+    </div>
+    <div>
+        <label for="LastName">LastName</label>
+        <InputDate id="LastName" @bind-Value="course.StartDate" class="form-control" />
+        <ValidationMessage For="@(() => course.StartDate)" />
+    </div>
+
+    </EditForm>
+
+@code {
+
+    [Parameter]
+    public int? Id { get; set; }
+
+    private BlazorEcommerceStaticWebApp.Shared.Course course =
+       new BlazorEcommerceStaticWebApp.Shared.Course { };
+    public string FormSubmitMessage { get; set; } = "Form Data Not Submitted";
+
+    protected override void OnInitialized()
+    {
+        CourseService.CoursesChanged += StateHasChanged;
+
+
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (Id is not null)
+        {
+
+            var result = await CourseService.GetCourseById((int)Id);
+            if (result is not null)
+            {
+                course = result;
+            }
+            else
+                NavigationManager.NavigateTo("/course");
+        }
+        else
+        {
+        }
+
+
+    }
+
+    async Task HandleSubmit()
+    {
+        FormSubmitMessage = "Submit Not Implemented";
+    }
+
+    public void HandleInvalidSubmit()
+    {
+        FormSubmitMessage = "Invalid Submit Not Implemented";
+    }
+}

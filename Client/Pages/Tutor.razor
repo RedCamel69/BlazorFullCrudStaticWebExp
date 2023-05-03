@@ -105,6 +105,10 @@ else
 </AddBusinessRazor>
 
 @code {
+   
+    [Parameter]
+    public int? Id { get; set; }
+
     protected ConfirmBase DeleteConfirmation { get; set; } = new ConfirmBase();
     protected AddBusinessBase? AddBusinessModal { get; set; }
     protected ElementReference? SelectBusinessElement;  // set the @ref for attribute
@@ -112,8 +116,7 @@ else
     private bool _displayDeleteButton { get; set; }
     private IJSObjectReference? _jsModule;
 
-    [Parameter]
-    public int? Id { get; set; }
+   
 
     private string btnText = string.Empty;
     public string FormSubmitMessage { get; set; } = "Form Data Not Submitted";
