@@ -5,8 +5,11 @@
 @using BlazorEcommerceStaticWebApp.Client.Services.CourseService;
 @using BlazorEcommerceStaticWebApp.Client.Services.StudentService;
 @using BlazorEcommerceStaticWebApp.Shared
+@using Microsoft.AspNetCore.Authorization;
 
 @inject HttpClient Http
+
+@attribute [Authorize]
 
 <div class="align-content-xl-around">
 

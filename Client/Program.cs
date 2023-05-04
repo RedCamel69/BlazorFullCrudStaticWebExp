@@ -7,6 +7,7 @@ using BlazorEcommerceStaticWebApp.Client.Services.StudentService;
 using BlazorEcommerceStaticWebApp.Client.Services.TutorService;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using Microsoft.Azure.Functions.Authentication.WebAssembly;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -21,7 +22,7 @@ builder.Services.AddScoped<ILanguageService, LanguageService>();
 builder.Services.AddScoped<ICourseService, CourseService>();
 
 
-
+builder.Services.AddStaticWebAppsAuthentication();
 
 
 
