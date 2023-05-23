@@ -13,3 +13,7 @@ export function SetBusinessDropDownIndex(index) {
 export function SetLanguageDropDownIndex(index) {
     document.getElementById("SelectLanguage").selectedIndex = index;
 };
+
+export function SetTutorDropDownIndex(index) {
+    document.getElementById("SelectTutor").selectedIndex = index;
+};

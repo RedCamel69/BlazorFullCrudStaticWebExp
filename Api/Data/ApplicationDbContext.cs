@@ -109,6 +109,7 @@ public class ApplicationDbContext : DbContext
                     Name = "An Introduction to the Movies of Stanley Kubrick",
                     StartDate= new DateTime(2023, 8, 12),
                     EndDate= new DateTime(2023,2,24),
+                    StudentCapacity=25,
                     LanguageId=1,
                     TutorId=2
                 },
@@ -118,6 +119,7 @@ public class ApplicationDbContext : DbContext
                     Name = "An Introduction to the Movies of David Cronenberg",
                     StartDate = new DateTime(2023, 8, 12),
                     EndDate = new DateTime(2023, 2, 24),
+                    StudentCapacity=180,
                     LanguageId = 1,
                     TutorId = 2
                 },
@@ -127,6 +129,7 @@ public class ApplicationDbContext : DbContext
                     Name = "An Introduction to the Movies of William Freidkin",
                     StartDate = new DateTime(2023, 8, 12),
                     EndDate = new DateTime(2023, 2, 24),
+                    StudentCapacity=1001,
                     LanguageId = 1,
                     TutorId = 2
                 }

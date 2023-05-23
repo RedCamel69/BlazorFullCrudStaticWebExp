@@ -4,11 +4,15 @@
 @page "/course/{id:int}"
 @using BlazorEcommerceStaticWebApp.Client.Components;
 @using BlazorEcommerceStaticWebApp.Client.Services.CourseService;
+@using BlazorEcommerceStaticWebApp.Client.Services.LanguageService;
 @using BlazorEcommerceStaticWebApp.Client.Services.StudentService;
+@using BlazorEcommerceStaticWebApp.Client.Services.TutorService;
 @using BlazorEcommerceStaticWebApp.Shared
 
 @inject HttpClient Http
 @inject ICourseService CourseService
+@inject ILanguageService LanguageService
+@inject ITutorService TutorService
 @inject NavigationManager NavigationManager
 @inject IJSRuntime JS
 
@@ -35,12 +39,64 @@ else
         <ValidationMessage For="@(() => course.Name)" />
     </div>
     <div>
-        <label for="LastName">LastName</label>
-        <InputDate id="LastName" @bind-Value="course.StartDate" class="form-control" />
+        <label for="StartDate">StartDate</label>
+        <InputDate id="StartDate" @bind-Value="course.StartDate" class="form-control" />
         <ValidationMessage For="@(() => course.StartDate)" />
     </div>
+    <div>
+        <label for="EndDate">EndDate</label>
+        <InputDate id="EndDate" @bind-Value="course.EndDate" class="form-control" />
+        <ValidationMessage For="@(() => course.StartDate)" />
+    </div>
+    <div>
+        <label for="StudentCapacity">StudentCapacity</label>
+        <InputNumber id="StudentCapacity" @bind-Value="course.StudentCapacity" class="form-control" />
+        <ValidationMessage For="@(() => course.StudentCapacity)" />
+    </div>
+    <div class="form-group">
+        <label for="Language">Language</label>
+        @*<InputNumber id="Language" @bind-Value="student.LanguageId" class="form-control" />*@
+
+        <select id="SelectLanguage" @ref="SelectLanguageElement" name="number" @onchange="SelectLanguage">
+            <option value="">Select a language</option>
+            @foreach (Language l in LanguageService.Languages)
+            {
+                <option value="@l.LanguageId">@l.Name</option>
+            }
+        </select>
+
+        <ValidationMessage For="@(() => course.LanguageId)" />
+    </div>
+
+    <div class="form-group">
+        <label for="Language">Submit</label>
+        <select id="SelectTutor" name="SelectTutor" @onchange="SelectTutor">
+            <option value="">Select a tutor</option>
+            @foreach (BlazorEcommerceStaticWebApp.Shared.Tutor t in TutorService.Tutors)
+            {
+                <option value="@t.Id">@t.FirstName + @t.LastName</option>
+            }
+        </select>
+
+        <ValidationMessage For="@(() => course.LanguageId)" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">@_btnText</button>
+
+    @if (_displayDeleteButton)
+    {
+        <button type="button" class="btn btn-danger"
+            @onclick="DeleteCourse">
+            Delete Student
+        </button>
+    }
 
     </EditForm>
+
+<Confirm @ref="DeleteConfirmation"
+         ConfirmationChanged="ConfirmDelete_Click"
+         ConfirmationMessage=@($"Are you sure you want to delete course \"{course.Name}\" ?")>
+</Confirm>
 
 @code {
 
@@ -50,11 +106,27 @@ else
     private BlazorEcommerceStaticWebApp.Shared.Course course =
        new BlazorEcommerceStaticWebApp.Shared.Course { };
     public string FormSubmitMessage { get; set; } = "Form Data Not Submitted";
+    private IJSObjectReference? _jsModule;
+    protected ElementReference? SelectLanguageElement;  // set the @ref for attribute
+    private bool _displayDeleteButton { get; set; }
+    protected ConfirmBase DeleteConfirmation { get; set; } = new ConfirmBase();
+    private string _btnText = string.Empty;
+    private bool InvalidSubmit;
 
     protected override void OnInitialized()
     {
+        _btnText = Id == null ? "Save New Course" : "Update Course";
         CourseService.CoursesChanged += StateHasChanged;
+        LanguageService.LanguagesChanged += StateHasChanged;
+        TutorService.TutorsChanged += StateHasChanged;
 
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LanguageService.GetLanguages();
+        await TutorService.GetTutors();
+        _jsModule = await JS.InvokeAsync<IJSObjectReference>("import", "./scripts/Helper.js");
 
     }
 
@@ -62,7 +134,7 @@ else
     {
         if (Id is not null)
         {
-
+            _displayDeleteButton = true;
             var result = await CourseService.GetCourseById((int)Id);
             if (result is not null)
             {
@@ -78,13 +150,93 @@ else
 
     }
 
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if ( course.LanguageId != null)
+        {
+            await _jsModule.InvokeVoidAsync("SetLanguageDropDownIndex", course.LanguageId);
+        }
+
+        if (course.TutorId != null)
+        {
+            await _jsModule.InvokeVoidAsync("SetTutorDropDownIndex", course.TutorId);
+        }
+    }
+
     async Task HandleSubmit()
     {
-        FormSubmitMessage = "Submit Not Implemented";
+        try
+        {
+            InvalidSubmit = false;
+
+            if (Id is null)
+            {
+                await CourseService.CreateCourse(course);
+            }
+            else
+            {
+                await CourseService.UpdateCourse(course);
+            }
+        }
+        catch (Exception ex)
+        {
+            FormSubmitMessage = "Error Updating / Creating Student";
+        }
     }
 
     public void HandleInvalidSubmit()
     {
         FormSubmitMessage = "Invalid Submit Not Implemented";
+    }
+
+    protected void SelectLanguage(ChangeEventArgs e)
+    {
+        int languageId = Convert.ToInt32(e.Value);
+        var selectedLanguage = LanguageService.Languages.FirstOrDefault(x => x.LanguageId == languageId);
+        if (selectedLanguage != null)
+        {
+            course.Language = selectedLanguage;
+            course.LanguageId = selectedLanguage.LanguageId;
+        }
+        else
+        {
+            //todo diagnostics - error getting business details
+        }
+
+    }
+
+    protected void SelectTutor(ChangeEventArgs e)
+    {
+        int tutorId = Convert.ToInt32(e.Value);
+        var selectedTutor = TutorService.Tutors.FirstOrDefault(x => x.Id== tutorId);
+        if (selectedTutor != null)
+        {
+            course.Tutor = selectedTutor;
+            course.TutorId = selectedTutor.Id;
+        }
+        else
+        {
+            //todo diagnostics - error getting business details
+        }
+    }
+
+    protected async Task ConfirmDelete_Click(bool deleteConfirmed)
+    {
+        try
+        {
+            if (deleteConfirmed)
+            {
+                await CourseService.DeleteCourse(course);
+            }
+        }
+        catch (Exception ex)
+        {
+            FormSubmitMessage = "Error Deleting Course";
+        }
+    }
+
+    protected void DeleteCourse()
+    {
+        DeleteConfirmation.Show();
     }
 }

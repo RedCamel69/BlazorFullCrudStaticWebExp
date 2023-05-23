@@ -29,6 +29,7 @@ namespace Api.Services.CourseService
             try
             {
                 course.Language = null; //ef workaround to stop new language being created
+                course.Tutor = null;
                 _context.Courses.Add(course);
 
                 await _context.SaveChangesAsync();
@@ -159,7 +160,10 @@ namespace Api.Services.CourseService
                 if (_helperService.GetAppSetting("CourseService_GetCourse_Throw_Test_Exception"))
                     throw new Exception("Test Exception");
 
-                var course = await _context.Courses.FirstOrDefaultAsync(x => x.CourseId == Id);
+                var course = await _context.Courses
+                    .Include(x => x.Language)
+                    .FirstOrDefaultAsync(x => x.CourseId == Id);
+                    
 
                 if (course == null)
                 {

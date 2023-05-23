@@ -3,6 +3,7 @@ using System;
 using BlazorEcommerceStaticWebApp.Api.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230523112249_course-2a")]
+    partial class course2a
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.3");
@@ -55,9 +57,6 @@ namespace Api.Migrations
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("StudentCapacity")
-                        .HasColumnType("INTEGER");
-
                     b.Property<int?>("TutorId")
                         .HasColumnType("INTEGER");
 
@@ -77,7 +76,6 @@ namespace Api.Migrations
                             LanguageId = 1,
                             Name = "An Introduction to the Movies of Stanley Kubrick",
                             StartDate = new DateTime(2023, 8, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            StudentCapacity = 25,
                             TutorId = 2
                         },
                         new
@@ -87,7 +85,6 @@ namespace Api.Migrations
                             LanguageId = 1,
                             Name = "An Introduction to the Movies of David Cronenberg",
                             StartDate = new DateTime(2023, 8, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            StudentCapacity = 180,
                             TutorId = 2
                         },
                         new
@@ -97,7 +94,6 @@ namespace Api.Migrations
                             LanguageId = 1,
                             Name = "An Introduction to the Movies of William Freidkin",
                             StartDate = new DateTime(2023, 8, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            StudentCapacity = 1001,
                             TutorId = 2
                         });
                 });

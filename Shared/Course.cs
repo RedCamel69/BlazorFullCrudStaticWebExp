@@ -23,9 +23,9 @@ namespace BlazorEcommerceStaticWebApp.Shared
         public DateTime EndDate { get; set; }
 
         [Required]
-        public int studentCapacity;
+        public int StudentCapacity { get; set; }
 
-        
+
         public int? LanguageId { get; set; }
         public Language? Language { get; set; }
 
