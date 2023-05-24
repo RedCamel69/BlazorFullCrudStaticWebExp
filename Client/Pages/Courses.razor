@@ -51,18 +51,46 @@
                     @foreach (var course in CourseService.Courses)
                     {
                         <tr>
-                            <td>@course.Name</td>
-                            <td>@course.StartDate</td>
-                            <td>@course.EndDate</td>
-                            <td>@course.Tutor.FirstName @course.Tutor.LastName</td>
-                            <td>@course.Language.Code</td>
+                            <td>
+                                @CheckNull(course.Name, "None Set")
+                            </td>
+
+                            <td>@CheckNull(course.StartDate, new DateTime(1,1,1))</td>
+                            <td>@CheckNull(course.EndDate, new DateTime(1,1,1))</td>
+                            @if (course.Tutor is null)
+                                {
+                                    <td>None Set</td>
+                                }
+                             else
+                                {
+                                    <td>
+                                        @CheckNull(course.Tutor.FirstName, "First Name")  @CheckNull(course.Tutor.LastName, "Last Name")
+                                    </td>
+                                }
+
+                            @if (course.Language is null)
+                            {
+                                <td>None Set</td>
+                            }
+                            else
+                            {
+                                <td>
+                                    @CheckNull(course.Language.Code, "None Set")
+                                </td>
+                            }
+
+                            <td>
+                                @CheckNull(course.StudentCapacity, 0)
+                            </td>
+
+                        @* <td>@course.Language.Code</td>
                             <td>@course.StudentCapacity</td>
                             <td>
                                 <button class="btn btn-primary"
                                 @onclick="(() => ShowCourse(course.CourseId))">
                                     <i class="oi oi-pencil"></i>
                                 </button>
-                            </td>
+                            </td>*@
                         </tr>
                     }
                 </tbody>
@@ -80,7 +108,7 @@
 
 @code {
 
-    
+
 
     protected override void OnInitialized()
     {
@@ -108,4 +136,12 @@
     {
         NavigationManager.NavigateTo("/course");
     }
+
+    private T CheckNull<T>(T value, T defaultValue)
+    {
+        return value == null ? defaultValue : value;
+    }
+
+    
+
 }
