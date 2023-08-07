@@ -1,0 +1,53 @@
+﻿LOgging.Abstractions err:
+https://stackoverflow.com/questions/43995432/could-not-load-file-or-assembly-microsoft-extensions-dependencyinjection-abstrac
+
+had to downgrade efcore / efcore sql to 6 to get round logging abstractions error - would latest version now work in light of the above?
+explicitly add sqlclinet to get past key error for azure sql
+
+
+so - put connection string in key vault and see if it works hosted
+do we need
+
+
+
+https://techcommunity.microsoft.com/t5/azure-database-support-blog/lesson-learned-396-fixing-invalid-value-for-key-authentication/ba-p/3869222#:~:text=ArgumentException%3A%20Invalid%20value%20for%20key%20'authentication'%22%2C%20signifies,supported%20by%20the%20current%20implementation.
+
+Our customer is getting the following error message: Application Error System.ArgumentException: Invalid value for key 'authentication'.    at System.Data.Common.DbConnectionStringBuilderUtil.ConvertToAuthenticationType(String keyword, Object value)    at System.Data.SqlClient.SqlConnectionString.ConvertValueToAuthenticationType()    at System.Data.SqlClient.SqlConnectionString..ctor(String connectionString)    at System.Data.SqlClient.SqlConnectionFactory.CreateConnectionOptions(String connectionString, DbConnectionOptions previous)    at System.Data.ProviderBase.DbConnectionFactory.GetConnectionPoolGroup(DbConnectionPoolKey key, DbConnectionPoolGroupOptions poolOptions, DbConnectionOptions& userConnectionOptions)    at System.Data.SqlClient.SqlConnection.ConnectionString_Set(DbConnectionPoolKey key) using in the authentication keyword in the connection string the value Active Directory Managed Identity.
+
+ 
+
+Understanding the Error
+
+
+The error message our customer received, "Application Error System.ArgumentException: Invalid value for key 'authentication'", signifies an issue in the connection string's authentication parameter. This error is generated when the provided value is incompatible or not supported by the current implementation.
+
+ 
+
+Limitations of System.Data.SqlClient
+
+
+System.Data.SqlClient, a widely used library for interacting with SQL Server databases, does not have built-in support for Azure Active Directory Managed Identity authentication. It offers support only for AAD password, integrated, and interactive authentication methods.
+
+ 
+
+Introducing Microsoft.Data.SqlClient
+
+
+To overcome the limitation of System.Data.SqlClient, we recommend migrating to Microsoft.Data.SqlClient. This newer library offers enhanced features and broader support for Azure SQL Database, including seamless integration with Azure Active Directory Managed Identity authentication.
+
+ 
+
+Benefits of Migrating to Microsoft.Data.SqlClient
+
+
+By migrating to Microsoft.Data.SqlClient, our client can unlock several benefits, such as, Full support for Azure Active Directory Managed Identity authentication, ensuring adherence to the latest security standards. Improved performance and reliability due to ongoing updates and optimizations in the library. Access to additional features and functionalities introduced in the latest versions of Microsoft.Data.SqlClient.
+
+ 
+
+Migrating to Microsoft.Data.SqlClient: Step-by-Step Guide
+
+
+Assess the codebase and identify all occurrences where System.Data.SqlClient is used for database connections.
+Replace instances of System.Data.SqlClient with Microsoft.Data.SqlClient in the codebase.
+Update the connection string to include the necessary configurations for Azure Active Directory Managed Identity authentication.
+Test the application.

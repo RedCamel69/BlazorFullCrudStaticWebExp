@@ -1,5 +1,6 @@
 using BlazorEcommerceStaticWebApp.Shared;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Linq;
 using System;
 
 namespace BlazorEcommerceStaticWebApp.Api.Data;
@@ -24,7 +25,18 @@ public class ApplicationDbContext : DbContext
     {
         if (!optionsBuilder.IsConfigured)
         {
-            optionsBuilder.UseSqlite(Utils.GetSQLiteConnectionString());
+            //added to local.settings.json for dev , app configuration for cloud.
+            //locally used the AAD connevction string, hosted the ADO.NET with admin password / userid
+            var useAzureSQL = Convert.ToBoolean(Environment.GetEnvironmentVariable("USE_AZURESQL"));
+            if (useAzureSQL)
+            {
+                optionsBuilder.UseSqlServer(Environment.GetEnvironmentVariable("ConnectionStringAzureSQL"));
+            }
+            else
+            {
+                optionsBuilder.UseSqlite(Utils.GetSQLiteConnectionString());
+            }
+            
         }
     }
 

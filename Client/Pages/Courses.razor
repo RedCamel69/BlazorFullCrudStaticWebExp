@@ -9,7 +9,6 @@
 
 @inject HttpClient Http
 
-@*@attribute [Authorize]*@
 
 
 <div class="align-content-xl-around">
@@ -83,14 +82,14 @@
                                 @CheckNull(course.StudentCapacity, 0)
                             </td>
 
-                        @* <td>@course.Language.Code</td>
+                         <td>@course.Language.Code</td>
                             <td>@course.StudentCapacity</td>
                             <td>
                                 <button class="btn btn-primary"
                                 @onclick="(() => ShowCourse(course.CourseId))">
                                     <i class="oi oi-pencil"></i>
                                 </button>
-                            </td>*@
+                            </td>
                         </tr>
                     }
                 </tbody>

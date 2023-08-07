@@ -4,14 +4,21 @@
 		<AzureFunctionsVersion>v4</AzureFunctionsVersion>
 	</PropertyGroup>
 	<ItemGroup>
+		<PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
 		<PackageReference Include="Microsoft.Azure.Functions.Extensions" Version="1.1.0" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.SQLite" Version="6.0.3" />
+		<PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.0-preview3.23201.1" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SQLite" Version="6.0.0" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.SQLite.Design" Version="1.1.6" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.3">
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.0">
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 			<PrivateAssets>all</PrivateAssets>
 		</PackageReference>
+		<PackageReference Include="Microsoft.Identity.Web" Version="2.11.0" />
+		<PackageReference Include="Microsoft.IdentityModel.Logging" Version="6.30.1" />
+		<PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.30.1" />
 		<PackageReference Include="Microsoft.NET.Sdk.Functions" Version="4.0.1" />
+		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.30.1" />
 	</ItemGroup>
 	<ItemGroup>
 	  <ProjectReference Include="..\Shared\Shared.csproj" />

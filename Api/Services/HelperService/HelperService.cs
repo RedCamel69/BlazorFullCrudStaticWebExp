@@ -26,6 +26,10 @@ namespace Api.Services.HelperService
         public bool GetAppSetting(string settingName)
         {
            return Convert.ToBoolean(_config[settingName]);
+
+
         }
+
+       
     }
 }
