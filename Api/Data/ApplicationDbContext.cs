@@ -23,21 +23,24 @@ public class ApplicationDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        if (!optionsBuilder.IsConfigured)
-        {
-            //added to local.settings.json for dev , app configuration for cloud.
-            //locally used the AAD connevction string, hosted the ADO.NET with admin password / userid
-            var useAzureSQL = Convert.ToBoolean(Environment.GetEnvironmentVariable("USE_AZURESQL"));
-            if (useAzureSQL)
-            {
-                optionsBuilder.UseSqlServer(Environment.GetEnvironmentVariable("ConnectionStringAzureSQL"));
-            }
-            else
-            {
-                optionsBuilder.UseSqlite(Utils.GetSQLiteConnectionString());
-            }
+        //var value = Environment.GetEnvironmentVariable("ConnectionStringAzureSQL");
+        //optionsBuilder.UseSqlServer(value);
+
+        //if (!optionsBuilder.IsConfigured)
+        //{
+        //    //added to local.settings.json for dev , app configuration for cloud.
+        //    //locally used the AAD connevction string, hosted the ADO.NET with admin password / userid
+        //    var useAzureSQL = Convert.ToBoolean(Environment.GetEnvironmentVariable("USE_AZURESQL"));
+        //    if (useAzureSQL)
+        //    {
+        //        optionsBuilder.UseSqlServer(Environment.GetEnvironmentVariable("ConnectionStringAzureSQL"));
+        //    }
+        //    else
+        //    {
+        //        optionsBuilder.UseSqlite(Utils.GetSQLiteConnectionString());
+        //    }
             
-        }
+        //}
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
