@@ -33,18 +33,18 @@ namespace BlazorEcommerceStaticWebApp.Api
             
             var appSettingValue = config["StudentService-GetStudents"];
 
-            if (Convert.ToBoolean(Environment.GetEnvironmentVariable("USE_AZURESQL")))
-            {
-                var value = Environment.GetEnvironmentVariable("ConnectionStringAzureSQL");
+            //if (Convert.ToBoolean(Environment.GetEnvironmentVariable("USE_AZURESQL")))
+            //{
+            //    var value = Environment.GetEnvironmentVariable("ConnectionStringAzureSQL");
                 
-                builder.Services.AddDbContext<ApplicationDbContext>(options =>
-                    {
-                        options.UseSqlServer(value);
-                    });
-            }
+            //    builder.Services.AddDbContext<ApplicationDbContext>(options =>
+            //        {
+            //            options.UseSqlServer(value);
+            //        });
+            //}
 
-            else
-            {
+            //else
+            //{
                 if (Environment.GetEnvironmentVariable("AZURE_FUNCTIONS_ENVIRONMENT") != "Development")
                 {
                     if (!File.Exists("D:\\home\\turin.db"))
@@ -69,7 +69,7 @@ namespace BlazorEcommerceStaticWebApp.Api
                     });
 
                 }
-            }
+           // }
 
                 //    var s = Utils.GetSQLiteConnectionString();
 
