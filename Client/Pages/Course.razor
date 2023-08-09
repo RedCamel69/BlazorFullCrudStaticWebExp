@@ -74,7 +74,7 @@ else
             <option value="">Select a tutor</option>
             @foreach (BlazorEcommerceStaticWebApp.Shared.Tutor t in TutorService.Tutors)
             {
-                <option value="@t.Id">@t.FirstName + @t.LastName</option>
+                <option value="@t.TutorId">@t.FirstName + @t.LastName</option>
             }
         </select>
 
@@ -208,11 +208,11 @@ else
     protected void SelectTutor(ChangeEventArgs e)
     {
         int tutorId = Convert.ToInt32(e.Value);
-        var selectedTutor = TutorService.Tutors.FirstOrDefault(x => x.Id== tutorId);
+        var selectedTutor = TutorService.Tutors.FirstOrDefault(x => x.TutorId== tutorId);
         if (selectedTutor != null)
         {
             course.Tutor = selectedTutor;
-            course.TutorId = selectedTutor.Id;
+            course.TutorId = selectedTutor.TutorId;
         }
         else
         {

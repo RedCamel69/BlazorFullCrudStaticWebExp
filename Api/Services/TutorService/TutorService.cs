@@ -51,7 +51,7 @@ namespace Api.Services.TutorService
             var response = new ServiceResponse<bool>();
             try
             {
-                var dbTutor = await _context.Tutors.FirstOrDefaultAsync(x => x.Id == tutorId);
+                var dbTutor = await _context.Tutors.FirstOrDefaultAsync(x => x.TutorId == tutorId);
                 if (dbTutor == null)
                 {
                     return new ServiceResponse<bool>
@@ -67,7 +67,7 @@ namespace Api.Services.TutorService
                 await _context.SaveChangesAsync();
                 response.Success = true;
                 response.Data = true;
-                response.Message = $"Tutor {dbTutor.Id} {dbTutor.FirstName + " " + dbTutor.LastName} deleted.";
+                response.Message = $"Tutor {dbTutor.TutorId} {dbTutor.FirstName + " " + dbTutor.LastName} deleted.";
             }
             catch (Exception ex)
             {
@@ -84,7 +84,7 @@ namespace Api.Services.TutorService
             {
                 Data = _context.Tutors
                 .Include(x => x.Business)
-                                .FirstOrDefault(x => x.Id == Id)
+                                .FirstOrDefault(x => x.TutorId == Id)
             };
 
             return response;
@@ -110,7 +110,7 @@ namespace Api.Services.TutorService
             _context.Tutors.Update(tutor);
             await _context.SaveChangesAsync();
 
-            var updated = _context.Tutors.FirstOrDefault(x => x.Id == tutor.Id);
+            var updated = _context.Tutors.FirstOrDefault(x => x.TutorId == tutor.TutorId);
             var response = new ServiceResponse<Tutor>
             {
                 Data = tutor,
@@ -122,7 +122,7 @@ namespace Api.Services.TutorService
 
         public ServiceResponse<bool> DeleteTutor(int tutorId)
         {
-            var dbTutor = _context.Tutors.FirstOrDefault(x => x.Id == tutorId);
+            var dbTutor = _context.Tutors.FirstOrDefault(x => x.TutorId == tutorId);
             if (dbTutor == null)
             {
                 return new ServiceResponse<bool>
@@ -158,7 +158,7 @@ namespace Api.Services.TutorService
             {
                 Data = await _context.Tutors
                             .Include(x => x.Business)
-                            .FirstOrDefaultAsync(t => t.Id == Id)
+                            .FirstOrDefaultAsync(t => t.TutorId == Id)
             };
 
             return response;

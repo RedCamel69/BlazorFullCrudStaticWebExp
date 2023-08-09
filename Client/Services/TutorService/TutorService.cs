@@ -72,7 +72,7 @@ namespace BlazorEcommerceStaticWebApp.Client.Services.TutorService
 
         public async Task DeleteTutor(Tutor tutor)
         {
-            await _http.DeleteAsync($"api/tutor/{tutor.Id}");
+            await _http.DeleteAsync($"api/tutor/{tutor.TutorId}");
             _navigationManger.NavigateTo("tutors");
         }
     }

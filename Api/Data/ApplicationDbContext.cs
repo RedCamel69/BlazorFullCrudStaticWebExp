@@ -23,6 +23,7 @@ public class ApplicationDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
+        
         //var value = Environment.GetEnvironmentVariable("ConnectionStringAzureSQL");
         //optionsBuilder.UseSqlServer(value);
 
@@ -39,7 +40,7 @@ public class ApplicationDbContext : DbContext
         //    {
         //        optionsBuilder.UseSqlite(Utils.GetSQLiteConnectionString());
         //    }
-            
+
         //}
     }
 
@@ -101,7 +102,7 @@ public class ApplicationDbContext : DbContext
         //    );
 
         modelBuilder.Entity<Tutor>()
-            .HasKey(x => new { x.Id });
+            .HasKey(x => new { x.TutorId });
 
         //modelBuilder.Entity<Tutor>()
         //            .HasData(

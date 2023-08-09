@@ -83,9 +83,9 @@ namespace Test
 
             var data = new List<Tutor>
             {
-                new Tutor {   Id=1,FirstName="Tutor 1 FName", LastName="Tutor 1 LName", Phone = "11111111"},
-                new Tutor {   Id=2,FirstName="Tutor 1 FName", LastName="Tutor 1 LName", Phone = "2222222"},
-                new Tutor {   Id=3,FirstName="Tutor 1 FName", LastName="Tutor 1 LName", Phone = "3333333"}
+                new Tutor {   TutorId=1,FirstName="Tutor 1 FName", LastName="Tutor 1 LName", Phone = "11111111"},
+                new Tutor {   TutorId=2,FirstName="Tutor 1 FName", LastName="Tutor 1 LName", Phone = "2222222"},
+                new Tutor {   TutorId=3,FirstName="Tutor 1 FName", LastName="Tutor 1 LName", Phone = "3333333"}
             }.AsQueryable();
 
             var mockHttpContextAccessor = new Mock<IHttpContextAccessor>();
@@ -111,9 +111,9 @@ namespace Test
 
             var data = new List<Tutor>
             {
-                new Tutor {   Id=1,FirstName="Tutor 1 FName", LastName="Tutor 1 LName", Phone = "11111111"},
-                new Tutor {   Id=2,FirstName="Tutor 1 FName", LastName="Tutor 1 LName", Phone = "2222222"},
-                new Tutor {   Id=3,FirstName="Tutor 1 FName", LastName="Tutor 1 LName", Phone = "3333333"}
+                new Tutor {   TutorId=1,FirstName="Tutor 1 FName", LastName="Tutor 1 LName", Phone = "11111111"},
+                new Tutor {   TutorId=2,FirstName="Tutor 1 FName", LastName="Tutor 1 LName", Phone = "2222222"},
+                new Tutor {   TutorId=3,FirstName="Tutor 1 FName", LastName="Tutor 1 LName", Phone = "3333333"}
             };
             //.AsQueryable();
 
@@ -130,7 +130,7 @@ namespace Test
 
             mockSet.Setup(m => m.Remove(It.IsAny<Tutor>())).Callback<Tutor>(s =>
             {
-                data.Remove(data.Find(t => t.Id == s.Id));
+                data.Remove(data.Find(t => t.TutorId == s.TutorId));
             });
 
 
@@ -151,9 +151,9 @@ namespace Test
 
             var data = new List<Tutor>
             {
-                new Tutor {   Id=1,FirstName="Tutor 1 FName", LastName="Tutor 1 LName", Phone = "11111111"},
-                new Tutor {   Id=2,FirstName="Tutor 1 FName", LastName="Tutor 1 LName", Phone = "2222222"},
-                new Tutor {   Id=3,FirstName="Tutor 1 FName", LastName="Tutor 1 LName", Phone = "3333333"}
+                new Tutor {   TutorId=1,FirstName="Tutor 1 FName", LastName="Tutor 1 LName", Phone = "11111111"},
+                new Tutor {   TutorId=2,FirstName="Tutor 1 FName", LastName="Tutor 1 LName", Phone = "2222222"},
+                new Tutor {   TutorId=3,FirstName="Tutor 1 FName", LastName="Tutor 1 LName", Phone = "3333333"}
             };
             //.AsQueryable();
 
@@ -167,7 +167,7 @@ namespace Test
 
             mockSet.Setup(m => m.Remove(It.IsAny<Tutor>())).Callback<Tutor>(s =>
             {
-                data.Remove(data.Find(t => t.Id == s.Id));
+                data.Remove(data.Find(t => t.TutorId == s.TutorId));
             });
 
             var mockContext = new Mock<ApplicationDbContext>();
@@ -179,8 +179,8 @@ namespace Test
             var service = new TutorService(mockContext.Object);
             var res = service.DeleteTutor(2);
             var tutorsLeft = service.GetTutors().Data;
-            var deletedTutor = tutorsLeft.FirstOrDefault(x => x.Id == 2);
-            var remainingTutor = tutorsLeft.FirstOrDefault(x => x.Id == 1);
+            var deletedTutor = tutorsLeft.FirstOrDefault(x => x.TutorId == 2);
+            var remainingTutor = tutorsLeft.FirstOrDefault(x => x.TutorId == 1);
 
             Assert.Contains("ServiceResponse", res.GetType().Name);
             Assert.True(deletedTutor == null);

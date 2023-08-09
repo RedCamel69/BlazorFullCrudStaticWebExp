@@ -8,7 +8,7 @@ namespace BlazorEcommerceStaticWebApp.Shared
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        public int TutorId { get; set; }
 
         [Required]
         [StringLength(50)]

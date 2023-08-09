@@ -33,7 +33,7 @@ namespace Test
                     TutorId = 1, 
                     Tutor=new Tutor()
                     {
-                         Id=1,
+                         TutorId=1,
                          FirstName="Tutor 1 FName",
                          LastName = "Tutor 1 LName"
                     },
