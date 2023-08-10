@@ -44,87 +44,87 @@ namespace Test
             return mockContext;
         }
 
-        //[Fact]
-        //public void GetBusiness_Returns_ServiceResponse()
-        //{
-        //    //arrange
-        //    Mock<ApplicationDbContext> mockContext = BuildMockContext();
-        //    var service = new BusinessService(mockContext.Object);
+        [Fact]
+        public void GetBusiness_Returns_ServiceResponse()
+        {
+            //arrange
+            Mock<ApplicationDbContext> mockContext = BuildMockContext();
+            var service = new BusinessService(mockContext.Object);
 
-        //    //act
-        //    var businesses = service.GetBusinesses();
+            //act
+            var businesses = service.GetBusinesses();
 
-        //    //assert
-        //    Assert.Contains("ServiceResponse", businesses.GetType().Name);
-        //}
-
-
-
-        //[Fact]
-        //public void GetBusiness_Returns_ServiceResponse_Containing_Expected_Businesses()
-        //{
-        //    //arrange
-        //    Mock<ApplicationDbContext> mockContext = BuildMockContext();
-        //    var service = new BusinessService(mockContext.Object);
-
-        //    //act
-        //    var businesses = service.GetBusinesses();
-
-        //    //assert
-        //    Assert.Contains("ServiceResponse", businesses.GetType().Name);
-        //    Assert.True(businesses.Data.Count == 3);
-        //    Assert.True(businesses.Data.FirstOrDefault().Name == "Test Business 1");
-        //}
-
-        //[Fact]
-        //public void Delete_Returns_ServiceResponse()
-        //{
-        //    //arrange
-        //    Mock<ApplicationDbContext> mockContext = BuildMockContext();
-        //    var service = new BusinessService(mockContext.Object);
-
-        //    //act
-        //    var res = service.DeleteBusiness(1);
-
-        //    //assert
-        //    Assert.Contains("ServiceResponse", res.GetType().Name);
-        //}
-
-        //[Fact]
-        //public void Delete_Returns_ServiceResponse_If_Tutor_Not_Found()
-        //{
-        //    //arrange
-        //    Mock<ApplicationDbContext> mockContext = BuildMockContext();
-        //    var service = new BusinessService(mockContext.Object);
-
-        //    //act
-        //    var res = service.DeleteBusiness(1009);
-
-        //    //assert
-        //    Assert.Contains("ServiceResponse", res.GetType().Name);
-        //    Assert.True(res.Message == "Business not found.");
-
-        //}
-
-        //[Fact]
-        //public void Delete_Removes_Expected_Business()
-        //{
-        //    //arrange
-        //    Mock<ApplicationDbContext> mockContext = BuildMockContext();
-        //    var service = new BusinessService(mockContext.Object);
-
-        //    //act
-        //    var res = service.DeleteBusiness(2);
-        //    var deletedBusiness = mockContext.Object.Businesses.FirstOrDefault(x => x.BusinessId == 2);
-        //    var remainingBusiness = mockContext.Object.Businesses.FirstOrDefault(x => x.BusinessId == 1);
-
-        //    //assert
-        //    Assert.Contains("ServiceResponse", res.GetType().Name);
-        //    Assert.True(deletedBusiness == null);
-        //    Assert.True(remainingBusiness != null);
-        //    Assert.True(mockContext.Object.Businesses.Count() == 2);
+            //assert
+            Assert.Contains("ServiceResponse", businesses.GetType().Name);
+        }
 
 
-        //}
+
+        [Fact]
+        public void GetBusiness_Returns_ServiceResponse_Containing_Expected_Businesses()
+        {
+            //arrange
+            Mock<ApplicationDbContext> mockContext = BuildMockContext();
+            var service = new BusinessService(mockContext.Object);
+
+            //act
+            var businesses = service.GetBusinesses();
+
+            //assert
+            Assert.Contains("ServiceResponse", businesses.GetType().Name);
+            Assert.True(businesses.Data.Count == 3);
+            Assert.True(businesses.Data.FirstOrDefault().Name == "Test Business 1");
+        }
+
+        [Fact]
+        public void Delete_Returns_ServiceResponse()
+        {
+            //arrange
+            Mock<ApplicationDbContext> mockContext = BuildMockContext();
+            var service = new BusinessService(mockContext.Object);
+
+            //act
+            var res = service.DeleteBusiness(1);
+
+            //assert
+            Assert.Contains("ServiceResponse", res.GetType().Name);
+        }
+
+        [Fact]
+        public void Delete_Returns_ServiceResponse_If_Tutor_Not_Found()
+        {
+            //arrange
+            Mock<ApplicationDbContext> mockContext = BuildMockContext();
+            var service = new BusinessService(mockContext.Object);
+
+            //act
+            var res = service.DeleteBusiness(1009);
+
+            //assert
+            Assert.Contains("ServiceResponse", res.GetType().Name);
+            Assert.True(res.Message == "Business not found.");
+
+        }
+
+        [Fact]
+        public void Delete_Removes_Expected_Business()
+        {
+            //arrange
+            Mock<ApplicationDbContext> mockContext = BuildMockContext();
+            var service = new BusinessService(mockContext.Object);
+
+            //act
+            var res = service.DeleteBusiness(2);
+            var deletedBusiness = mockContext.Object.Businesses.FirstOrDefault(x => x.BusinessId == 2);
+            var remainingBusiness = mockContext.Object.Businesses.FirstOrDefault(x => x.BusinessId == 1);
+
+            //assert
+            Assert.Contains("ServiceResponse", res.GetType().Name);
+            Assert.True(deletedBusiness == null);
+            Assert.True(remainingBusiness != null);
+            Assert.True(mockContext.Object.Businesses.Count() == 2);
+
+
+        }
     }
 }

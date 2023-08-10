@@ -1,4 +1,5 @@
-﻿using BlazorEcommerceStaticWebApp.Api.Data;
+﻿using Api.Migrations;
+using BlazorEcommerceStaticWebApp.Api.Data;
 using BlazorEcommerceStaticWebApp.Shared;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -92,15 +93,24 @@ namespace Api.Services.TutorService
 
         public ServiceResponse<List<Tutor>> GetTutors()
         {
-            var response = new ServiceResponse<List<Tutor>>
+            var response = new ServiceResponse<List<Tutor>>();
+
+            try
             {
-                Data = _context.Tutors
+                response.Data = _context.Tutors
                             .Include(x => x.Business)
-                            .ToList()
-            };
+                            .ToList();
+                response.Message = "Successfully returned Tutors";
+                response.Success = true;
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Data = null;
+                response.Message = ex.Message;
+            }
 
             return response;
-
 
         }
 
@@ -142,12 +152,22 @@ namespace Api.Services.TutorService
 
         public async Task<ServiceResponse<List<Tutor>>> GetTutorsAsync()
         {
-            var response = new ServiceResponse<List<Tutor>>
+            var response = new ServiceResponse<List<Tutor>>();
+
+            try
             {
-                Data = await _context.Tutors
+                response.Data = await _context.Tutors
                             .Include(x => x.Business)
-                            .ToListAsync()
-            };
+                            .ToListAsync();
+                response.Message = "Successfully returned Tutors";
+                response.Success = true;
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Data = null;
+                response.Message = ex.Message;
+            }
 
             return response;
         }

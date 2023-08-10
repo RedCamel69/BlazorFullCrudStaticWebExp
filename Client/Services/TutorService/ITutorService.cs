@@ -9,6 +9,9 @@ namespace BlazorEcommerceStaticWebApp.Client.Services.TutorService
 
         List<Tutor> Tutors { get; set; }
 
+        String Response { get; set; }
+        bool RequestSuccessful { get; set; }  
+
         Task GetTutors();
 
         Task<Tutor?> GetTutorById(int id);

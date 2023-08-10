@@ -10,15 +10,23 @@ namespace BlazorEcommerceStaticWebApp.Client.Services.TutorService
 
         private readonly HttpClient _http;
         private readonly NavigationManager _navigationManger;
+        private readonly IConfiguration _config;
 
+        private bool _showServiceRequestResponses;
+        
         public event Action TutorsChanged;
 
         public List<Tutor> Tutors { get; set; } = new List<Tutor>();
+        public string Response { get;set;}        
+        public bool RequestSuccessful { get; set ; }
 
-        public TutorService(HttpClient http, NavigationManager navigationManger)
+        public TutorService(HttpClient http, NavigationManager navigationManger, IConfiguration configuration)
         {
             _http = http;
             _navigationManger = navigationManger;
+            _config = configuration;
+
+            _showServiceRequestResponses = Convert.ToBoolean(_config["Show_Service_Request_Responses"]);
         }
 
         public async Task GetTutors()
@@ -29,20 +37,27 @@ namespace BlazorEcommerceStaticWebApp.Client.Services.TutorService
 
 
             if (res != null && res.Data != null)
+            {
                 Tutors = res.Data;
+            }
+
+            if (res != null)
+            {
+                RequestSuccessful = res.Success;
+                if (!res.Success)
+                {
+                    Response = "Error retrieving Tutors " + (_showServiceRequestResponses ? res.Message : String.Empty);
+                }
+                else
+                {
+                    Response = "Tutors successfully retrieved " + (_showServiceRequestResponses ? res.Message : String.Empty);
+                }
+                
+            }
+
 
             //CurrentPage = 1;
             //PageCount = 0;
-
-            //if (Tutors.Count == 0)
-            //{
-            //    Message = "No Products Found";
-            //}
-
-            //if (Products.Count > 0)
-            //{
-            //    Message = "Products Found";
-            //}
 
             TutorsChanged.Invoke();
         }
