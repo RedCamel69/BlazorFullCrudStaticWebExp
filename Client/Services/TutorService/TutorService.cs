@@ -14,6 +14,8 @@ namespace BlazorEcommerceStaticWebApp.Client.Services.TutorService
 
         private bool _showServiceRequestResponses;
         
+        public bool TestRetrieval { get; set; }
+
         public event Action TutorsChanged;
 
         public List<Tutor> Tutors { get; set; } = new List<Tutor>();
@@ -27,6 +29,7 @@ namespace BlazorEcommerceStaticWebApp.Client.Services.TutorService
             _config = configuration;
 
             _showServiceRequestResponses = Convert.ToBoolean(_config["Show_Service_Request_Responses"]);
+            TestRetrieval = _showServiceRequestResponses;
         }
 
         public async Task GetTutors()
