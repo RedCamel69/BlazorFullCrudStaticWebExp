@@ -24,7 +24,7 @@
 	  <ProjectReference Include="..\Shared\Shared.csproj" />
 	</ItemGroup>
 	<ItemGroup>
-		<None Update="turin.db">
+		<None Update="turin-old.db">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
 		<None Update="host.json">
@@ -33,6 +33,9 @@
 		<None Update="local.settings.json">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 			<CopyToPublishDirectory>Never</CopyToPublishDirectory>
+		</None>
+		<None Update="turin.db">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
 	</ItemGroup>
 </Project>

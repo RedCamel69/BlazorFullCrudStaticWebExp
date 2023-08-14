@@ -1,10 +1,35 @@
 ﻿@page "/"
 @using System.Reflection;
+@using BlazorEcommerceStaticWebApp.Client.Services.Helper;
+
+@implements IDisposable
+@inject StateContainer StateContainer
 
 <PageTitle>Blazor Full Stack Crud (SQLITE)</PageTitle>
 
-Build Version: @Assembly.GetExecutingAssembly().GetName().Version
-Buid Date @Assembly.GetExecutingAssembly().GetName().
+<div class="container">
+<div class="row">
+        <div class="col">
+            Build Version: @Assembly.GetExecutingAssembly().GetName().Version
+        </div>
+        <div class="col">
+            Buid Date: @Assembly.GetExecutingAssembly().GetName().FullName
+        </div>
+</div>
+    <div class="row">
+        <div class="col">
+
+            <p>UseAzureSQL: <b>@StateContainer.UseAzureSQL</b></p>
+            <p>UseSQLite: <b>@StateContainer.UseSQLite</b></p>
+
+            <p>
+                <button @onclick="ChangeTargetDb">
+                   Switch DB
+                </button>
+            </p>
+        </div>
+    </div>
+</div>
 
 <div class="container">
     <div class="row">
@@ -170,5 +195,29 @@ Buid Date @Assembly.GetExecutingAssembly().GetName().
 
 
 @code {
+
+    protected override void OnInitialized()
+    {
+        StateContainer.OnChange += StateHasChanged;
+    }
+
+    private void ChangeTargetDb()
+    {
+        if (StateContainer.UseSQLite)
+        {
+            StateContainer.UseSQLite = false;
+            StateContainer.UseAzureSQL = true;
+        }
+        else
+        {
+            StateContainer.UseSQLite = true;
+            StateContainer.UseAzureSQL = false;
+        }
+    }
+
+    public void Dispose()
+    {
+        StateContainer.OnChange -= StateHasChanged;
+    }
 
 }

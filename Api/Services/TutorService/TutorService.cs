@@ -1,5 +1,4 @@
-﻿using Api.Migrations;
-using BlazorEcommerceStaticWebApp.Api.Data;
+﻿using BlazorEcommerceStaticWebApp.Api.Data;
 using BlazorEcommerceStaticWebApp.Shared;
 using Microsoft.EntityFrameworkCore;
 using System;

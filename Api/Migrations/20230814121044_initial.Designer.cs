@@ -11,13 +11,13 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230411144804_Student-Seed")]
-    partial class StudentSeed
+    [Migration("20230814121044_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "6.0.3");
+            modelBuilder.HasAnnotation("ProductVersion", "6.0.0");
 
             modelBuilder.Entity("BlazorEcommerceStaticWebApp.Shared.Business", b =>
                 {
@@ -36,6 +36,84 @@ namespace Api.Migrations
                         .IsUnique();
 
                     b.ToTable("Businesses");
+
+                    b.HasData(
+                        new
+                        {
+                            BusinessId = 1,
+                            Name = "Test Business 1"
+                        },
+                        new
+                        {
+                            BusinessId = 2,
+                            Name = "Test Business 2"
+                        });
+                });
+
+            modelBuilder.Entity("BlazorEcommerceStaticWebApp.Shared.Course", b =>
+                {
+                    b.Property<int>("CourseId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("LanguageId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("StudentCapacity")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("TutorId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("CourseId");
+
+                    b.HasIndex("LanguageId");
+
+                    b.HasIndex("TutorId");
+
+                    b.ToTable("Courses");
+
+                    b.HasData(
+                        new
+                        {
+                            CourseId = 1,
+                            EndDate = new DateTime(2023, 2, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LanguageId = 1,
+                            Name = "An Introduction to the Movies of Stanley Kubrick",
+                            StartDate = new DateTime(2023, 8, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            StudentCapacity = 25,
+                            TutorId = 2
+                        },
+                        new
+                        {
+                            CourseId = 2,
+                            EndDate = new DateTime(2023, 2, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LanguageId = 1,
+                            Name = "An Introduction to the Movies of David Cronenberg",
+                            StartDate = new DateTime(2023, 8, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            StudentCapacity = 180,
+                            TutorId = 2
+                        },
+                        new
+                        {
+                            CourseId = 3,
+                            EndDate = new DateTime(2023, 2, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LanguageId = 1,
+                            Name = "An Introduction to the Movies of William Freidkin",
+                            StartDate = new DateTime(2023, 8, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            StudentCapacity = 1001,
+                            TutorId = 2
+                        });
                 });
 
             modelBuilder.Entity("BlazorEcommerceStaticWebApp.Shared.Language", b =>
@@ -104,6 +182,8 @@ namespace Api.Migrations
 
                     b.HasKey("StudentId");
 
+                    b.HasIndex("LanguageId");
+
                     b.ToTable("Students");
 
                     b.HasData(
@@ -129,7 +209,7 @@ namespace Api.Migrations
 
             modelBuilder.Entity("BlazorEcommerceStaticWebApp.Shared.Tutor", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("TutorId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -162,11 +242,59 @@ namespace Api.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("Id");
+                    b.HasKey("TutorId");
 
                     b.HasIndex("BusinessId");
 
                     b.ToTable("Tutors");
+
+                    b.HasData(
+                        new
+                        {
+                            TutorId = 1,
+                            BusinessId = 1,
+                            Email = "testemail@demo.com",
+                            FirstName = "Bill",
+                            LastName = "Smith",
+                            MobilePhone = "+44 0687 565665",
+                            Phone = "0161 454545",
+                            ProtopageUrl = "https://www.protopage.co,/demo1"
+                        },
+                        new
+                        {
+                            TutorId = 2,
+                            BusinessId = 1,
+                            Email = "fbrown@demo.com",
+                            FirstName = "Frederick",
+                            LastName = "Brown",
+                            MobilePhone = "+44 0688 565668",
+                            Phone = "0161 765432",
+                            ProtopageUrl = "https://www.protopage.co,/demo2"
+                        });
+                });
+
+            modelBuilder.Entity("BlazorEcommerceStaticWebApp.Shared.Course", b =>
+                {
+                    b.HasOne("BlazorEcommerceStaticWebApp.Shared.Language", "Language")
+                        .WithMany()
+                        .HasForeignKey("LanguageId");
+
+                    b.HasOne("BlazorEcommerceStaticWebApp.Shared.Tutor", "Tutor")
+                        .WithMany()
+                        .HasForeignKey("TutorId");
+
+                    b.Navigation("Language");
+
+                    b.Navigation("Tutor");
+                });
+
+            modelBuilder.Entity("BlazorEcommerceStaticWebApp.Shared.Student", b =>
+                {
+                    b.HasOne("BlazorEcommerceStaticWebApp.Shared.Language", "Language")
+                        .WithMany()
+                        .HasForeignKey("LanguageId");
+
+                    b.Navigation("Language");
                 });
 
             modelBuilder.Entity("BlazorEcommerceStaticWebApp.Shared.Tutor", b =>

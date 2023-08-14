@@ -15,7 +15,7 @@ namespace Api.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "6.0.3");
+            modelBuilder.HasAnnotation("ProductVersion", "6.0.0");
 
             modelBuilder.Entity("BlazorEcommerceStaticWebApp.Shared.Business", b =>
                 {
@@ -34,6 +34,18 @@ namespace Api.Migrations
                         .IsUnique();
 
                     b.ToTable("Businesses");
+
+                    b.HasData(
+                        new
+                        {
+                            BusinessId = 1,
+                            Name = "Test Business 1"
+                        },
+                        new
+                        {
+                            BusinessId = 2,
+                            Name = "Test Business 2"
+                        });
                 });
 
             modelBuilder.Entity("BlazorEcommerceStaticWebApp.Shared.Course", b =>
@@ -195,7 +207,7 @@ namespace Api.Migrations
 
             modelBuilder.Entity("BlazorEcommerceStaticWebApp.Shared.Tutor", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("TutorId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -228,11 +240,35 @@ namespace Api.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("Id");
+                    b.HasKey("TutorId");
 
                     b.HasIndex("BusinessId");
 
                     b.ToTable("Tutors");
+
+                    b.HasData(
+                        new
+                        {
+                            TutorId = 1,
+                            BusinessId = 1,
+                            Email = "testemail@demo.com",
+                            FirstName = "Bill",
+                            LastName = "Smith",
+                            MobilePhone = "+44 0687 565665",
+                            Phone = "0161 454545",
+                            ProtopageUrl = "https://www.protopage.co,/demo1"
+                        },
+                        new
+                        {
+                            TutorId = 2,
+                            BusinessId = 1,
+                            Email = "fbrown@demo.com",
+                            FirstName = "Frederick",
+                            LastName = "Brown",
+                            MobilePhone = "+44 0688 565668",
+                            Phone = "0161 765432",
+                            ProtopageUrl = "https://www.protopage.co,/demo2"
+                        });
                 });
 
             modelBuilder.Entity("BlazorEcommerceStaticWebApp.Shared.Course", b =>

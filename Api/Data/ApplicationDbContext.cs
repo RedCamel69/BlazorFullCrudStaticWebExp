@@ -23,9 +23,9 @@ public class ApplicationDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        
-        //var value = Environment.GetEnvironmentVariable("ConnectionStringAzureSQL");
-        //optionsBuilder.UseSqlServer(value);
+        //for migrations working with sqlite locally
+       // optionsBuilder.UseSqlite(Utils.GetSQLiteConnectionString());
+
 
         //if (!optionsBuilder.IsConfigured)
         //{
@@ -95,26 +95,39 @@ public class ApplicationDbContext : DbContext
         modelBuilder.Entity<Business>()
             .HasKey(x => new { x.BusinessId });
 
-        //modelBuilder.Entity<Business>()
-        //    .HasData(
-        //        new Business() { BusinessId = 1, Name = "Test Business 1" },
-        //        new Business() { BusinessId = 2, Name = "Test Business 2" }
-        //    );
+        modelBuilder.Entity<Business>()
+            .HasData(
+                new Business() { BusinessId = 1, Name = "Test Business 1" },
+                new Business() { BusinessId = 2, Name = "Test Business 2" }
+            );
 
         modelBuilder.Entity<Tutor>()
             .HasKey(x => new { x.TutorId });
 
-        //modelBuilder.Entity<Tutor>()
-        //            .HasData(
-        //    new Tutor() { 
-        //        Id = 1, 
-        //        FirstName = "Bill",
-        //        LastName = "Smith", 
-        //        Email = "testemail@demo.com", 
-        //        MobilePhone = "+44 0687 565665", 
-        //        Phone = "0161 454545", 
-        //        ProtopageUrl = "https://www.protopage.co,/demo1", 
-        //        BusinessId = 1});
+        modelBuilder.Entity<Tutor>()
+                    .HasData(
+            new Tutor()
+            {
+                TutorId = 1,
+                FirstName = "Bill",
+                LastName = "Smith",
+                Email = "testemail@demo.com",
+                MobilePhone = "+44 0687 565665",
+                Phone = "0161 454545",
+                ProtopageUrl = "https://www.protopage.co,/demo1",
+                BusinessId = 1
+            },
+             new Tutor()
+             {
+                 TutorId = 2,
+                 FirstName = "Frederick",
+                 LastName = "Brown",
+                 Email = "fbrown@demo.com",
+                 MobilePhone = "+44 0688 565668",
+                 Phone = "0161 765432",
+                 ProtopageUrl = "https://www.protopage.co,/demo2",
+                 BusinessId = 1
+             });
 
 
         modelBuilder.Entity<Course>()

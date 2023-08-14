@@ -51,3 +51,24 @@ Assess the codebase and identify all occurrences where System.Data.SqlClient is 
 Replace instances of System.Data.SqlClient with Microsoft.Data.SqlClient in the codebase.
 Update the connection string to include the necessary configurations for Azure Active Directory Managed Identity authentication.
 Test the application.
+
+
+
+Switch Back To SQLite
+*********************
+If updating db...
+1.Delete migrations
+2.delete migration history from db
+3.uncomment / add sqlite setup to dbcontext OnConfiguring
+( optionsBuilder.UseSqlite(Utils.GetSQLiteConnectionString());)
+
+To just switch
+1. Update local.settings.json
+2. Comment out dbcontext OnConfiguring code
+
+To switch to AzureSQL
+1.update local.settings.json
+
+Note:set local turin.db to always copy to output. Still need an elegant way to update cloud hosted sql file.
+
+
