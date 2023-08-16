@@ -1,4 +1,5 @@
-﻿using Api.Services.Admin.UserService;
+﻿using Api.Services.Admin.DataDumpService;
+using Api.Services.Admin.UserService;
 using Api.Services.BusinessService;
 using Api.Services.CourseService;
 using Api.Services.HelperService;
@@ -101,6 +102,7 @@ namespace BlazorEcommerceStaticWebApp.Api
 
             builder.Services.AddScoped<IUserService, UserService>();
 
+            builder.Services.AddScoped<IDataDumpService, DataDumpService>();
            
 
         }

@@ -6,6 +6,7 @@
 	<ItemGroup>
 		<PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
 		<PackageReference Include="Microsoft.Azure.Functions.Extensions" Version="1.1.0" />
+		<PackageReference Include="Microsoft.Azure.WebJobs.Extensions.OpenApi" Version="1.0.0" />
 		<PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.0-preview3.23201.1" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.SQLite" Version="6.0.0" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.SQLite.Design" Version="1.1.6" />
