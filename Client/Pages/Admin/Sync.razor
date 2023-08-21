@@ -1,0 +1,30 @@
+﻿@page "/admin/sync"
+
+@using BlazorEcommerceStaticWebApp.Client.Components;
+@using BlazorEcommerceStaticWebApp.Client.Services.Admin;
+@using BlazorEcommerceStaticWebApp.Shared
+
+@inject HttpClient Http
+@inject ISyncService SyncService
+
+
+<h3>Sync</h3>
+
+
+<button @onclick="SyncLiveToLocal">Sync</button>
+
+@code {
+   
+
+    async Task SyncLiveToLocal()
+    {
+        try
+        {
+            await SyncService.Sync();
+        }
+        catch(Exception ex)
+        {
+            var error = ex;            
+        }
+    }
+}

@@ -8,8 +8,12 @@ namespace BlazorEcommerceStaticWebApp.Shared
 {
     public class Everything
     {
+        public IEnumerable<Language>? Languages;
+
         public IEnumerable<Tutor>? Tutors;
 
         public IEnumerable<Business>? Businesses;
+       
+        public IEnumerable<Course>? Courses;
     }
 }

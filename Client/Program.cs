@@ -1,4 +1,5 @@
 using BlazorEcommerceStaticWebApp.Client;
+using BlazorEcommerceStaticWebApp.Client.Services.Admin;
 using BlazorEcommerceStaticWebApp.Client.Services.BusinessService;
 using BlazorEcommerceStaticWebApp.Client.Services.CourseService;
 using BlazorEcommerceStaticWebApp.Client.Services.Helper;
@@ -21,6 +22,8 @@ builder.Services.AddScoped<IBusinessService, BusinessService>();
 builder.Services.AddScoped<IStudentService, StudentService>();
 builder.Services.AddScoped<ILanguageService, LanguageService>();
 builder.Services.AddScoped<ICourseService, CourseService>();
+
+builder.Services.AddScoped<ISyncService, SyncService>();
 
 builder.Services.AddScoped<StateContainer>();
 

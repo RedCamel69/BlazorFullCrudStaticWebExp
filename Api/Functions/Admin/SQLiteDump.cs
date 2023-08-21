@@ -18,6 +18,7 @@ using Newtonsoft.Json;
 
 namespace Api.Functions.Admin
 {
+    //todo: secure function!
     public class SQLiteDump 
     {
         private readonly IDataDumpService _service;
@@ -46,6 +47,7 @@ namespace Api.Functions.Admin
                 Content = new StringContent(jsonToReturn, Encoding.UTF8, "application/json")
             };
         }
+        
     }
 }
 
