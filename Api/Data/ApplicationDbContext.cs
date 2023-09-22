@@ -24,7 +24,7 @@ public class ApplicationDbContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         //for migrations working with sqlite locally
-       // optionsBuilder.UseSqlite(Utils.GetSQLiteConnectionString());
+       optionsBuilder.UseSqlite(Utils.GetSQLiteConnectionString());
 
 
         //if (!optionsBuilder.IsConfigured)

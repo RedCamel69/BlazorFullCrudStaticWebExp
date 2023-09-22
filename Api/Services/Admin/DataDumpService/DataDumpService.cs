@@ -36,10 +36,11 @@ namespace Api.Services.Admin.DataDumpService
 
             response.Data = new Everything()
             {
-                Languages = _context.Languages ?? null,
-                Tutors = _context.Tutors ?? null,
-                Courses=_context.Courses ?? null,
-                Businesses = _context.Businesses ?? null,
+                Languages = _context.Languages ?? null
+                //,
+                //Tutors = _context.Tutors ?? null,
+                //Courses=_context.Courses ?? null,
+                //Businesses = _context.Businesses ?? null,
             };
 
             //response.Data.Tutors = _context.Tutors;

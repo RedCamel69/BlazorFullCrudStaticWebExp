@@ -23,12 +23,14 @@ namespace BlazorEcommerceStaticWebApp.Shared
         public DateTime EndDate { get; set; }
 
         [Required]
+        [Range(0, int.MaxValue, ErrorMessage = "Value should be greater than or equal to 0")]
         public int StudentCapacity { get; set; }
 
-
+        [Required]
         public int? LanguageId { get; set; }
         public Language? Language { get; set; }
 
+        [Required]
         public int? TutorId { get; set; }
         public Tutor? Tutor { get; set; }
 
