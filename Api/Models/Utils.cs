@@ -12,7 +12,7 @@ public class Utils
         {
             home = System.IO.Path.Combine(home, "site", "wwwroot");
         }
-        var databasePath = System.IO.Path.Combine(home, "turin.db");
+        var databasePath = System.IO.Path.Combine(home, "turin2.db");
         var connStr = $"Data Source={databasePath}";
 
         return connStr;

@@ -48,17 +48,17 @@ namespace BlazorEcommerceStaticWebApp.Api
             {
                 if (Environment.GetEnvironmentVariable("AZURE_FUNCTIONS_ENVIRONMENT") != "Development")
                 {
-                    if (!File.Exists("D:\\home\\turin.db"))
+                    if (!File.Exists("D:\\home\\turin2.db"))
                     {
 
-                        File.Copy("D:\\home\\site\\wwwroot\\turin.db", "D:\\home\\turin.db");
-                        File.SetAttributes("D:\\home\\turin.db", FileAttributes.Normal);
+                        File.Copy("D:\\home\\site\\wwwroot\\turin2.db", "D:\\home\\turin2.db");
+                        File.SetAttributes("D:\\home\\turin2.db", FileAttributes.Normal);
                     }
 
                     builder.Services.AddDbContext<ApplicationDbContext>(options =>
                     {
                         //options.UseSqlite(Utils.GetSQLiteConnectionString());
-                        options.UseSqlite("Data source = D:\\home\\turin.db");
+                        options.UseSqlite("Data source = D:\\home\\turin2.db");
                         //options.UseSqlite("Data source = D:\\home\\site\\wwwroot\\school.db");
                     });
                 }
