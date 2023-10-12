@@ -1,5 +1,6 @@
 ﻿using BlazorEcommerceStaticWebApp.Api.Data;
 using BlazorEcommerceStaticWebApp.Shared;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,9 +31,26 @@ namespace Api.Services.Admin.DataDumpService
             return response;
         }
 
+
+        public ServiceResponse<string> Diagnostics2()
+        {
+            var response = new ServiceResponse<string>();
+
+            _context.Database.CloseConnection();
+
+            
+            response.Data = _context.Database.GetConnectionString() + " " + Convert.ToString(_context.Database.CanConnect());
+
+            return response;
+
+        }
+
         public ServiceResponse<Everything> GetEverything()
         {
             var response = new ServiceResponse<Everything>();
+
+
+           
 
             response.Data = new Everything()
             {

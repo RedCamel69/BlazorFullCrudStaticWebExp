@@ -14,5 +14,7 @@ namespace Api.Services.Admin.DataDumpService
         ServiceResponse<List<Tutor>> GetTutors();
 
         ServiceResponse<Everything> GetEverything();
+
+        ServiceResponse<String> Diagnostics2();
     }
 }
