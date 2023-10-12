@@ -3,6 +3,7 @@ using BlazorEcommerceStaticWebApp.Shared;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -38,7 +39,10 @@ namespace Api.Services.Admin.DataDumpService
 
             _context.Database.CloseConnection();
 
-            
+            //2 lines azure only!
+            File.Copy("D:\\home\\site\\wwwroot\\turin2.db", "D:\\home\\turin2.db");
+            File.SetAttributes("D:\\home\\turin2.db", FileAttributes.Normal);
+
             response.Data = _context.Database.GetConnectionString() + " " + Convert.ToString(_context.Database.CanConnect());
 
             return response;
