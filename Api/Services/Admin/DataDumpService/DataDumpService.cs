@@ -40,7 +40,8 @@ namespace Api.Services.Admin.DataDumpService
             _context.Database.CloseConnection();
 
             //2 lines azure only!
-            File.Copy("D:\\home\\site\\wwwroot\\turin2.db", "D:\\home\\turin2.db");
+            File.Copy("D:\\home\\turin2.db", "D:\\home\\turin3.db", true);
+            File.Copy("D:\\home\\turin3.db", "D:\\home\\turin2.db",true);
             File.SetAttributes("D:\\home\\turin2.db", FileAttributes.Normal);
 
             response.Data = _context.Database.GetConnectionString() + " " + Convert.ToString(_context.Database.CanConnect());
